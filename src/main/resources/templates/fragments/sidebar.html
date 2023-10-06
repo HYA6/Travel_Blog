@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <section th:fragment="sidebar" id="sidebar">
+		<!-- Intro -->
+		<section id="intro" style="margin: 0; margin-bottom: 1em;">
+			<header>
+				<h2 th:text="${blogDto.blogName}"></h2>
+				<p style="margin-bottom: 0.5em;">블로그 테마</p>
+				<p th:text="${blogDto.blogThema}" style="font-size: 0.8em; font-style: italic; color: #2ebaae;"></p>
+				<div align="center">
+					<a href="#" style="font-size: 0.9em; margin-right: 2.5em;">follower</a>
+					<a href="#" style="font-size: 0.9em;">following</a>
+				</div>
+			</header>
+		</section>
+	
+		<!-- Mini Posts -->
+		<section>
+			<div>
+				<!-- Mini Posts Header -->
+				<header>
+					<h3>인기글</h3>
+				</header>
+			</div>
+			<div class="mini-posts">
+				<!-- Mini Post -->
+				<article class="mini-post">
+					<header>
+						<h3><a href="single.html">인기 게시글</a></h3>
+						<time class="published" datetime="2015-10-20">게시글 작성일</time>
+						<a href="#" class="author"><img src="images/avatar.jpg" alt="" /></a>
+					</header>
+					<a href="single.html" class="image"><img src="images/pic04.jpg" alt="" /></a>
+				</article>
+			</div>
+		</section>
+		<!-- Posts List -->
+		<section>
+			<div>
+				<header>
+					<h3>최신 댓글</h3>
+				</header>
+			</div>
+			<ul class="posts">
+				<li>
+					<article>
+						<header>
+							<h3><a href="single.html">댓글 내용</a></h3>
+							<time class="published" datetime="2015-10-20">댓글 작성일</time>
+						</header>
+						<a href="single.html" class="image"><img src="images/pic08.jpg" alt="" /></a>
+					</article>
+				</li>
+			</ul>
+		</section>
+		<!-- About -->
+		<section class="blurb">
+			<h2>여기엔</h2>
+			<p>무얼 쓸까..</p>
+			<ul class="actions">
+				<li><a href="#" class="button">Learn More</a></li>
+			</ul>
+		</section>
+	</section>
+</html>

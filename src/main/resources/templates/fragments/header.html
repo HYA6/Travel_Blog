@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <div th:fragment="header">
+		<header id="header">
+			<h1><a href="#">Home</a></h1>
+			<nav class="links">
+				<ul>
+					<li><a href="main?users_num=${userNum}">Blog</a></li>
+					<li><a href="#">Timeline</a></li>
+				</ul>
+			</nav>
+			<nav class="main">
+				<ul>
+					<li style="border: none;">
+						<a class="fa-comments" href="#">Comments</a>
+						<a class="fa-envelope" href="#">Email</a>
+					</li>
+					<li class="search">
+						<a class="fa-search" href="#search">Search</a>
+						<form id="search" method="get" action="#">
+							<input type="text" name="query" placeholder="Other Blog Search" />
+						</form>
+					</li>
+					<li class="menu">
+						<a class="fa-bars" href="#menu">Menu</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+		<!-- menu -->
+		<section th:replace="fragments/menu::menu"></section>
+   	</div>
+</html>

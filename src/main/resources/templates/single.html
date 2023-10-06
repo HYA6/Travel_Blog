@@ -1,0 +1,32 @@
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+    <div layout:fragment="main">
+    	<div id="main">
+			<!-- Post -->
+			<article class="post">
+				<header>
+					<div class="title">
+						<h2><a href="single">게시글 제목</a></h2>
+						<p>게시글 부제목</p>
+					</div>
+					<div class="meta">
+						<time class="published" datetime="2015-11-01">작성일</time>
+						<a href="#" class="author"><span class="name">블로그 주인</span><img src="images/avatar.jpg" alt="" /></a>
+					</div>
+				</header>
+				<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
+				<p>게시글 내용</p>
+				<p></p>
+				<footer>
+					<ul class="stats">
+						<li><a href="#">카테고리?</a></li>
+						<li><a href="#" class="icon solid fa-eye">조회수</a></li>
+						<li><a href="#" class="icon solid fa-heart">좋아요수</a></li>
+						<li><a href="#" class="icon solid fa-comment">댓글수</a></li>
+					</ul>
+				</footer>
+			</article>
+		</div>
+	</div>
+</html>

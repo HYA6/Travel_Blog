@@ -1,0 +1,107 @@
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+    <div layout:fragment="main">
+    	<div id="main">
+			<!-- Post -->
+			<article class="post" style="padding-top: 0;">
+				<header style="margin: 0; border-bottom: none; margin-bottom: 1em;">
+					<div class="title" style="padding-bottom: 2em; padding-top: 3.5em; padding-left: 6em;">
+						<h2 style="font-size: 2em;">My Page</h2>
+						<p style="font-size: 1em;">내 정보</p>
+					</div>
+					<div class="meta" style="border-left: none; padding-top: 6em;">
+						<a href="mypage" class="author">
+							<span class="name" style="font-size: 1.5em;">${usersDto.userName}</span>
+							<img src="images/avatar.jpg" alt="" style="width: 5em;"/>
+						</a>
+					</div>
+				</header>
+				<form action="myInfoEditOK" method="post" id="infoForm">
+					<table style="width: 90%; margin-left: auto; margin-right: auto;">
+						<tr>
+							<td style="width: 23%; text-align: center;"><label for="userName">이름 (수정불가)</label></td>
+							<td><input type="text" name="userName" id="userName" th:value="${usersDto.userName}" disabled="disabled"/></td>
+						</tr>
+						<tr>
+							<td style="text-align: center;"><label for="userId">아이디 (수정불가)</label></td>
+							<td>
+								<input type="text" name="userId" id="userId" th:value="${usersDto.userId}" disabled="disabled"/>
+							</td>
+						</tr>
+						<tr>
+							<td style="text-align: center;"><label for="password1">현재 비밀번호</label></td>
+							<td>
+								<input type="password" id="password1"/>
+								<input type="hidden" id="passwordCheck" th:value="${usersDto.userPassword}"/>
+							</td>
+						</tr>
+						<tr>
+							<td style="text-align: center;"><label for="password2">새로운 비밀번호</label></td>
+							<td><input type="password" name="userPassword" id="password2"/></td>
+						</tr>
+						<tr>
+							<td style="text-align: center;"><label for="password3">새로운 비밀번호 확인</label></td>
+							<td><input type="password" id="password3"/></td>
+						</tr>
+						<tr>
+							<td style="text-align: center;"><label for="userBirhtday">생년월일 (수정불가)</label></td>
+							<td>
+								<input type="date" name="userBirhtday" id="userBirhtday" 
+									style="width: 35%;" th:value="${usersDto.userBirhtday}" disabled="disabled"/>
+							</td>
+						</tr>
+						<tr>
+							<td style="text-align: center;"><label for="emailId">이메일</label></td>
+							<td>
+								<input type="text" id="emailId" value="" title="이메일 아이디" placeholder="영어와 숫자로만 입력" 
+									maxlength="18" style="width: 30%; display: inline-block;"/> @ 
+								<input type="text" id="emailDomain" value="" title="이메일 도메인" placeholder="직접 입력" 
+									maxlength="18" style="width: 30%; display: inline-block;"/> 
+								<select class="select" title="이메일 도메인 선택" onclick="setEmailDomain(this.value);return false;" style="width: 30%; display: inline-block;">
+									<option value="">- 선택 -</option>
+									<option value="naver.com">naver.com</option>
+									<option value="gmail.com">gmail.com</option>
+									<option value="hanmail.net">hanmail.net</option>
+									<option value="daum.com">daum.com</option>
+									<option value="nate.com">nate.com</option>
+								</select>
+								<input type="hidden" name="userEmail" id="mail" th:value="${usersDto.userEmail}"/>
+							</td>
+						</tr>
+						<tr>
+							<td style="text-align: center;"><label for="userPhone">전화번호</label></td>
+							<td>
+								<input th:value="${usersDto.userPhone}" type="tel" title="전화번호" placeholder="00*-000*-0000" name="userPhone" id="userPhone"
+									pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13"/>
+							</td>
+						</tr>
+						<tr>
+							<td style="text-align: center;"><label>성별</label></td>
+							<td>
+								<input type="radio" name="userGender" id="genderN"/><label for="genderN">선택안함</label>
+								<input type="radio" name="userGender" value="남성" id="genderM"/><label for="genderM">남성</label>
+								<input type="radio" name="userGender" value="여성" id="genderF"/><label for="genderF">여성</label>
+								<input type="hidden" value="${usersDto.userGender}" id="gender"/>
+							</td>
+						</tr>
+						<tr>
+							<td style="text-align: center;"><label for="userNickname">닉네임</label></td>
+							<td>
+								<input th:value="${usersDto.userNickname}" type="text" name="userNickname" id="userNickname"/>
+							</td>
+						</tr>
+						<tr style="border-bottom: none; background-color: white;">
+							<td colspan="2" align="right">
+								<input type="button" value="정보 수정" onclick="infoEmailCheck()"/>
+								<input type="button" value="회원 탈퇴" onclick="deleteInfo()"/>
+								<input type="hidden" name="userNum" th:value="${usersDto.userNum}" id="userNum"/>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</article>
+		</div>
+		<script src="assets/js/myInfoEdit.js"></script>
+	</div>
+</html>

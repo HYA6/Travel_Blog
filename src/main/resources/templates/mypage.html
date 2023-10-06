@@ -1,0 +1,123 @@
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+    <div layout:fragment="main">
+    	<div id="main">
+			<!-- Post -->
+			<article class="post" style="padding-top: 0;">
+				<header style="margin: 0;">
+					<div class="title" style="padding-bottom: 2em; padding-top: 3.5em; padding-left: 6em;">
+						<h2 style="font-size: 2em;">My Page</h2>
+						<p style="font-size: 1em;">내 정보</p>
+					</div>
+					<div class="meta" style="border-left: none; padding-top: 6em;">
+						<a href="mypage" class="author">
+							<span class="name" style="font-size: 1.5em;">${usersDto.userName}</span>
+							<img src="images/avatar.jpg" alt="" style="width: 5em;"/>
+						</a>
+					</div>
+				</header>
+				<div align="center" style="margin-top: 1em;">
+					<div style="
+							display: inline-block;
+						    border: 1px solid rgba(160, 160, 160, 0.3);
+						    width: 380px;
+						    height: 300px;
+						    text-align: center;
+						    position: relative;
+						    font-size: 1.6em;
+						    margin: 20px;
+						">
+						<a href="myInfoEdit">
+							<span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); line-height: 1.2em;">Edit My Information<br/>
+								<span style="font-size: 0.5em;">내 정보 수정</span>
+							</span>
+						</a>
+					</div>
+					<div style="
+							display: inline-block;
+						    border: 1px solid rgba(160, 160, 160, 0.3);
+						    width: 380px;
+						    height: 300px;
+						    text-align: center;
+						   	position: relative;
+						    font-size: 1.6em;
+						    margin: 20px;
+						">
+						<a href="#">
+							<span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); line-height: 1.2em;">Profile Settings<br/>
+								<span style="font-size: 0.5em;">프로필 설정</span>
+							</span>
+						</a>
+					</div>
+					<div style="
+							display: inline-block;
+						    border: 1px solid rgba(160, 160, 160, 0.3);
+						    width: 380px;
+						    height: 300px;
+						    text-align: center;
+						    position: relative;
+						    font-size: 1.6em;
+						    margin: 20px;
+						">
+						<a href="blogEdit">
+							<span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); line-height: 1.2em;">Blog Settings<br/>
+								<span style="font-size: 0.5em;">블로그 설정</span>
+							</span>
+						</a>
+					</div>
+					
+					<div style="
+							display: inline-block;
+						    border: 1px solid rgba(160, 160, 160, 0.3);
+						    width: 380px;
+						    height: 300px;
+						    text-align: center;
+						    position: relative;
+						    font-size: 1.6em;
+						    margin: 20px;
+						">
+						<a href="#">
+							<span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); line-height: 1.2em;">Post Management<br/>
+								<span style="font-size: 0.5em;">게시글 관리</span>
+							</span>
+						</a>
+					</div>
+					
+					<div style="
+							display: inline-block;
+						    border: 1px solid rgba(160, 160, 160, 0.3);
+						    width: 380px;
+						    height: 300px;
+						    text-align: center;
+						    position: relative;
+						    font-size: 1.6em;
+						    margin: 20px;
+						">
+						<a href="#">
+							<span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); line-height: 1.2em;">Comment, Like Management<br/>
+								<span style="font-size: 0.5em;">댓글, 좋아요 관리</span>
+							</span>
+						</a>
+					</div>
+					<div style="
+							display: inline-block;
+						    border: 1px solid rgba(160, 160, 160, 0.3);
+						    width: 380px;
+						    height: 300px;
+						    text-align: center;
+						    position: relative;
+						    font-size: 1.6em;
+						    margin: 20px;
+						">
+						<a href="#">
+							<span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); line-height: 1.2em;">Follow Management<br/>
+								<span style="font-size: 0.5em;">팔로 관리</span>
+							</span>
+						</a>
+					</div>
+				</div>
+			</article>
+		</div>
+	</div>
+</html>
