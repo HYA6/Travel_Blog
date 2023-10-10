@@ -2,13 +2,13 @@ $(document).ready(function() {
 	// 유저 정보에 저장되어 있는 이메일 적용
 	// console.log($("#mail").val());
 	const mail = $("#mail").val().split('@'); // 유저 정보에 저장되어 있는 이메일을 @을 경계로 나눈다.
-	// console.log(mail[0]);
+//	console.log(mail[0]);
 	$("#emailId").val(mail[0]);
 	$("#emailDomain").val(mail[1]);
 	
 	// 유저 정보에 저장되어 있는 성별에 따라 체크 표시하기
 	const gender = $('#gender').val();
-	console.log(gender);
+//	console.log(gender);
 	if (gender == 'on' || gender == '' || gender == null) {
 		$('#genderN').prop("checked", true);
 	} else if (gender == '남자') {
@@ -45,7 +45,7 @@ function infoBlankCheck() {
 // 현재 비밀번호 확인
 function infoPasswordCheck() {
 	console.log('infoPasswordCheck() 실행');
-	let password1 = $'#password1');
+	let password1 = $('#password1');
 	let passwordCheck = $('#passwordCheck');
 	if (password1.val() == passwordCheck.val()){
 		return true;
@@ -97,17 +97,17 @@ function infoEmailCheck() {
 	// 입력한 이메일 중복 검사
 	if (emailId != mail[0] || emailDomain != mail[1]) { 
 		$.ajax({
-			url: 'usersEmailCheck',
+			url: 'api/usersEmailCheck',
 			type: 'POST',
 			data: {'userEmail' : userEmail},
 			success : function (data){
-				// console.log(data);
+//				console.log(data);
 				email = data;
 				if (passwordCheck != null && infoBlankCheck() == false) { // 빈 칸 있는지 확인
 					return false;
 				}
-				// console.log(email);
-				// console.log(userEmail);
+//				console.log(email);
+//				console.log(userEmail);
 				if (userEmail != email){
 					$("#mail").val(userEmail);
 					infoEdit();
@@ -118,7 +118,9 @@ function infoEmailCheck() {
 				}
 	        },
 			error: function(){
-				alert("ajax 실패");
+				console.log("ajax 실패");
+				alert("저장 실패");
+				return false;
 	        }
 		});
 	} else {
@@ -134,12 +136,13 @@ function infoEdit() {
 	console.log('infoEdit() 실행');
 	let infoForm = $('#infoForm'); // form 태그
 	let passwordCheck = $('#passwordCheck'); // DB에 저장된 비밀번호
+	console.log(passwordCheck.val())
 	
-	if (passwordCheck != null && infoPasswordCheck() == false) { // 현재 비밀번호 일치하는지 확인
+	if (passwordCheck.val() != null && infoPasswordCheck() == false) { // 현재 비밀번호 일치하는지 확인
 		return false;
 	};
 	
-	if (passwordCheck != null && infoNewPasswordCheck() == false) { // 새로운 비밀번호 일치하는지 확인
+	if (passwordCheck.val() != null && infoNewPasswordCheck() == false) { // 새로운 비밀번호 일치하는지 확인
 		return false;
 	};
 	

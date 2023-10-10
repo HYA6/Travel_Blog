@@ -12,7 +12,7 @@
 					</div>
 					<div class="meta" style="border-left: none; padding-top: 6em;">
 						<a href="mypage" class="author">
-							<span class="name" style="font-size: 1.5em;">${usersDto.userName}</span>
+							<span th:text="${usersDto.userName}" class="name" style="font-size: 1.5em;"></span>
 							<img src="images/avatar.jpg" alt="" style="width: 5em;"/>
 						</a>
 					</div>
@@ -29,18 +29,18 @@
 								<input type="text" name="userId" id="userId" th:value="${usersDto.userId}" disabled="disabled"/>
 							</td>
 						</tr>
-						<tr>
+						<tr th:if="${usersDto.userPassword != null}">
 							<td style="text-align: center;"><label for="password1">현재 비밀번호</label></td>
 							<td>
 								<input type="password" id="password1"/>
 								<input type="hidden" id="passwordCheck" th:value="${usersDto.userPassword}"/>
 							</td>
 						</tr>
-						<tr>
+						<tr th:if="${usersDto.userPassword != null}">
 							<td style="text-align: center;"><label for="password2">새로운 비밀번호</label></td>
 							<td><input type="password" name="userPassword" id="password2"/></td>
 						</tr>
-						<tr>
+						<tr th:if="${usersDto.userPassword != null}">
 							<td style="text-align: center;"><label for="password3">새로운 비밀번호 확인</label></td>
 							<td><input type="password" id="password3"/></td>
 						</tr>
@@ -82,7 +82,7 @@
 								<input type="radio" name="userGender" id="genderN"/><label for="genderN">선택안함</label>
 								<input type="radio" name="userGender" value="남성" id="genderM"/><label for="genderM">남성</label>
 								<input type="radio" name="userGender" value="여성" id="genderF"/><label for="genderF">여성</label>
-								<input type="hidden" value="${usersDto.userGender}" id="gender"/>
+								<input type="hidden" th:value="${usersDto.userGender}" id="gender"/>
 							</td>
 						</tr>
 						<tr>

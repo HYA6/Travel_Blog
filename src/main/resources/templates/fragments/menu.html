@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <section th:fragment="menu" id="menu">
 		<!-- Search -->
-		<section>
+		<section style="padding-bottom: 2em; padding-top: 2em;">
 			<form class="search" method="get" action="#">
 				<input type="text" name="query" placeholder="Search in this blog" />
 			</form>
 		</section>
 		<!-- Links -->
-		<section>
+		<section style="padding-top: 2.5em;">
 			<ul class="links">
 				<li style="text-align: center;">
 					<h2>Category</h2>
@@ -17,22 +17,15 @@
 					<div th:each="categroy:${categoryDto}">
 						<!-- 메인 카테고리 -->
 						<a href="" style="font-size: 1.2em; margin-bottom: 0.5em;">
-							<span th:if="${categroy.categoryGup}==1 and ${categroy.categoryLev}==0" th:text="${categroy.categoryName}"></span>
+							<span th:if="${categroy.categoryLev == 0}" th:text="${categroy.categoryName}"></span>
 						</a>
 						<!-- 서브 카테고리 -->
-						<span th:if="${categroy.categoryLev}==1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ </span>
-						<a href="" style="font-size: 1em; margin-bottom: 0.5em;">
-							<span th:if="${categroy.categoryGup}==1 and ${categroy.categoryLev}==1" th:text="${categroy.categoryName}"></span>
-						</a>
-						<!-- 메인 카테고리 -->
-						<a href="" style="font-size: 1.2em; margin-bottom: 0.5em;">
-							<span th:if="${categroy.categoryGup}==2 and ${categroy.categoryLev}==0" th:text="${categroy.categoryName}"></span>
-						</a>
-						<!-- 서브 카테고리 -->
-						<a href="" style="font-size: 1em; margin-bottom: 0.5em;">
-							<span th:if="${categroy.categoryLev}==1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ </span>
-							<span th:if="${categroy.categoryGup}==2 and ${categroy.categoryLev}==1" th:text="${categroy.categoryName}"></span>
-						</a>
+						<div th:if="${categroy.categoryLev == 1}">
+							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ </span>
+							<a href="" style="font-size: 1em; margin-bottom: 0.5em; display: inline-block;">
+								<span th:text="${categroy.categoryName}"></span>
+							</a>
+						</div>
 					</div>
 				</li>
 			</ul>

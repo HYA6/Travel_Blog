@@ -11,7 +11,7 @@ import com.example.TravelProject.entity.Category;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 	
 	// 카테고리 목록 찾기
-	@Query(value = "SELECT * FROM category WHERE blog_id = :blogId", nativeQuery = true)
+	@Query(value = "SELECT * FROM category WHERE blog_id = :blogId ORDER BY category_gup, category_lev, category_seq", nativeQuery = true)
 	List<Category> selectByBlog(Long blogId);
 	
 	// 카테고리 찾기

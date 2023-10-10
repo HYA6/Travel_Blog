@@ -40,7 +40,7 @@ public class Category {
 	@Column(name="category_gup", columnDefinition="int")
 	private int categoryGup; // 카테고리 그룹(상위 카테고리 구분)
 	@Column(name="category_lev", columnDefinition="int")
-	private int categoryLev; // 카테고리 레벨(하위 카테고리 구분)
+	private int categoryLev; // 카테고리 레벨(상,하위 카테고리 구분)
 	@Column(name="category_seq", columnDefinition="int")
 	private int categorySeq; // 카테고리 출력 순서(카테고리 내의 출력 순서)
 	// 외래키

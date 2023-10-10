@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.TravelProject.dto.BlogDto;
 import com.example.TravelProject.dto.CategoryDto;
+import com.example.TravelProject.dto.PostDto;
 import com.example.TravelProject.dto.UsersDto;
 import com.example.TravelProject.service.BlogService;
 import com.example.TravelProject.service.CategoryService;
@@ -46,9 +47,10 @@ public class MainController {
 		
 		// 블로그에 있는 카테고리 전부 가져오기
 		List<CategoryDto> categoryDto = categoryService.selectCategoryList(blogId);
-//		log.info("categoryDto: {}", categoryDto);
+		log.info("categoryDto: {}", categoryDto);
 		
 		// 블로그에 있는 전체 게시글 목록 가져오기
+		List<PostDto> postDto = null;
 
 		// 블로그에 있는 인기순 게시글 가져오기(5개)
 		
@@ -57,6 +59,7 @@ public class MainController {
 		model.addAttribute("usersDto", usersDto);
 		model.addAttribute("blogDto", blogDto);
 		model.addAttribute("categoryDto", categoryDto);
+		model.addAttribute("postDto", postDto);
 		
 		return "main";
 	}

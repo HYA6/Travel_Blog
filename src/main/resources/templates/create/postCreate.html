@@ -1,30 +1,25 @@
+<!DOCTYPE HTML>
 <html xmlns:th="http//www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default}">
     <div layout:fragment="main">
 		<div id="main">
 			<!-- Post -->
-			<article class="post" style="padding-top: 0;">
-				<header style="margin: 0; border-bottom: none; margin-bottom: 1em;">
-					<div class="title" style="padding-bottom: 2em; padding-top: 3.5em; padding-left: 6em;">
-						<h2 style="font-size: 2em;">Blog Settings</h2>
-						<p style="font-size: 1em;">블로그 설정</p>
-					</div>
-					<div class="meta" style="border-left: none; padding-top: 6em;">
-						<a href="mypage" class="author">
-							<span th:text="${usersDto.userName}" class="name" style="font-size: 1.5em;"></span>
-							<img src="images/avatar.jpg" alt="" style="width: 5em;"/>
-						</a>
+			<article class="post">
+				<header style="border-bottom: none; margin-bottom: 1.5em;">
+					<div class="title" style="padding-bottom: 0; padding-left: 5em; text-align: center;">
+						<h2>CREATE BLOG</h2>
+						<p style="font-size: 0.8em; margin-top: -2em;">블로그 생성하기</p>
 					</div>
 				</header>
-				<form action="blogEditOK" method="post" id="blogEditForm">
-					<table style="width: 90%; margin-left: auto; margin-right: auto;">
+				<form action="blogCreate" method="post" id="blogCreateForm">
+					<table style="width: 80%; margin-left: auto; margin-right: auto;">
 						<tr>
 							<td align="center"><label for="blogName" style="margin: 0; font-size: 1.2em;">BLOG NAME</label></td>
 						</tr>
 						<tr>
 							<td align="center">
-								<input type="text" name="blogName" id="blogName" placeholder="자신만의 블로그 이름을 입력하세요." th:value="${blogDto.blogName}"
+								<input type="text" name="blogName" id="blogName" placeholder="자신만의 블로그 이름을 입력하세요."
 									style="text-align: center; width: 50%; background-color: white; border: none; border-bottom: 1px solid rgba(160, 160, 160, 0.3);"/>
 							</td>
 						</tr>
@@ -44,7 +39,6 @@
 								<input type="checkbox" name="blogThema" value="쇼핑여행" id="shopping" style="margin-bottom: 0;"/><label for="shopping">쇼핑여행</label>
 								<input type="checkbox" name="blogThema" value="가족여행" id="family" style="margin-bottom: 0;"/><label for="family">가족여행</label>
 								<input type="checkbox" name="blogThema" value="우정여행" id="friend" style="margin-bottom: 0;"/><label for="friend">우정여행</label>
-								<input type="hidden" id="blogThema" th:value="${blogDto.blogThema}"/>
 							</td>
 						</tr>
 						<tr>
@@ -53,23 +47,20 @@
 						<tr>
 							<td align="center">
 								http://localhost:9090/&nbsp;&nbsp;
-								<input type="text" id="blogUrl" th:value="${blogDto.blogUrl}" title="유동 url" placeholder="자신만의 블로그 주소를 입력하세요." maxlength="18" 
+								<input type="text" id="blogUrl" value="" title="유동 url" placeholder="자신만의 블로그 주소를 입력하세요." maxlength="18" 
 									style="width: 30%; display: inline-block; background-color: white; border: none; border-bottom: 1px solid rgba(160, 160, 160, 0.3);"/> 
-								<input type="hidden" name="blogUrl" id="url" th:value="${blogDto.blogUrl}"/>
+								<input type="hidden" name="blogUrl" id="DBUrl"/>
 							</td>
 						</tr>
 						<tr style="background-color: white; border-bottom: none;">
 							<td align="right">
-								<input type="button" value="블로그 수정" onclick="blogEdit()">
-								<input type="button" value="블로그 삭제" onclick="blogDelete()">
-								<input type="hidden" th:value="${usersDto.userNum}" name="userNum"/>
-								<input type="hidden" th:value="${blogDto.blogId}" name="blogId" id="blogId"/>
+								<input type="button" value="블로그 생성" onclick="blog()">
+								<input type="hidden" th:value="${userNum}" name="userNum"/>
 							</td>
 						</tr>
 					</table>
 				</form>
 			</article>
 		</div>
-		<script src="assets/js/blogEdit.js"></script>
 	</div>
 </html>
