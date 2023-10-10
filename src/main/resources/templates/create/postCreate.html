@@ -3,64 +3,278 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default}">
     <div layout:fragment="main">
+    	<th:block layout:fragment="css">
+			<link rel="stylesheet" href="assets/css/datepicker.css">
+			<style>
+				.simpleTables {
+					width: 90%; 
+					margin-left: auto; 
+					margin-right: auto;
+					display: inline-table;
+				}
+				.images {
+					display: inline-block;
+					width: 45%;
+					height: 20em;
+					border: 1px solid rgba(160, 160, 160, 0.3);;
+					line-height: 20em;
+				}
+			</style>
+		</th:block>
 		<div id="main">
 			<!-- Post -->
 			<article class="post">
 				<header style="border-bottom: none; margin-bottom: 1.5em;">
 					<div class="title" style="padding-bottom: 0; padding-left: 5em; text-align: center;">
-						<h2>CREATE BLOG</h2>
-						<p style="font-size: 0.8em; margin-top: -2em;">블로그 생성하기</p>
+						<h2>WRITE POST</h2>
+						<p style="font-size: 0.8em; margin-top: -2em;">게시글 작성하기</p>
 					</div>
 				</header>
-				<form action="blogCreate" method="post" id="blogCreateForm">
-					<table style="width: 80%; margin-left: auto; margin-right: auto;">
+				<form action="createPost" method="post" id="postCreateForm">
+					<table id="table" style="width: 90%; margin-left: auto; margin-right: auto;">
 						<tr>
-							<td align="center"><label for="blogName" style="margin: 0; font-size: 1.2em;">BLOG NAME</label></td>
-						</tr>
-						<tr>
+							<td align="center"><label for="postSubject" style="margin: 0; font-size: 1.2em;">제목</label></td>
 							<td align="center">
-								<input type="text" name="blogName" id="blogName" placeholder="자신만의 블로그 이름을 입력하세요."
-									style="text-align: center; width: 50%; background-color: white; border: none; border-bottom: 1px solid rgba(160, 160, 160, 0.3);"/>
+								<input type="text" name="postSubject" id="postSubject" placeholder="제목을 입력하세요."/>
 							</td>
 						</tr>
 						<tr>
 							<td align="center">
-								<label style="margin: 0; font-size: 1.2em;">BLOG THEMA</label>
-								<p style="font-size: 0.7em; margin: 0;">주로 가는 여행을 모두 선택해주세요.</p>
+								<label style="margin: 0; font-size: 1.2em;">게시글 양식</label>
+							</td>
+							<td>
+								<input type="radio" name="postForm" value="simple" id="simple" style="margin-bottom: 0;"/>
+								<label for="simple">간단한 양식</label>
+								<input type="radio" name="postForm" value="standard" id="standard" style="margin-bottom: 0;"/>
+								<label for="standard">기본 양식</label>
 							</td>
 						</tr>
 						<tr>
+							<td align="center"><label style="margin: 0; font-size: 1.2em;">여행 기간</label></td>
 							<td align="center">
-								<input type="checkbox" name="blogThema" value="해외여행" id="foreign" style="margin-bottom: 0;"/><label for="foreign">해외여행</label>
-								<input type="checkbox" name="blogThema" value="국내여행" id="domestic" style="margin-bottom: 0;"/><label for="domestic">국내여행</label>
-								<input type="checkbox" name="blogThema" value="자유여행" id="Backpacking" style="margin-bottom: 0;"/><label for="Backpacking">자유여행</label>
-								<input type="checkbox" name="blogThema" value="패키지여행" id="package" style="margin-bottom: 0;"/><label for="package">패키지여행</label>
-								<input type="checkbox" name="blogThema" value="힐링여행" id="healing" style="margin-bottom: 0;"/><label for="healing">힐링여행</label>
-								<input type="checkbox" name="blogThema" value="쇼핑여행" id="shopping" style="margin-bottom: 0;"/><label for="shopping">쇼핑여행</label>
-								<input type="checkbox" name="blogThema" value="가족여행" id="family" style="margin-bottom: 0;"/><label for="family">가족여행</label>
-								<input type="checkbox" name="blogThema" value="우정여행" id="friend" style="margin-bottom: 0;"/><label for="friend">우정여행</label>
+								<div class="row">
+									<div class="input-group">
+										<input type="text" id="startDt" class="form-control datepicker startDt" placeholder="시작날짜" name="postStratDate"
+											style="display: inline-block; width: 70%; margin-right: 0.5em;">
+										<label class="input-group-text" for="startDt" style="display: inline-block; cursor: pointer;"><i class="fas fa-calendar-alt"></i></label>
+									</div>
+									<div class="text-center"  style="font-size: x-large;">~ </div>
+									<div class="input-group">
+										<input type="text" id="endDt" class="form-control datepicker endDt" placeholder="종료날짜" name="postEndDate" 
+											style="display: inline-block; width: 70%; margin-right: 0.5em;">
+										<label class="input-group-text" for="endDt" style="display: inline-block; cursor: pointer;"><i class="fas fa-calendar-alt"></i></label>
+									</div>            
+								</div>
 							</td>
 						</tr>
 						<tr>
-							<td align="center"><label for="blogUrl" style="margin: 0; font-size: 1.2em;">BLOG URL</label></td>
-						</tr>
-						<tr>
-							<td align="center">
-								http://localhost:9090/&nbsp;&nbsp;
-								<input type="text" id="blogUrl" value="" title="유동 url" placeholder="자신만의 블로그 주소를 입력하세요." maxlength="18" 
-									style="width: 30%; display: inline-block; background-color: white; border: none; border-bottom: 1px solid rgba(160, 160, 160, 0.3);"/> 
-								<input type="hidden" name="blogUrl" id="DBUrl"/>
+							<td align="center"><label style="margin: 0; font-size: 1.2em;">카테고리</label></td>
+							<td>
+								<select title="카테고리 선택">
+									<option value="">- 선택 -</option>
+									<div th:each="category:${categoryDto}">
+										<option th:text="${category.categoryName}" th:value="${category.categoryId}"></option>
+									</div>
+								</select>
 							</td>
 						</tr>
-						<tr style="background-color: white; border-bottom: none;">
-							<td align="right">
-								<input type="button" value="블로그 생성" onclick="blog()">
-								<input type="hidden" th:value="${userNum}" name="userNum"/>
+						<tr>
+							<td align="center"><label style="margin: 0; font-size: 1.2em;">장소</label></td>
+							<td>
+								지도 선택?
 							</td>
 						</tr>
 					</table>
+					<table id="standardTable" style="width: 90%; margin-left: auto; margin-right: auto;">
+						<tr>
+							<td>
+								<div id="standardContent">
+									<!-- 내용 쓰는 곳 -->
+									<!-- js로 글이라면 textarea를, 이미지라면 img 태그 추가하기 -->
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="button" id="standardText" value="글쓰기"/> <!-- 누르면 내용 쓰는 곳에 textarea 생성 후 유지시키기 -->
+								<input type="file" id="standardImage" value="사진 추가"/> <!-- 라이브러리에 파일 추가 후 내용 쓰는 곳에 이미지 파일 추가 -->
+							</td>
+						</tr>
+					</table>
+					<div id="simpleLeft" style="display: inline-block;">
+						<i class="fas fa-chevron-left" onclick="simpleBefore()"></i>
+					</div>
+					<table id="simpleTable1" class="simpleTables">
+						<tr>
+							<td><h2>POST1</h2></td>
+						</tr>
+						<tr>
+							<td align="center">
+								<div class="images" style="margin-right: 0.5em;">
+									사진 올리기
+								</div>
+								<div class="images" style="margin-top: 0.5em;">
+									사진 올리기
+								</div>
+								<br/>
+								<div class="images" style="margin-right: 0.5em;">
+									사진 올리기
+								</div>
+								<div class="images" style="margin-top: 0.5em;">
+									사진 올리기
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<textarea placeholder="내용을 200자 이내로 작성하세요." id="simpleContent1" rows="5"
+									style="background-color: white; width: 80%; border: 1px solid rgba(160, 160, 160, 0.3); resize: none;"></textarea>
+							</td>
+						</tr>
+					</table>
+					<table id="simpleTable2" class="simpleTables">
+						<tr>
+							<td><h2>POST2</h2></td>
+						</tr>
+						<tr>
+							<td align="center">
+								<div class="images" style="margin-right: 0.5em;">
+									사진 올리기
+								</div>
+								<div class="images" style="margin-top: 0.5em;">
+									사진 올리기
+								</div>
+								<br/>
+								<div class="images" style="margin-right: 0.5em;">
+									사진 올리기
+								</div>
+								<div class="images" style="margin-top: 0.5em;">
+									사진 올리기
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<textarea placeholder="내용을 200자 이내로 작성하세요." id="simpleContent2" rows="5"
+									style="background-color: white; width: 80%; border: 1px solid rgba(160, 160, 160, 0.3); resize: none;"></textarea>
+							</td>
+						</tr>
+					</table>
+					<table id="simpleTable3" class="simpleTables">
+						<tr>
+							<td><h2>POST3</h2></td>
+						</tr>
+						<tr>
+							<td align="center">
+								<div class="images" style="margin-right: 0.5em;">
+									사진 올리기
+								</div>
+								<div class="images" style="margin-top: 0.5em;">
+									사진 올리기
+								</div>
+								<br/>
+								<div class="images" style="margin-right: 0.5em;">
+									사진 올리기
+								</div>
+								<div class="images" style="margin-top: 0.5em;">
+									사진 올리기
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<textarea placeholder="내용을 200자 이내로 작성하세요." id="simpleContent3" rows="5"
+									style="background-color: white; width: 80%; border: 1px solid rgba(160, 160, 160, 0.3); resize: none;"></textarea>
+							</td>
+						</tr>
+					</table>
+					<table id="simpleTable4" class="simpleTables">
+						<tr>
+							<td><h2>POST4</h2></td>
+						</tr>
+						<tr>
+							<td align="center">
+								<div class="images" style="margin-right: 0.5em;">
+									사진 올리기
+								</div>
+								<div class="images" style="margin-top: 0.5em;">
+									사진 올리기
+								</div>
+								<br/>
+								<div class="images" style="margin-right: 0.5em;">
+									사진 올리기
+								</div>
+								<div class="images" style="margin-top: 0.5em;">
+									사진 올리기
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<textarea placeholder="내용을 200자 이내로 작성하세요." id="simpleContent4" rows="5"
+									style="background-color: white; width: 80%; border: 1px solid rgba(160, 160, 160, 0.3); resize: none;"></textarea>
+							</td>
+						</tr>
+					</table>
+					<table id="simpleTable5" class="simpleTables">
+						<tr>
+							<td><h2>POST5</h2></td>
+						</tr>
+						<tr>
+							<td align="center">
+								<div class="images" style="margin-right: 0.5em;">
+									사진 올리기
+								</div>
+								<div class="images" style="margin-top: 0.5em;">
+									사진 올리기
+								</div>
+								<br/>
+								<div class="images" style="margin-right: 0.5em;">
+									사진 올리기
+								</div>
+								<div class="images" style="margin-top: 0.5em;">
+									사진 올리기
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<textarea placeholder="내용을 200자 이내로 작성하세요." id="simpleContent5" rows="5"
+									style="background-color: white; width: 80%; border: 1px solid rgba(160, 160, 160, 0.3); resize: none;"></textarea>
+							</td>
+						</tr>
+					</table>
+					<div id="simpleRight" style="display: inline-block;">
+						<i class="fas fa-chevron-right" onclick="simpleNext()"></i>
+					</div>
+					<table id="tagTable" style="width: 90%; margin-left: auto; margin-right: auto;">
+						<tr>
+							<td align="center">
+								태그 선택
+							</td>
+						</tr>
+					</table>
+					<div style="width: 90%; margin-left: auto; margin-right: auto; text-align: right;">
+						<input type="button" value="이전" id="postBefore" onclick="before()">
+						<input type="button" value="다음" id="postNext" onclick="next()">
+						<input type="submit" value="저장" id="postSubmit" style="display: none;">
+					</div>
 				</form>
 			</article>
 		</div>
+		<th:block layout:fragment="script">
+			<script src="assets/js/post.js"></script>
+			<script type="text/javascript" src="assets/js/datepicker.js"></script>
+			<script type="text/javascript">
+				var foopicker = new FooPicker({
+					id: 'startDt',
+					dateFormat: 'yyyy-MM-dd'
+				});
+				var foopicker2 = new FooPicker({
+					id: 'endDt',
+					dateFormat: 'yyyy-MM-dd'
+				});
+			</script>
+		</th:block>
 	</div>
 </html>
