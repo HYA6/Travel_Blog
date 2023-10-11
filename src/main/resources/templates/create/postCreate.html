@@ -18,6 +18,8 @@
 					height: 20em;
 					border: 1px solid rgba(160, 160, 160, 0.3);;
 					line-height: 20em;
+					position: relative;
+					vertical-align: bottom;
 				}
 			</style>
 		</th:block>
@@ -30,7 +32,7 @@
 						<p style="font-size: 0.8em; margin-top: -2em;">게시글 작성하기</p>
 					</div>
 				</header>
-				<form action="createPost" method="post" id="postCreateForm">
+				<form action="createPost" method="post" id="postCreateForm" enctype="multipart/form-data">
 					<table id="table" style="width: 90%; margin-left: auto; margin-right: auto;">
 						<tr>
 							<td align="center"><label for="postSubject" style="margin: 0; font-size: 1.2em;">제목</label></td>
@@ -88,16 +90,17 @@
 					<table id="standardTable" style="width: 90%; margin-left: auto; margin-right: auto;">
 						<tr>
 							<td>
-								<div id="standardContent">
-									<!-- 내용 쓰는 곳 -->
-									<!-- js로 글이라면 textarea를, 이미지라면 img 태그 추가하기 -->
-								</div>
+								<input type="button" id="standardText" value="글쓰기" onclick="standardAddText()"/> <!-- 누르면 내용 쓰는 곳에 textarea 생성 후 유지시키기 -->
+								<input type="file" id="standardImage1" class="standardImages" name="files" multiple="multiple"
+									accept=".jpg,.png" onchange="standardLoadFile(this)"/> <!-- 라이브러리에 파일 추가 후 내용 쓰는 곳에 이미지 파일 추가 -->
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<input type="button" id="standardText" value="글쓰기"/> <!-- 누르면 내용 쓰는 곳에 textarea 생성 후 유지시키기 -->
-								<input type="file" id="standardImage" value="사진 추가"/> <!-- 라이브러리에 파일 추가 후 내용 쓰는 곳에 이미지 파일 추가 -->
+								<div id="standardContent">
+									<!-- 내용 쓰는 곳 -->
+									<!-- js로 글이라면 textarea를, 이미지라면 img 태그 추가하기 -->
+								</div>
 							</td>
 						</tr>
 					</table>
@@ -111,17 +114,21 @@
 						<tr>
 							<td align="center">
 								<div class="images" style="margin-right: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages1" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 								<div class="images" style="margin-top: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages1" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 								<br/>
 								<div class="images" style="margin-right: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages1" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 								<div class="images" style="margin-top: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages1" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 							</td>
 						</tr>
@@ -139,17 +146,21 @@
 						<tr>
 							<td align="center">
 								<div class="images" style="margin-right: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages2" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 								<div class="images" style="margin-top: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages2" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 								<br/>
 								<div class="images" style="margin-right: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages2" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 								<div class="images" style="margin-top: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages2" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 							</td>
 						</tr>
@@ -167,17 +178,21 @@
 						<tr>
 							<td align="center">
 								<div class="images" style="margin-right: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages3" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 								<div class="images" style="margin-top: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages3" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 								<br/>
 								<div class="images" style="margin-right: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages3" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 								<div class="images" style="margin-top: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages3" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 							</td>
 						</tr>
@@ -195,17 +210,21 @@
 						<tr>
 							<td align="center">
 								<div class="images" style="margin-right: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages4" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 								<div class="images" style="margin-top: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages4" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 								<br/>
 								<div class="images" style="margin-right: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages4" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 								<div class="images" style="margin-top: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages4" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 							</td>
 						</tr>
@@ -223,17 +242,21 @@
 						<tr>
 							<td align="center">
 								<div class="images" style="margin-right: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages5" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 								<div class="images" style="margin-top: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages5" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 								<br/>
 								<div class="images" style="margin-right: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages5" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 								<div class="images" style="margin-top: 0.5em;">
-									사진 올리기
+									<input type="file" class="simpleImages5" name="files" multiple="multiple"
+										accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
 								</div>
 							</td>
 						</tr>

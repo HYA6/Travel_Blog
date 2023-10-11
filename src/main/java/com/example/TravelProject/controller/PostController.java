@@ -14,8 +14,8 @@ import com.example.TravelProject.service.CategoryService;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Controller
 @Slf4j
+@Controller
 public class PostController {
 	
 	@Autowired
@@ -39,4 +39,4 @@ public class PostController {
 		return "create/postCreate";
 	};
 	
-}
+};

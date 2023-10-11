@@ -103,7 +103,6 @@ function next() {
 };
 
 function simpleBefore() {
-	simpleNum -= 1;
 	if (simpleNum == 4) {
 		$('#simpleTable5').hide();
 		$('#simpleTable4').show();
@@ -116,9 +115,10 @@ function simpleBefore() {
 	} else if (simpleNum == 1) {
 		$('#simpleTable2').hide();
 		$('#simpleTable1').show();
-	} else if (simpleNum < 0) {
+	} else if (simpleNum == 0) {
 		simpleNum += 1;
 	};
+	simpleNum -= 1;
 };
 
 function simpleNext() {
@@ -135,7 +135,35 @@ function simpleNext() {
 	} else if (simpleNum == 4) {
 		$('#simpleTable4').hide();
 		$('#simpleTable5').show();
-	} else if (simpleNum > 5) {
+	} else if (simpleNum == 5) {
 		simpleNum -= 1;
 	};
 };
+
+// 기본 양식 글쓰기 추가
+function standardAddText() {
+	let text = $('.standardTexts').length;
+	$('#standardContent').append('<textarea id="standardText' + text + 
+			'" class="standardTexts" row="5" style="background-color: white; resize: none;"></textarea>');
+};
+
+// 기본 양식 사진 미리보기
+function standardLoadFile(input) {
+	let images = $('.standardImages').length;
+	let file = input.files[0];
+	// 내용 쓰는 곳에 사진 띄우기
+	$('#standardContent').append('<img src="' + URL.createObjectURL(file) + '" style="max-width:500px;"/>');
+	// 새로운 파일 첨부 버튼 생성
+	$('#standardImage' + images).after('<input type="file" id="standardImage' + (++images) + '" class="standardImages"' + 
+			' name="files" multiple="multiple" accept=".jpg,.png" onchange="loadFile(this)"/>');
+};
+
+// 간단 양식 사진 미리보기
+function simpleLoadFile(input) {
+	let file = input.files[0];
+	$(input).after('<img src="' + URL.createObjectURL(file) + '" class="simpleImages" style="width: 100%; height: 100%; object-fit: contain;"/>');
+	$(input).hide();
+};
+
+
+

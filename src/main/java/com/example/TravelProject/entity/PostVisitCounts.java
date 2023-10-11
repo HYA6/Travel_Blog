@@ -45,7 +45,7 @@ public class PostVisitCounts implements Serializable {
 	// 외래키
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "users_num", nullable=false, columnDefinition="int")
+	@JoinColumn(name = "user_num", nullable=false, columnDefinition="int")
 	private Users users; // 유저 고유 번호
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)

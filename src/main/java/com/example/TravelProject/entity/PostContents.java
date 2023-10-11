@@ -25,14 +25,18 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @ToString
 @Slf4j
-public class Postimages {
+public class PostContents {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="images_id", nullable=false, columnDefinition="int")
-	private Long postImagesId; // 게시글 이미지 고유 번호
-	@Column(name="images_name", nullable=false, columnDefinition="varchar(100)")
-	private String postImagesName; // 게시글 이미지 이름
+	@Column(name="content_id", nullable=false, columnDefinition="int")
+	private Long postContentId; // 게시글 내용 고유 번호
+	@Column(name="content", nullable=false, columnDefinition="varchar(1000)")
+	private String postContent; // 게시글 내용
+	@Column(name="content_gup", columnDefinition="int")
+	private int postContentGup; // 게시글 내용 그룹
+	@Column(name="content_seq", columnDefinition="int")
+	private int postContentSeq; // 게시글 내용 출력 순서
 	// 외래키
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -41,10 +45,11 @@ public class Postimages {
 	
 	
 //	DTO 데이터를 Entity로 변환하는 메소드(블로그, 사용자)
-	public static Postimages toEntity(Postimages postimages, Post post) {
-		log.info("Postimages의 toEntity() 메소드 실행");
+	public static PostContents toEntity(PostContents postContents, Post post) {
+		log.info("PostContents의 toEntity() 메소드 실행");
 		// Entity 생성 및 반환
-		return new Postimages(postimages.getPostImagesId(), postimages.getPostImagesName(), post);
+		return new PostContents(postContents.getPostContentId(), postContents.getPostContent(), 
+				postContents.getPostContentGup(), postContents.getPostContentSeq(), post);
 	};
 	
 };

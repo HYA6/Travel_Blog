@@ -33,21 +33,23 @@ public class Comments {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="comments_id", nullable=false, columnDefinition="int")
-	private Long commentsId; // 댓글 고유 번호
-	@Column(name="comments_content", nullable=false, columnDefinition="varchar(200)")
-	private String commentsContent; // 댓글 내용
-	@Column(name="comments_date", nullable=false)
+	@Column(name="comment_id", nullable=false, columnDefinition="int")
+	private Long commentId; // 댓글 고유 번호
+	@Column(name="comment_content", nullable=false, columnDefinition="varchar(200)")
+	private String commentContent; // 댓글 내용
+	@Column(name="comment_date", nullable=false)
 	@Temporal(TemporalType.DATE)
-	private Date commentsDate; // 댓글 작성일
-	@Column(name="comments_gup", columnDefinition="int")
-	private String commentsGup; // 댓글 그룹
-	@Column(name="comments_seq", columnDefinition="int")
-	private String commentsSeq; // 댓글 순서
+	private Date commentDate; // 댓글 작성일
+	@Column(name="comment_gup", columnDefinition="int")
+	private int commentGup; // 댓글 그룹
+	@Column(name="comment_lev", columnDefinition="int")
+	private int commentLev; // 댓글 레벨
+	@Column(name="comment_seq", columnDefinition="int")
+	private int commentSeq; // 댓글 출력 순서
 	// 외래키
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "users_num", nullable=false, columnDefinition="int")
+	@JoinColumn(name = "user_num", nullable=false, columnDefinition="int")
 	private Users users; // 유저 고유 번호
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -58,8 +60,8 @@ public class Comments {
 	public static Comments toEntity(Comments comments, Users users, Post post) {
 		log.info("Comments의 toEntity() 메소드 실행");
 		// Entity 생성 및 반환
-		return new Comments(comments.getCommentsId(), comments.getCommentsContent(), comments.getCommentsDate(),
-				comments.getCommentsGup(), comments.getCommentsSeq(), users, post);
+		return new Comments(comments.getCommentId(), comments.getCommentContent(), comments.getCommentDate(),
+				comments.getCommentGup(), comments.getCommentLev(), comments.getCommentSeq(), users, post);
 	}
 	
 }
