@@ -22,7 +22,8 @@ $(document).ready(function() {
 		showOtherMonths: true,
 		showMonthAfterYear: true,
 		changeMonth: true,
-		changeYear: true
+		changeYear: true,
+		yearRange: 'c-30:c+30'
 	});
 	$('#startDt').datepicker();
 	$('#startDt').datepicker("option", "maxDate", $("#endDt").val());
@@ -39,6 +40,7 @@ $(document).ready(function() {
 let beforeNext = 0; // 이전, 다음 버튼 누른 횟수
 let simpleNum = 0; // 간단 양식 누른 횟수
 
+// 이전 버튼
 function before() {
 	let postForm = $('input[type="radio"]:checked').val();
 	let categoryId = $('select > option:checked').val();
@@ -81,6 +83,7 @@ function before() {
 	};
 };
 
+// 다음 버튼
 function next() {
 	let postForm = $('input[type="radio"]:checked').val();
 	let categoryId = $('select > option:checked').val();
@@ -127,6 +130,7 @@ function next() {
 	};
 };
 
+// 간단 양식 POST 이전
 function simpleBefore() {
 	if (simpleNum == 4) {
 		$('#simpleTable5').hide();
@@ -146,6 +150,7 @@ function simpleBefore() {
 	simpleNum -= 1;
 };
 
+//간단 양식 POST 다음
 function simpleNext() {
 	simpleNum += 1;
 	if (simpleNum == 1) {
@@ -167,28 +172,45 @@ function simpleNext() {
 
 // 기본 양식 글쓰기 추가
 function standardAddText() {
-	let text = $('.standardTexts').length;
-	$('#standardContent').append('<textarea id="standardText' + text + 
-			'" class="standardTexts" row="5" style="background-color: white; resize: none;"></textarea>');
+	let standard = $('.standardContents').length + 1;
+	$('#standardContent').append('<textarea id="standardContent' + standard + 
+			'" class="standardContents" name="postContent" row="5" style="background-color: white; resize: none;"></textarea>');
+	$('#standardContent').append('<input type="hidden" name="postContentSeq" id="standardContentSeq' + standard + 
+			'" value="' + standard + '"/>');
 };
 
 // 기본 양식 사진 미리보기
-function standardLoadFile(input) {
-	let images = $('.standardImages').length;
-	let file = input.files[0];
+function standardAddImage(input) {
 	// 내용 쓰는 곳에 사진 띄우기
-	$('#standardContent').append('<img src="' + URL.createObjectURL(file) + '" style="max-width:500px;"/>');
+	let file = input.files[0];
+	$('#standardContent').append('<img src="' + URL.createObjectURL(file) + '" class="standardContents" style="max-width:500px;"/>');
+	let standard = $('.standardContents').length;
+	$('#standardContent').append('<input type="hidden" name="postImageSeq" id="standardImageSeq' + standard + 
+			'" value="' + standard + '"/>');
 	// 새로운 파일 첨부 버튼 생성
-	$('#standardImage' + images).after('<input type="file" id="standardImage' + (++images) + '" class="standardImages"' + 
-			' name="files" multiple="multiple" accept=".jpg,.png" onchange="loadFile(this)"/>');
+	let images = $('.standardImages').length;
+	$('#standardImage' + images).after('<input type="file" id="standardImage' + ++images + '" class="standardImages"' + 
+			' name="files" multiple="multiple" accept=".jpg,.png" onchange="standardAddImage(this)"/>');
 };
 
 // 간단 양식 사진 미리보기
 function simpleLoadFile(input) {
+	let inputClass = input.getAttribute('class');
+	let inputNum = Number(inputClass[inputClass.length - 1]);
 	let file = input.files[0];
-	$(input).after('<img src="' + URL.createObjectURL(file) + '" class="simpleImages" style="width: 100%; height: 100%; object-fit: contain;"/>');
+	// div 안에 이미지 출력
+	$(input).after('<img src="' + URL.createObjectURL(file) + '" class="simpleImage' + inputNum + 
+			'" style="width: 100%; height: 100%; object-fit: contain;"/>');
+	// 버튼 숨기기
 	$(input).hide();
+	// 다음 div에 있는 파일 첨부 버튼 보이기
+	let simpleImages = $('.simpleImage' + inputNum).length;
+	console.log(simpleImages);
+	if (simpleImages == 1) {
+		$('#simpleBtn' + inputNum + '_2').show();
+	} else if (simpleImages == 2) {
+		$('#simpleBtn' + inputNum + '_3').show();
+	} else if (simpleImages == 3) {
+		$('#simpleBtn' + inputNum + '_4').show();
+	};
 };
-
-
-

@@ -45,7 +45,7 @@ public class Post {
 	private String postPlace; // 게시글 여행 장소
 	@Column(name="post_subject", nullable=false, columnDefinition="varchar(100)")
 	private String postSubject; // 게시글 제목
-	@Column(name="post_tag", columnDefinition="varchar(20)")
+	@Column(name="post_tag", columnDefinition="varchar(100)")
 	private String postTag; // 게시글 태그
 	@Column(name="post_write", nullable=false)
 	@Temporal(TemporalType.DATE)
