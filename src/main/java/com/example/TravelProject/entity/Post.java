@@ -37,12 +37,10 @@ public class Post {
 	private Long postId; // 게시글 고유 번호
 	@Column(name="post_form", nullable=false, columnDefinition="varchar(10)")
 	private String postForm; // 게시글 양식
-	@Column(name="post_strat_date", nullable=false)
-	@Temporal(TemporalType.DATE)
-	private Date postStratDate; // 게시글 여행 첫 날짜
-	@Column(name="post_end_date", nullable=false)
-	@Temporal(TemporalType.DATE)
-	private Date postEndDate; // 게시글 여행 마지막 날짜
+	@Column(name="post_strat_date", nullable=false, columnDefinition="varchar(10)")
+	private String postStratDate; // 게시글 여행 첫 날짜
+	@Column(name="post_end_date", nullable=false, columnDefinition="varchar(10)")
+	private String postEndDate; // 게시글 여행 마지막 날짜
 	@Column(name="post_place", nullable=false, columnDefinition="varchar(100)")
 	private String postPlace; // 게시글 여행 장소
 	@Column(name="post_subject", nullable=false, columnDefinition="varchar(100)")

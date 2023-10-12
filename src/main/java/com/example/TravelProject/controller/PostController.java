@@ -1,5 +1,6 @@
 package com.example.TravelProject.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.TravelProject.dto.CategoryDto;
+import com.example.TravelProject.dto.PostDto;
 import com.example.TravelProject.service.CategoryService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,9 +36,24 @@ public class PostController {
 		List<CategoryDto> categoryDto = categoryService.selectCategoryList(blogId);
 		log.info("categoryDto: {}", categoryDto);
 		
-		model.addAttribute("categoryDto", categoryDto);
 		model.addAttribute("userNum", userNum);
+		model.addAttribute("blogId", blogId);
+		model.addAttribute("categoryDto", categoryDto);
+		
 		return "create/postCreate";
+	};
+	
+	// 게시글 저장
+	@RequestMapping("/createPost")
+	public boolean createPost(PostDto postDto, Model model) {
+		log.info("PostController의 createPost() 메소드");
+		Date nowDate = new Date();
+		postDto.setPostWrite(nowDate);
+		
+		
+		log.info("postDto: {}", postDto);
+		
+		return false;
 	};
 	
 };

@@ -56,7 +56,7 @@ public class Comments {
 	@JoinColumn(name = "post_id", nullable=false, columnDefinition="int")
 	private Post post; // 게시글 고유 번호
 	
-//	DTO 데이터를 Entity로 변환하는 메소드(블로그, 사용자)
+//	DTO 데이터를 Entity로 변환하는 메소드
 	public static Comments toEntity(Comments comments, Users users, Post post) {
 		log.info("Comments의 toEntity() 메소드 실행");
 		// Entity 생성 및 반환

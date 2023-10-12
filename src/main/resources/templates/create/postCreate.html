@@ -4,8 +4,68 @@
       layout:decorate="~{layouts/default}">
     <div layout:fragment="main">
     	<th:block layout:fragment="css">
-			<link rel="stylesheet" href="assets/css/datepicker.css">
 			<style>
+				.input-group .inputDt { /* 날짜 부분 */
+					display: inline-block;
+					width: 70%; 
+					margin-right: 0.5em;
+					cursor: pointer;
+				}
+				.labelDt { /* 날짜 아이콘 */
+					display: inline-block; 
+					cursor: pointer;
+				}
+				/* datepicker */
+				.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
+					width: 20%;
+					display: inline-block;
+					background-image: none;
+					text-align: right;
+					padding: 0;
+					margin: 0;
+					border: none;
+					background-color: inherit;
+					cursor: pointer;
+					font-weight: bold;
+				}
+				.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next {
+					position: absolute;
+					top: 0;
+					width: 1.8em;
+					height: 3em;
+				}
+				.ui-widget-header {
+					border: none;
+					background: #47c5ba57;;
+				}
+				.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+					color: #2ebaae !important;
+				}
+				.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, 
+				.ui-button:active, .ui-button.ui-state-active:hover {
+					background: #b1b0b0 !important;
+					color: #ffffff !important;
+					border-radius: 50%;
+				}
+				.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, 
+				html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+					border: none;
+					background: inherit;
+					text-align: center;
+				}
+				.ui-widget-content .ui-state-hover {
+					background: #47c5ba57;
+					border-radius: 50%;
+				}
+				.ui-state-hover,.ui-widget-header .ui-state-hover,.ui-state-focus,.ui-widget-content .ui-state-focus,
+				.ui-widget-header .ui-state-focus,.ui-button:hover,.ui-button:focus {
+					border: none;
+					background: inherit;
+					font-weight: normal;
+					color: inherit;
+					cursor: pointer;
+				}
+				/* datepicker */
 				.simpleTables {
 					width: 90%; 
 					margin-left: auto; 
@@ -16,7 +76,7 @@
 					display: inline-block;
 					width: 45%;
 					height: 20em;
-					border: 1px solid rgba(160, 160, 160, 0.3);;
+					border: 1px solid rgba(160, 160, 160, 0.3);
 					line-height: 20em;
 					position: relative;
 					vertical-align: bottom;
@@ -56,16 +116,14 @@
 							<td align="center">
 								<div class="row">
 									<div class="input-group">
-										<input type="text" id="startDt" class="form-control datepicker startDt" placeholder="시작날짜" name="postStratDate"
-											style="display: inline-block; width: 70%; margin-right: 0.5em;">
-										<label class="input-group-text" for="startDt" style="display: inline-block; cursor: pointer;"><i class="fas fa-calendar-alt"></i></label>
+										<input type="text" id="startDt" class="inputDt" placeholder="시작 날짜" name="postStratDate" readonly="readonly"/>
+										<label class="labelDt" for="startDt"><i class="fas fa-calendar-alt"></i></label>
 									</div>
-									<div class="text-center"  style="font-size: x-large;">~ </div>
+									<div class="text-center" style="font-size: x-large;">~ </div>
 									<div class="input-group">
-										<input type="text" id="endDt" class="form-control datepicker endDt" placeholder="종료날짜" name="postEndDate" 
-											style="display: inline-block; width: 70%; margin-right: 0.5em;">
-										<label class="input-group-text" for="endDt" style="display: inline-block; cursor: pointer;"><i class="fas fa-calendar-alt"></i></label>
-									</div>            
+										<input type="text" id="endDt" class="inputDt" placeholder="종료 날짜" name="postEndDate" readonly="readonly"/>
+										<label class="labelDt" for="endDt"><i class="fas fa-calendar-alt"></i></label>
+									</div>
 								</div>
 							</td>
 						</tr>
@@ -75,7 +133,7 @@
 								<select title="카테고리 선택">
 									<option value="">- 선택 -</option>
 									<div th:each="category:${categoryDto}">
-										<option th:text="${category.categoryName}" th:value="${category.categoryId}"></option>
+										<option th:text="${category.categoryName}" name="categoryId" th:value="${category.categoryId}"></option>
 									</div>
 								</select>
 							</td>
@@ -278,26 +336,16 @@
 						</tr>
 					</table>
 					<div style="width: 90%; margin-left: auto; margin-right: auto; text-align: right;">
-						<input type="button" value="이전" id="postBefore" onclick="before()">
-						<input type="button" value="다음" id="postNext" onclick="next()">
-						<input type="submit" value="저장" id="postSubmit" style="display: none;">
+						<input type="button" value="이전" id="postBefore" onclick="before()"/>
+						<input type="button" value="다음" id="postNext" onclick="next()"/>
+						<input type="submit" value="저장" id="postSubmit" style="display: none;"/>
+						<input type="hidden" th:value="${blogId}" name="blogId"/>
 					</div>
 				</form>
 			</article>
 		</div>
 		<th:block layout:fragment="script">
 			<script src="assets/js/post.js"></script>
-			<script type="text/javascript" src="assets/js/datepicker.js"></script>
-			<script type="text/javascript">
-				var foopicker = new FooPicker({
-					id: 'startDt',
-					dateFormat: 'yyyy-MM-dd'
-				});
-				var foopicker2 = new FooPicker({
-					id: 'endDt',
-					dateFormat: 'yyyy-MM-dd'
-				});
-			</script>
 		</th:block>
 	</div>
 </html>

@@ -21,8 +21,8 @@ public class PostDto {
 	
 	private Long postId; // 게시글 고유 번호
 	private String postForm; // 게시글 양식
-	private Date postStratDate; // 게시글 여행 첫 날짜
-	private Date postEndDate; // 게시글 여행 마지막 날짜
+	private String postStratDate; // 게시글 여행 첫 날짜
+	private String postEndDate; // 게시글 여행 마지막 날짜
 	private String postPlace; // 게시글 여행 장소
 	private String postSubject; // 게시글 제목
 	private String postTag; // 게시글 태그
