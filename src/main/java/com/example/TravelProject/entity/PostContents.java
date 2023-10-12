@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.example.TravelProject.dto.PostContentsDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,11 +47,11 @@ public class PostContents {
 	
 	
 //	DTO 데이터를 Entity로 변환하는 메소드(블로그, 사용자)
-	public static PostContents toEntity(PostContents postContents, Post post) {
+	public static PostContents toEntity(PostContentsDto postContentsDto, Post post) {
 		log.info("PostContents의 toEntity() 메소드 실행");
 		// Entity 생성 및 반환
-		return new PostContents(postContents.getPostContentId(), postContents.getPostContent(), 
-				postContents.getPostContentGup(), postContents.getPostContentSeq(), post);
+		return new PostContents(postContentsDto.getPostContentId(), postContentsDto.getPostContent(), 
+				postContentsDto.getPostContentGup(), postContentsDto.getPostContentSeq(), post);
 	};
 	
 };

@@ -15,6 +15,8 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.example.TravelProject.dto.PostDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,6 +49,8 @@ public class Post {
 	private String postSubject; // 게시글 제목
 	@Column(name="post_tag", columnDefinition="varchar(100)")
 	private String postTag; // 게시글 태그
+	@Column(name="post_thumbnail", columnDefinition="varchar(100)")
+	private String postThumbnail; // 게시글 대표 이미지 이름
 	@Column(name="post_write", nullable=false)
 	@Temporal(TemporalType.DATE)
 	private Date postWrite; // 게시글 작성일
@@ -65,11 +69,11 @@ public class Post {
 	
 	
 //	DTO 데이터를 Entity로 변환하는 메소드(블로그, 사용자)
-	public static Post toEntity(Post post, Blog blog, Category category) {
+	public static Post toEntity(PostDto postDto, Blog blog, Category category) {
 		log.info("Post의 toEntity() 메소드 실행");
 		// Entity 생성 및 반환
-		return new Post(post.getPostId(), post.getPostForm(), post.getPostStratDate(), post.getPostEndDate(), post.getPostPlace(), 
-				post.getPostSubject(), post.getPostTag(), post.getPostWrite(), post.getPostUpdate(), blog, category);
+		return new Post(postDto.getPostId(), postDto.getPostForm(), postDto.getPostStratDate(), postDto.getPostEndDate(), postDto.getPostPlace(), 
+				postDto.getPostSubject(), postDto.getPostTag(), postDto.getPostThumbnail(), postDto.getPostWrite(), postDto.getPostUpdate(), blog, category);
 	};
 	
 };

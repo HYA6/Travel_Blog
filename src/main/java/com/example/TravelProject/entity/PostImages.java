@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.example.TravelProject.dto.PostImagesDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,8 +41,6 @@ public class PostImages {
 	private int postImageGup; // 게시글 이미지 그룹
 	@Column(name="image_seq", columnDefinition="int")
 	private int postImageSeq; // 게시글 이미지 출력 순서
-	@Column(name="image_thumbnail", columnDefinition="varchar(10)")
-	private String imageThumbnail; // 게시글 대표 이미지 여부
 	// 외래키
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -49,12 +49,12 @@ public class PostImages {
 	
 	
 //	DTO 데이터를 Entity로 변환하는 메소드(블로그, 사용자)
-	public static PostImages toEntity(PostImages postImages, Post post) {
+	public static PostImages toEntity(PostImagesDto postImagesDto, Post post) {
 		log.info("Postimages의 toEntity() 메소드 실행");
 		// Entity 생성 및 반환
-		return new PostImages(postImages.getPostImageId(), postImages.getPostOriginalName(),
-				postImages.getPostImageName(), postImages.getPostImageGup(), 
-				postImages.getPostImageSeq(), postImages.getImageThumbnail(), post);
+		return new PostImages(postImagesDto.getPostImageId(), postImagesDto.getPostOriginalName(),
+				postImagesDto.getPostImageName(), postImagesDto.getPostImageGup(), 
+				postImagesDto.getPostImageSeq(), post);
 	};
 	
 };

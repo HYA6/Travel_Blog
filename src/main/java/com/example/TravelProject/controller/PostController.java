@@ -44,17 +44,15 @@ public class PostController {
 	};
 	
 	// 게시글 저장
-	@RequestMapping("/createPost")
-	public boolean createPost(PostDto postDto, Model model) {
+	@RequestMapping("/toMain")
+	public String createPost(PostDto postDto, Model model) {
 		log.info("PostController의 createPost() 메소드");
-		// 오늘 날짜를 작성일에 저장
-		Date nowDate = new Date();
-		postDto.setPostWrite(nowDate);
+		
 		
 		
 		log.info("postDto: {}", postDto);
 		
-		return false;
+		return "redirect:main";
 	};
 	
 };

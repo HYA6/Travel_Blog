@@ -35,6 +35,7 @@ $(document).ready(function() {
     $('#endDt').datepicker("option", "onClose", function ( selectedDate ) {
         $("#startDt").datepicker( "option", "maxDate", selectedDate );
     });
+    
 });
 
 let beforeNext = 0; // 이전, 다음 버튼 누른 횟수
@@ -53,7 +54,7 @@ function before() {
 			$('#tagTable').hide();
 			$('#standardTable').show();
 			$('#postNext').attr('disabled', false);
-			$('#postSubmit').hide();
+			$('#createPost').hide();
 		} else if (beforeNext == 0) {
 			$('#standardTable').hide();
 			$('#table').show();
@@ -68,7 +69,7 @@ function before() {
 			$('#simpleLeft').show();
 			$('#simpleRight').show();
 			$('#postNext').attr('disabled', false);
-			$('#postSubmit').hide();
+			$('#createPost').hide();
 		} else if (beforeNext == 0) {
 			$('#simpleTable1').hide();
 			$('#simpleTable2').hide();
@@ -104,11 +105,12 @@ function next() {
 			$('#standardTable').hide();
 			$('#tagTable').show();
 			$('#postNext').attr('disabled', true);
-			$('#postSubmit').show();
+			$('#createPost').show();
 		};
 	} else if (postForm == 'simple') {
 		beforeNext += 1;
 		if (beforeNext == 1) {
+			
 			simpleNum = 0;
 			$('#table').hide();
 			$('#simpleTable1').show();
@@ -125,7 +127,7 @@ function next() {
 			$('#simpleLeft').hide();
 			$('#simpleRight').hide();
 			$('#postNext').attr('disabled', true);
-			$('#postSubmit').show();
+			$('#createPost').show();
 		};
 	};
 };
@@ -174,23 +176,26 @@ function simpleNext() {
 function standardAddText() {
 	let standard = $('.standardContents').length + 1;
 	$('#standardContent').append('<textarea id="standardContent' + standard + 
-			'" class="standardContents" name="postContent" row="5" style="background-color: white; resize: none;"></textarea>');
-	$('#standardContent').append('<input type="hidden" name="postContentSeq" id="standardContentSeq' + standard + 
-			'" value="' + standard + '"/>');
+			'" class="standardContents" row="5" style="background-color: white; resize: none;"></textarea>');
+	$('#standardContent').append('<input type="hidden" name="standardContentSeq" value="' + standard + '"/>');
 };
 
 // 기본 양식 사진 미리보기
 function standardAddImage(input) {
 	// 내용 쓰는 곳에 사진 띄우기
 	let file = input.files[0];
-	$('#standardContent').append('<img src="' + URL.createObjectURL(file) + '" class="standardContents" style="max-width:500px;"/>');
+	$('#standardContent').append('<img src="' + URL.createObjectURL(file) + '" class="standardContents" title="' + 
+			$(input).val().substring(12) + '" style="max-width:500px;"/>');
 	let standard = $('.standardContents').length;
-	$('#standardContent').append('<input type="hidden" name="postImageSeq" id="standardImageSeq' + standard + 
-			'" value="' + standard + '"/>');
+	$('#standardContent').append('<input type="hidden" name="standardImageSeq" value="' + standard + '"/>');
 	// 새로운 파일 첨부 버튼 생성
-	let images = $('.standardImages').length;
-	$('#standardImage' + images).after('<input type="file" id="standardImage' + ++images + '" class="standardImages"' + 
+	let imagesLen = $('.standardImages').length;
+	$('#standardImage' + imagesLen).after('<input type="file" id="standardImage' + (imagesLen+1) + '" class="standardImages"' + 
 			' name="files" multiple="multiple" accept=".jpg,.png" onchange="standardAddImage(this)"/>');
+	// 버튼 값 저장 후 숨기기
+	$('#standardImageDiv').append('<input type="text" id="standardImagesValue' + imagesLen + '" disabled/>');
+	$('#standardImagesValue' + imagesLen).val($(input).val().substring(12));
+	$(input).hide();
 };
 
 // 간단 양식 사진 미리보기
@@ -213,4 +218,151 @@ function simpleLoadFile(input) {
 	} else if (simpleImages == 3) {
 		$('#simpleBtn' + inputNum + '_4').show();
 	};
+};
+
+// 해시태그
+const hashtagsInput = document.getElementById("hashtags");
+const hashtagsContainer = document.getElementById("hashtags-container");
+const hiddenHashtagsInput = document.getElementById("hashtags-hidden");
+
+let hashtags = [];
+function addHashtag(tag) {
+    tag = tag.replace(/[\[\]]/g, '').trim();
+    if(tag && !hashtags.includes(tag)) {
+        const span = document.createElement("span");
+        span.innerText = "#" + tag + " ";
+        span.classList.add("hashtag");
+
+        const removeButton = document.createElement("button");
+        removeButton.innerText = "x";
+        removeButton.classList.add("remove-button");
+        removeButton.addEventListener("click", () => {
+            hashtagsContainer.removeChild(span);
+            hashtags = hashtags.filter((hashtag) => hashtag !== tag);
+            hiddenHashtagsInput.value = hashtags.join(",");
+        });
+
+        span.appendChild(removeButton);
+        hashtagsContainer.appendChild(span);
+        hashtags.push(tag);
+        hiddenHashtagsInput.value = hashtags.join(",");
+    };
+};
+
+hashtagsInput.addEventListener("keydown", (event) => {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        const tag = hashtagsInput.value.trim();
+        if (tag) {
+            addHashtag(tag);
+            hashtagsInput.value = "";
+        };
+    };
+});
+
+// 게시글 저장
+function createPost() {
+	// 빈 곳 확인
+	if($('#postSubject').val() == '') {
+		alert('제목을 입력하세요.')
+		return false;
+	} else if($('#startDt').val() == '' || $('#endDt').val() == '') {
+		alert('첫날과 마지막날을 모두 선택하세요.')
+		return false;
+	} else if($("#categorySelect option:selected").val() == '') {
+		alert('카테고리를 선택하세요.')
+		return false;
+	} else if($("#hashtags-hidden").val() == '') {
+		if(!confirm('태그 없이 저장하시겠습니까?')) {
+			return false;
+		}
+	};
+	// 양식에 따라 저장
+	let postForm = $('input[type="radio"]:checked').val();
+	savePost(postForm);
+};
+
+// 게시글 저장
+function savePost(postForm) {
+	if (postForm == 'standard') {
+		console.log('기본 양식으로 저장한당');
+		let postStratDate = $('#startDt').val();
+		let postEndDate = $('#endDt').val();
+		let postPlace = '';
+		let postSubject = $('#postSubject').val();
+		let postTag = $('#hashtags-hidden').val();
+		let blogId = $('#blogId').val();
+		let categoryId = $("#categorySelect option:selected").val();
+		
+		let postThumbnail = $('#postThumbnail').files[0];
+		console.log(postThumbnail);
+		
+		// ajax로 전달할 폼 객체
+	    var formData = new FormData();
+	    // 폼 객체에 파일추가, append("변수명", 값)
+	    formData.append("postForm", postForm);
+	    formData.append("postStratDate", postStratDate);
+	    formData.append("postEndDate", postEndDate);
+	    formData.append("postPlace", postPlace);
+	    formData.append("postSubject", postSubject);
+	    formData.append("postTag", postTag);
+	    formData.append("postThumbnail", postThumbnail);
+	    formData.append("blogId", blogId);
+	    formData.append("categoryId", categoryId);
+		
+		$.ajax({
+			url: 'api/uploadPost',
+			type: 'POST',
+			data: { formData },
+			dataType: "text",
+			// processData: true=> get방식, false => post방식
+	        // contentType: true => application/x-www-form-urlencoded, 
+	        //                false => multipart/form-data
+	        processData: false,
+	        contentType: false,
+			success : function(data) {
+				console.log(data);
+			},
+			error: function() {
+				console.log('게시글 저장 실패');
+				return false;
+			}
+		});
+		
+	} else if (postForm == 'simple') {
+		console.log('간단 양식으로 저장한당');
+	};
+};
+
+// 이미지 저장
+function saveImage(postForm) {
+	for (let i=1; i < $('.standardImages').length; i++) {
+		let standardImage = $('#standardImage' + i).val().substring(12);
+		let postImageGup = $('#standardImageGup').val();
+		let postImageSeq = document.querySelectorAll('input[name="standardImageSeq"]')[i-1].value;
+		saveImage(standardImage, postImageGup, postImageSeq);
+	};
+	$.ajax({
+		url: 'api/uploadFile',
+		type: 'POST',
+		data: {
+			'postImageName' : standardImage,
+			'postImageGup' : postImageGup,
+			'postImageSeq' : postImageSeq,
+			'blogId' : blogId,
+			
+		},
+		success : function(data) {
+			console.log(data);
+		},
+		error: function() {
+			console.log('블로그 삭제 실패');
+			return false;
+		}
+	});
+};
+
+// 내용 저장
+function saveText(postForm) {
+	
 };

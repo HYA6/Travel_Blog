@@ -26,6 +26,7 @@ public class PostDto {
 	private String postPlace; // 게시글 여행 장소
 	private String postSubject; // 게시글 제목
 	private String postTag; // 게시글 태그
+	private String postThumbnail; // 게시글 대표 이미지 이름
 	private Date postWrite; // 게시글 작성일
 	private Date postUpdate; // 게시글 수정일
 	private Long blogId; // 블로그 고유 번호
@@ -35,7 +36,7 @@ public class PostDto {
 	public static PostDto toDto(Post post) {
 		log.info("PostDto의 toDto() 메소드 실행");
 		return new PostDto(post.getPostId(), post.getPostForm(), post.getPostStratDate(), post.getPostEndDate(), 
-				post.getPostPlace(), post.getPostSubject(), post.getPostTag(), post.getPostWrite(), 
+				post.getPostPlace(), post.getPostSubject(), post.getPostTag(), post.getPostThumbnail(), post.getPostWrite(), 
 				post.getPostUpdate(), post.getBlog().getBlogId(), post.getCategory().getCategoryId());
 	}
 	
