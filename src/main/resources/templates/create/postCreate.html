@@ -15,6 +15,23 @@
 					display: inline-block; 
 					cursor: pointer;
 				}
+				.gm-style-mtc button { /* 구글 지도 버튼 */
+					height: 2em;
+				    line-height: 2em;
+				}
+				#pac-input {
+					width: 70%;
+					display: inline-block;
+				}
+				#postPlace {
+					width: 40%;
+					display: inline-block;
+					border: none;
+					background-color: inherit;
+					border-bottom: 1px solid rgba(160, 160, 160, 0.3);
+					height: 2em;
+					padding: 0;
+				}
 				/* datepicker */
 				.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
 					width: 20%;
@@ -106,12 +123,6 @@
 				</header>
 					<table id="table" style="width: 90%; margin-left: auto; margin-right: auto;">
 						<tr>
-							<td align="center"><label for="postSubject" style="margin: 0; font-size: 1.2em;">제목</label></td>
-							<td align="center">
-								<input type="text" id="postSubject" placeholder="제목을 입력하세요."/>
-							</td>
-						</tr>
-						<tr>
 							<td align="center">
 								<label style="margin: 0; font-size: 1.2em;">게시글 양식</label>
 							</td>
@@ -120,6 +131,23 @@
 								<label for="simple">간단한 양식</label>
 								<input type="radio" name="postForm" value="standard" id="standard" style="margin-bottom: 0;"/>
 								<label for="standard">기본 양식</label>
+							</td>
+						</tr>
+						<tr>
+							<td align="center"><label for="postSubject" style="margin: 0; font-size: 1.2em;">제목</label></td>
+							<td align="center">
+								<input type="text" id="postSubject" placeholder="제목을 입력하세요."/>
+							</td>
+						</tr>
+						<tr>
+							<td align="center"><label style="margin: 0; font-size: 1.2em;">카테고리</label></td>
+							<td>
+								<select title="카테고리 선택" id="categorySelect">
+									<option value="">- 선택 -</option>
+									<div th:each="category:${categoryDto}">
+										<option th:text="${category.categoryName}" th:value="${category.categoryId}"></option>
+									</div>
+								</select>
 							</td>
 						</tr>
 						<tr>
@@ -139,273 +167,271 @@
 							</td>
 						</tr>
 						<tr>
-							<td align="center"><label style="margin: 0; font-size: 1.2em;">카테고리</label></td>
+							<td align="center"><label style="margin: 0; font-size: 1.2em;">여행 장소</label></td>
 							<td>
-								<select title="카테고리 선택" id="categorySelect">
-									<option value="">- 선택 -</option>
-									<div th:each="category:${categoryDto}">
-										<option th:text="${category.categoryName}" th:value="${category.categoryId}"></option>
+								<input type="text" id="pac-input" class="controls" placeholder="여행 장소를 검색하세요."/>
+								<div id="googleMap" style="width: 80%; height: 25em; margin-top: 0.5em;"></div>
+								<div id="postPlaceDiv" style="margin-top: 1em; display: none;">
+									저장할 여행 장소: &nbsp;&nbsp;
+									<input type="text" id="postPlace" disabled="disabled"/>
+								</div>
+							</td>
+						</tr>
+					</table>
+					<form action="postToMain" enctype="multipart/form-data">
+						<!-- 기본 양식 -->
+						<table id="standardTable" style="width: 90%; margin-left: auto; margin-right: auto;">
+							<tr>
+								<td>
+									<!-- 누르면 내용 쓰는 곳에 textarea 생성 후 유지시키기 -->
+									<input type="button" id="standardText" value="글쓰기" onclick="standardAddText()"/> 
+									<!-- 내용 쓰는 곳에 이미지 파일 추가 -->
+									<input type="file" name="" id="standardImage1" class="standardImages" accept=".jpg,.png" onchange="standardAddImage(this)"/> 
+									<div id="standardImageDiv">
 									</div>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td align="center"><label style="margin: 0; font-size: 1.2em;">장소</label></td>
-							<td>
-								지도 선택?
-							</td>
-						</tr>
-					</table>
-					<!-- 기본 양식 -->
-					<table id="standardTable" style="width: 90%; margin-left: auto; margin-right: auto;">
-						<tr>
-							<td>
-								<!-- 누르면 내용 쓰는 곳에 textarea 생성 후 유지시키기 -->
-								<input type="button" id="standardText" value="글쓰기" onclick="standardAddText()"/> 
-								<!-- 내용 쓰는 곳에 이미지 파일 추가 -->
-								<input type="file" id="standardImage1" class="standardImages" accept=".jpg,.png" onchange="standardAddImage(this)"/> 
-								<div id="standardImageDiv">
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div id="standardContent">
-									<!-- 내용 쓰는 곳 -->
-									<!-- js로 글이라면 textarea를, 이미지라면 img 태그 추가하기 -->
-								</div>
-								<input type="hidden" id="standardImageGup" value="0"/>
-								<input type="hidden" id="standardContentGup" value="0"/>
-							</td>
-						</tr>
-					</table>
-					<div align="center" style="margin-left: auto; margin-right: auto;">
-						<!-- 간단 양식 -->
-						<div id="simpleLeft" style="display: inline-block; cursor: pointer;">
-							<i class="fas fa-chevron-left" onclick="simpleBefore()" style="font-size: 1.5em;"></i>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div id="standardContent">
+										<!-- 내용 쓰는 곳 -->
+										<!-- js로 글이라면 textarea를, 이미지라면 img 태그 추가하기 -->
+									</div>
+									<input type="hidden" id="standardImageGup" value="0"/>
+									<input type="hidden" id="standardContentGup" value="0"/>
+								</td>
+							</tr>
+						</table>
+						<div align="center" style="margin-left: auto; margin-right: auto; position: relative;">
+							<!-- 간단 양식 -->
+							<i id="simpleLeft" class="fas fa-chevron-left" onclick="simpleBefore()" 
+								style="font-size: 1.5em; position: absolute; top: 3.5%; left: 1%; cursor: pointer;"></i>
+							<table id="simpleTable1" class="simpleTables">
+								<tr>
+									<td align="center"><h2>POST1</h2><p style="font-size: 0.8em; margin: 0">한 POST에 사진은 4장까지 올릴 수 있습니다.</p></td>
+								</tr>
+								<tr>
+									<td align="center">
+										<div class="images" style="margin-right: 0.5em;">
+											<input type="file" name="files" class="simpleImages1" id="simpleBtn1_1" accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
+											<input type="hidden" id="simpleImageSeq1_1" value="1"/>
+										</div>
+										<div class="images" style="margin-top: 0.5em;">
+											<input type="file" name="files" class="simpleImages1" id="simpleBtn1_2" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
+												style="display: none;"/>
+											<input type="hidden" id="simpleImageSeq1_2" value="2"/>
+										</div>
+										<br/>
+										<div class="images" style="margin-right: 0.5em;">
+											<input type="file" name="files" class="simpleImages1" id="simpleBtn1_3" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
+												style="display: none;"/>
+											<input type="hidden" id="simpleImageSeq1_3" value="3"/>
+										</div>
+										<div class="images" style="margin-top: 0.5em;">
+											<input type="file" name="files" class="simpleImages1" id="simpleBtn1_4" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
+												style="display: none;"/>
+											<input type="hidden" id="simpleImageSeq1_4" value="4"/>
+										</div>
+										<input type="hidden" id="simpleImageGup1" value="1"/>
+									</td>
+								</tr>
+								<tr>
+									<td align="center">
+										<textarea placeholder="내용을 200자 이내로 작성하세요." id="simpleContent1" rows="5"
+											style="background-color: white; width: 80%; border: 1px solid rgba(160, 160, 160, 0.3); resize: none;"></textarea>
+										<input type="hidden" id="simpleContentGup1" value="1"/>
+									</td>
+								</tr>
+							</table>
+							<table id="simpleTable2" class="simpleTables">
+								<tr>
+									<td align="center"><h2>POST2</h2><p style="font-size: 0.8em; margin: 0">한 POST에 사진은 4장까지 올릴 수 있습니다.</p></td>
+								</tr>
+								<tr>
+									<td align="center">
+										<div class="images" style="margin-right: 0.5em;">
+											<input type="file" name="files" class="simpleImages2" id="simpleBtn2_1" accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
+											<input type="hidden" id="simpleImageSeq2_1" value="1"/>
+										</div>
+										<div class="images" style="margin-top: 0.5em;">
+											<input type="file" name="files" class="simpleImages2" id="simpleBtn2_2" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
+												style="display: none;"/>
+											<input type="hidden" id="simpleImageSeq2_2" value="2"/>
+										</div>
+										<br/>
+										<div class="images" style="margin-right: 0.5em;">
+											<input type="file" name="files" class="simpleImages2" id="simpleBtn2_3" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
+												style="display: none;"/>
+											<input type="hidden" id="simpleImageSeq2_3" value="3"/>
+										</div>
+										<div class="images" style="margin-top: 0.5em;">
+											<input type="file" name="files" class="simpleImages2" id="simpleBtn2_4" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
+												style="display: none;"/>
+											<input type="hidden" id="simpleImageSeq2_4" value="4"/>
+										</div>
+										<input type="hidden" id="simpleImageGup2" value="2"/>
+									</td>
+								</tr>
+								<tr>
+									<td align="center">
+										<textarea placeholder="내용을 200자 이내로 작성하세요." id="simpleContent2" rows="5"
+											style="background-color: white; width: 80%; border: 1px solid rgba(160, 160, 160, 0.3); resize: none;"></textarea>
+										<input type="hidden" id="simpleContentGup2" value="2"/>
+									</td>
+								</tr>
+							</table>
+							<table id="simpleTable3" class="simpleTables">
+								<tr>
+									<td align="center"><h2>POST3</h2><p style="font-size: 0.8em; margin: 0">한 POST에 사진은 4장까지 올릴 수 있습니다.</p></td>
+								</tr>
+								<tr>
+									<td align="center">
+										<div class="images" style="margin-right: 0.5em;">
+											<input type="file" name="files" class="simpleImages3" id="simpleBtn3_1" accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
+											<input type="hidden" id="simpleImageSeq3_1" value="1"/>
+										</div>
+										<div class="images" style="margin-top: 0.5em;">
+											<input type="file" name="files" class="simpleImages3" id="simpleBtn3_2" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
+												style="display: none;"/>
+											<input type="hidden" id="simpleImageSeq3_2" value="2"/>
+										</div>
+										<br/>
+										<div class="images" style="margin-right: 0.5em;">
+											<input type="file" name="files" class="simpleImages3" id="simpleBtn3_3" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
+												style="display: none;"/>
+											<input type="hidden" id="simpleImageSeq3_3" value="3"/>
+										</div>
+										<div class="images" style="margin-top: 0.5em;">
+											<input type="file" name="files" class="simpleImages3" id="simpleBtn3_4" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
+												style="display: none;"/>
+											<input type="hidden" id="simpleImageSeq3_4" value="4"/>
+										</div>
+										<input type="hidden" id="simpleImageGup3" value="3"/>
+									</td>
+								</tr>
+								<tr>
+									<td align="center">
+										<textarea placeholder="내용을 200자 이내로 작성하세요." id="simpleContent3" rows="5"
+											style="background-color: white; width: 80%; border: 1px solid rgba(160, 160, 160, 0.3); resize: none;"></textarea>
+										<input type="hidden" id="simpleContentGup3" value="3"/>
+									</td>
+								</tr>
+							</table>
+							<table id="simpleTable4" class="simpleTables">
+								<tr>
+									<td align="center"><h2>POST4</h2><p style="font-size: 0.8em; margin: 0">한 POST에 사진은 4장까지 올릴 수 있습니다.</p></td>
+								</tr>
+								<tr>
+									<td align="center">
+										<div class="images" style="margin-right: 0.5em;">
+											<input type="file" name="files" class="simpleImages4" id="simpleBtn4_1" accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
+											<input type="hidden" id="simpleImageSeq4_1" value="1"/>
+										</div>
+										<div class="images" style="margin-top: 0.5em;">
+											<input type="file" name="files" class="simpleImages4" id="simpleBtn4_2" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
+												style="display: none;"/>
+											<input type="hidden" id="simpleImageSeq4_2" value="2"/>
+										</div>
+										<br/>
+										<div class="images" style="margin-right: 0.5em;">
+											<input type="file" name="files" class="simpleImages4" id="simpleBtn4_3" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
+												style="display: none;"/>
+											<input type="hidden" id="simpleImageSeq4_3" value="3"/>
+										</div>
+										<div class="images" style="margin-top: 0.5em;">
+											<input type="file" name="files" class="simpleImages4" id="simpleBtn4_4" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
+												style="display: none;"/>
+											<input type="hidden" id="simpleImageSeq4_4" value="4"/>
+										</div>
+										<input type="hidden" id="simpleImageGup4" value="4"/>
+									</td>
+								</tr>
+								<tr>
+									<td align="center">
+										<textarea placeholder="내용을 200자 이내로 작성하세요." id="simpleContent4" rows="5"
+											style="background-color: white; width: 80%; border: 1px solid rgba(160, 160, 160, 0.3); resize: none;"></textarea>
+										<input type="hidden" id="simpleContentGup4" value="4"/>
+									</td>
+								</tr>
+							</table>
+							<table id="simpleTable5" class="simpleTables">
+								<tr>
+									<td align="center"><h2>POST5</h2><p style="font-size: 0.8em; margin: 0">한 POST에 사진은 4장까지 올릴 수 있습니다.</p></td>
+								</tr>
+								<tr>
+									<td align="center">
+										<div class="images" style="margin-right: 0.5em;">
+											<input type="file" name="files" class="simpleImages5" id="simpleBtn5_1" accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
+											<input type="hidden" id="simpleImageSeq5_1" value="1"/>
+										</div>
+										<div class="images" style="margin-top: 0.5em;">
+											<input type="file" name="files" class="simpleImages5" id="simpleBtn5_2" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
+												style="display: none;"/>
+											<input type="hidden" id="simpleImageSeq5_2" value="2"/>
+										</div>
+										<br/>
+										<div class="images" style="margin-right: 0.5em;">
+											<input type="file" name="files" class="simpleImages5" id="simpleBtn5_3" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
+												style="display: none;"/>
+											<input type="hidden" id="simpleImageSeq5_3" value="3"/>
+										</div>
+										<div class="images" style="margin-top: 0.5em;">
+											<input type="file" name="files" class="simpleImages5" id="simpleBtn5_4" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
+												style="display: none;"/>
+											<input type="hidden" id="simpleImageSeq5_4" value="4"/>
+										</div>
+										<input type="hidden" id="simpleImageGup5" value="5"/>
+									</td>
+								</tr>
+								<tr>
+									<td align="center">
+										<textarea placeholder="내용을 200자 이내로 작성하세요." id="simpleContent5" rows="5"
+											style="background-color: white; width: 80%; border: 1px solid rgba(160, 160, 160, 0.3); resize: none;"></textarea>
+										<input type="hidden" id="simpleContentGup5" value="5"/>
+										<input type="hidden" id="simpleContentSeq" value="0"/>
+									</td>
+								</tr>
+							</table>
+							<i id="simpleRight" class="fas fa-chevron-right" onclick="simpleNext()" 
+								style="font-size: 1.5em; position: absolute; top: 3.5%; right: 1%; cursor: pointer;"></i>
 						</div>
-						<table id="simpleTable1" class="simpleTables">
-							<tr>
-								<td align="center"><h2>POST1</h2><p style="font-size: 0.8em; margin: 0">한 POST에 사진은 4장까지 올릴 수 있습니다.</p></td>
-							</tr>
+						<table id="tagTable" style="width: 90%; margin-left: auto; margin-right: auto;">
 							<tr>
 								<td align="center">
-									<div class="images" style="margin-right: 0.5em;">
-										<input type="file" class="simpleImages1" id="simpleBtn1_1" accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
-										<input type="hidden" id="simpleImageSeq1_1" value="1"/>
+									<label for="hashtags" style="font-size: 1.2em;">대표 이미지</label>
+									<div>
+										<input type="file" name="files" id="postThumbnail" accept=".jpg,.png" onchange="thumbnailLoadFile(this)"/>
 									</div>
-									<div class="images" style="margin-top: 0.5em;">
-										<input type="file" class="simpleImages1" id="simpleBtn1_2" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
-											style="display: none;"/>
-										<input type="hidden" id="simpleImageSeq1_2" value="2"/>
+									<div>
+										<img id="thumbnailImg" src="" style="display: none; width: 50%; object-fit: contain;">
 									</div>
-									<br/>
-									<div class="images" style="margin-right: 0.5em;">
-										<input type="file" class="simpleImages1" id="simpleBtn1_3" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
-											style="display: none;"/>
-										<input type="hidden" id="simpleImageSeq1_3" value="3"/>
-									</div>
-									<div class="images" style="margin-top: 0.5em;">
-										<input type="file" class="simpleImages1" id="simpleBtn1_4" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
-											style="display: none;"/>
-										<input type="hidden" id="simpleImageSeq1_4" value="4"/>
-									</div>
-									<input type="hidden" id="simpleImageGup1" value="1"/>
 								</td>
 							</tr>
 							<tr>
 								<td align="center">
-									<textarea placeholder="내용을 200자 이내로 작성하세요." id="simpleContent1" rows="5"
-										style="background-color: white; width: 80%; border: 1px solid rgba(160, 160, 160, 0.3); resize: none;"></textarea>
-									<input type="hidden" id="simpleContentGup1" value="1"/>
+									<label for="hashtags" class="form-label" style="font-size: 1.2em;">해시태그</label>
+									<div align="center">
+										<input type="text" id="hashtags" class="form-control" placeholder="Enter로 추가해보세요." style="width: 70%;"/>
+										<div id="hashtags-container"></div>
+										<input type="hidden" id="hashtags-hidden"/>
+									</div>
 								</td>
 							</tr>
 						</table>
-						<table id="simpleTable2" class="simpleTables">
-							<tr>
-								<td align="center"><h2>POST2</h2><p style="font-size: 0.8em; margin: 0">한 POST에 사진은 4장까지 올릴 수 있습니다.</p></td>
-							</tr>
-							<tr>
-								<td align="center">
-									<div class="images" style="margin-right: 0.5em;">
-										<input type="file" class="simpleImages2" id="simpleBtn2_1" accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
-										<input type="hidden" id="simpleImageSeq2_1" value="1"/>
-									</div>
-									<div class="images" style="margin-top: 0.5em;">
-										<input type="file" class="simpleImages2" id="simpleBtn2_2" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
-											style="display: none;"/>
-										<input type="hidden" id="simpleImageSeq2_2" value="2"/>
-									</div>
-									<br/>
-									<div class="images" style="margin-right: 0.5em;">
-										<input type="file" class="simpleImages2" id="simpleBtn2_3" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
-											style="display: none;"/>
-										<input type="hidden" id="simpleImageSeq2_3" value="3"/>
-									</div>
-									<div class="images" style="margin-top: 0.5em;">
-										<input type="file" class="simpleImages2" id="simpleBtn2_4" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
-											style="display: none;"/>
-										<input type="hidden" id="simpleImageSeq2_4" value="4"/>
-									</div>
-									<input type="hidden" id="simpleImageGup2" value="2"/>
-								</td>
-							</tr>
-							<tr>
-								<td align="center">
-									<textarea placeholder="내용을 200자 이내로 작성하세요." id="simpleContent2" rows="5"
-										style="background-color: white; width: 80%; border: 1px solid rgba(160, 160, 160, 0.3); resize: none;"></textarea>
-									<input type="hidden" id="simpleContentGup2" value="2"/>
-								</td>
-							</tr>
-						</table>
-						<table id="simpleTable3" class="simpleTables">
-							<tr>
-								<td align="center"><h2>POST3</h2><p style="font-size: 0.8em; margin: 0">한 POST에 사진은 4장까지 올릴 수 있습니다.</p></td>
-							</tr>
-							<tr>
-								<td align="center">
-									<div class="images" style="margin-right: 0.5em;">
-										<input type="file" class="simpleImages3" id="simpleBtn3_1" accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
-										<input type="hidden" id="simpleImageSeq3_1" value="1"/>
-									</div>
-									<div class="images" style="margin-top: 0.5em;">
-										<input type="file" class="simpleImages3" id="simpleBtn3_2" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
-											style="display: none;"/>
-										<input type="hidden" id="simpleImageSeq3_2" value="2"/>
-									</div>
-									<br/>
-									<div class="images" style="margin-right: 0.5em;">
-										<input type="file" class="simpleImages3" id="simpleBtn3_3" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
-											style="display: none;"/>
-										<input type="hidden" id="simpleImageSeq3_3" value="3"/>
-									</div>
-									<div class="images" style="margin-top: 0.5em;">
-										<input type="file" class="simpleImages3" id="simpleBtn3_4" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
-											style="display: none;"/>
-										<input type="hidden" id="simpleImageSeq3_4" value="4"/>
-									</div>
-									<input type="hidden" id="simpleImageGup3" value="3"/>
-								</td>
-							</tr>
-							<tr>
-								<td align="center">
-									<textarea placeholder="내용을 200자 이내로 작성하세요." id="simpleContent3" rows="5"
-										style="background-color: white; width: 80%; border: 1px solid rgba(160, 160, 160, 0.3); resize: none;"></textarea>
-									<input type="hidden" id="simpleContentGup3" value="3"/>
-								</td>
-							</tr>
-						</table>
-						<table id="simpleTable4" class="simpleTables">
-							<tr>
-								<td align="center"><h2>POST4</h2><p style="font-size: 0.8em; margin: 0">한 POST에 사진은 4장까지 올릴 수 있습니다.</p></td>
-							</tr>
-							<tr>
-								<td align="center">
-									<div class="images" style="margin-right: 0.5em;">
-										<input type="file" class="simpleImages4" id="simpleBtn4_1" accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
-										<input type="hidden" id="simpleImageSeq4_1" value="1"/>
-									</div>
-									<div class="images" style="margin-top: 0.5em;">
-										<input type="file" class="simpleImages4" id="simpleBtn4_2" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
-											style="display: none;"/>
-										<input type="hidden" id="simpleImageSeq4_2" value="2"/>
-									</div>
-									<br/>
-									<div class="images" style="margin-right: 0.5em;">
-										<input type="file" class="simpleImages4" id="simpleBtn4_3" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
-											style="display: none;"/>
-										<input type="hidden" id="simpleImageSeq4_3" value="3"/>
-									</div>
-									<div class="images" style="margin-top: 0.5em;">
-										<input type="file" class="simpleImages4" id="simpleBtn4_4" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
-											style="display: none;"/>
-										<input type="hidden" id="simpleImageSeq4_4" value="4"/>
-									</div>
-									<input type="hidden" id="simpleImageGup4" value="4"/>
-								</td>
-							</tr>
-							<tr>
-								<td align="center">
-									<textarea placeholder="내용을 200자 이내로 작성하세요." id="simpleContent4" rows="5"
-										style="background-color: white; width: 80%; border: 1px solid rgba(160, 160, 160, 0.3); resize: none;"></textarea>
-									<input type="hidden" id="simpleContentGup4" value="4"/>
-								</td>
-							</tr>
-						</table>
-						<table id="simpleTable5" class="simpleTables">
-							<tr>
-								<td align="center"><h2>POST5</h2><p style="font-size: 0.8em; margin: 0">한 POST에 사진은 4장까지 올릴 수 있습니다.</p></td>
-							</tr>
-							<tr>
-								<td align="center">
-									<div class="images" style="margin-right: 0.5em;">
-										<input type="file" class="simpleImages5" id="simpleBtn5_1" accept=".jpg,.png" onchange="simpleLoadFile(this)"/>
-										<input type="hidden" id="simpleImageSeq5_1" value="1"/>
-									</div>
-									<div class="images" style="margin-top: 0.5em;">
-										<input type="file" class="simpleImages5" id="simpleBtn5_2" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
-											style="display: none;"/>
-										<input type="hidden" id="simpleImageSeq5_2" value="2"/>
-									</div>
-									<br/>
-									<div class="images" style="margin-right: 0.5em;">
-										<input type="file" class="simpleImages5" id="simpleBtn5_3" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
-											style="display: none;"/>
-										<input type="hidden" id="simpleImageSeq5_3" value="3"/>
-									</div>
-									<div class="images" style="margin-top: 0.5em;">
-										<input type="file" class="simpleImages5" id="simpleBtn5_4" accept=".jpg,.png" onchange="simpleLoadFile(this)" 
-											style="display: none;"/>
-										<input type="hidden" id="simpleImageSeq5_4" value="4"/>
-									</div>
-									<input type="hidden" id="simpleImageGup5" value="5"/>
-								</td>
-							</tr>
-							<tr>
-								<td align="center">
-									<textarea placeholder="내용을 200자 이내로 작성하세요." id="simpleContent5" rows="5"
-										style="background-color: white; width: 80%; border: 1px solid rgba(160, 160, 160, 0.3); resize: none;"></textarea>
-									<input type="hidden" id="simpleContentGup5" value="5"/>
-									<input type="hidden" id="simpleContentSeq" value="0"/>
-								</td>
-							</tr>
-						</table>
-						<div id="simpleRight" style="display: inline-block; cursor: pointer;">
-							<i class="fas fa-chevron-right" onclick="simpleNext()" style="font-size: 1.5em;"></i>
+						<div style="width: 90%; margin-left: auto; margin-right: auto; text-align: center;">
+							<input type="button" value="이전" id="postBefore" onclick="before()"/>
+							<input type="button" value="다음" id="postNext" onclick="next()"/>
 						</div>
-					</div>
-					<table id="tagTable" style="width: 90%; margin-left: auto; margin-right: auto;">
-						<tr>
-							<td align="center">
-								<label for="hashtags" class="form-label">해시태그</label>
-								<div>
-									<input type="text" id="hashtags" class="form-control" placeholder="Enter로 추가해보세요."/>
-									<div id="hashtags-container"></div>
-									<input type="hidden" id="hashtags-hidden"/>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td align="center">
-								<label for="hashtags">대표 이미지</label>
-								<div>
-									<input type="file" id="postThumbnail" accept=".jpg,.png"/>
-								</div>
-							</td>
-						</tr>
-					</table>
-					<div style="width: 90%; margin-left: auto; margin-right: auto; text-align: center;">
-						<input type="button" value="이전" id="postBefore" onclick="before()"/>
-						<input type="button" value="다음" id="postNext" onclick="next()"/>
-					</div>
-					<div style="width: 90%; margin-left: auto; margin-right: auto; text-align: right;">
-						<input type="button" value="저장" id="createPost" onclick="createPost()" style="display: none;"/>
-						<input type="hidden" id="blogId" th:value="${blogId}"/>
-					</div>
+						<div style="width: 90%; margin-left: auto; margin-right: auto; text-align: right;">
+							<input type="button" value="저장" id="createPostBtn" onclick="createPost()" style="display: none;"/>
+							<input type="hidden" id="blogId" th:value="${blogId}"/>
+						</div>
+				</form>
 			</article>
 		</div>
 		<th:block layout:fragment="script">
 			<script src="assets/js/post.js"></script>
+			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDI8A6pf5wHljTsxajYO3b1JYBDq0YbFus&callback=initAutocomplete&libraries=places&v=weekly" defer></script>
 		</th:block>
 	</div>
 </html>

@@ -1,6 +1,5 @@
 package com.example.TravelProject.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -43,8 +42,8 @@ public class PostController {
 		return "create/postCreate";
 	};
 	
-	// 게시글 저장
-	@RequestMapping("/toMain")
+	// 게시글 저장(파일 디렉토리에 업로드) 후 메인 페이지
+	@RequestMapping("/postToMain")
 	public String createPost(PostDto postDto, Model model) {
 		log.info("PostController의 createPost() 메소드");
 		

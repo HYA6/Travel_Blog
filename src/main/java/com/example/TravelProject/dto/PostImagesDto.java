@@ -18,8 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 public class PostImagesDto {
 	
 	private Long postImageId; // 게시글 이미지 고유 번호
-	private String postOriginalName; // 게시글 실제 이미지 이름
 	private String postImageName; // 게시글 이미지 이름
+	private String postImagePath; // 게시글 이미지 경로
 	private int postImageGup; // 게시글 이미지 그룹
 	private int postImageSeq; // 게시글 이미지 출력 순서
 	private Long postId; // 게시글 고유 번호
@@ -27,9 +27,9 @@ public class PostImagesDto {
 	// entity를 dto로 변환하는 메소드
 	public static PostImagesDto toDto(PostImages postImages) {
 		log.info("PostImagesDto의 toDto() 메소드 실행");
-		return new PostImagesDto(postImages.getPostImageId(), postImages.getPostOriginalName(), 
-				postImages.getPostImageName(), postImages.getPostImageGup(), postImages.getPostImageSeq(),
-				postImages.getPost().getPostId());
+		return new PostImagesDto(postImages.getPostImageId(), postImages.getPostImageName(), 
+				postImages.getPostImagePath(), postImages.getPostImageGup(), 
+				postImages.getPostImageSeq(), postImages.getPost().getPostId());
 	};
 	
 };

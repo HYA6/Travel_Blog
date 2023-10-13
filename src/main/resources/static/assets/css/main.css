@@ -3074,6 +3074,7 @@ input, select, textarea {
 
 		table td {
 			padding: 0.75em 0.75em;
+			vertical-align: middle;
 		}
 
 		table th {
