@@ -10,6 +10,7 @@ $(document).ready(function() {
 	$('#simpleRight').hide();
 	$('#tagTable').hide();
 	
+	// 데이트피커
 	$.datepicker.setDefaults({
 		dateFormat: 'yy-mm-dd',
 		prevText: '이전 달',
@@ -26,32 +27,31 @@ $(document).ready(function() {
 		yearRange: 'c-30:c+30'
 	});
 	$('#startDt').datepicker();
-	$('#startDt').datepicker("option", "maxDate", $("#endDt").val());
-    $('#startDt').datepicker("option", "onClose", function ( selectedDate ) {
-        $("#endDt").datepicker( "option", "minDate", selectedDate );
+	$('#startDt').datepicker('option', 'maxDate', $('#endDt').val());
+    $('#startDt').datepicker('option', 'onClose', function ( selectedDate ) {
+        $('#endDt').datepicker( 'option', 'minDate', selectedDate );
     });
     $('#endDt').datepicker();
-    $('#endDt').datepicker("option", "minDate", $("#startDt").val());
-    $('#endDt').datepicker("option", "onClose", function ( selectedDate ) {
-        $("#startDt").datepicker( "option", "maxDate", selectedDate );
+    $('#endDt').datepicker('option', 'minDate', $('#startDt').val());
+    $('#endDt').datepicker('option', 'onClose', function ( selectedDate ) {
+        $('#startDt').datepicker( 'option', 'maxDate', selectedDate );
     });
-    
 });
 
 // 구글 맵
 function initAutocomplete() {
-	const map = new google.maps.Map(document.getElementById("googleMap"), {
+	const map = new google.maps.Map(document.getElementById('googleMap'), {
 		center: { lat: 37.5642135, lng: 127.0016985 },
 		zoom: 8,
-		mapTypeId: "roadmap",
+		mapTypeId: 'roadmap',
 	});
 	// Create the search box and link it to the UI element.
-	const input = document.getElementById("pac-input");
+	const input = document.getElementById('pac-input');
 	const searchBox = new google.maps.places.SearchBox(input);
 
 //	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input); // 맵 안에 서치박스 넣는 코드
 	// Bias the SearchBox results towards current map's viewport.
-	map.addListener("bounds_changed", () => {
+	map.addListener('bounds_changed', () => {
 		searchBox.setBounds(map.getBounds());
 	});
 
@@ -59,7 +59,7 @@ function initAutocomplete() {
 
 	// Listen for the event fired when the user selects a prediction and retrieve
 	// more details for that place.
-	searchBox.addListener("places_changed", () => {
+	searchBox.addListener('places_changed', () => {
 		const places = searchBox.getPlaces();
 		if (places.length == 0) {
 			return;
@@ -73,7 +73,7 @@ function initAutocomplete() {
 		const bounds = new google.maps.LatLngBounds();
 		places.forEach((place) => {
 			if (!place.geometry || !place.geometry.location) {
-				console.log("Returned place contains no geometry");
+				console.log('Returned place contains no geometry');
 				return;
 			};
 			const icon = {
@@ -242,28 +242,59 @@ function simpleNext() {
 
 // 기본 양식 글쓰기 추가
 function standardAddText() {
-	let standard = $('.standardContents').length + 1;
+	let standard = $('.standardTextContents').length + 1;
+	let seq = $('[name="postContent"]').length + 1;
 	$('#standardContent').append('<textarea id="standardContent' + standard + 
-			'" class="standardContents" row="5" style="background-color: white; resize: none;"></textarea>');
-	$('#standardContent').append('<input type="hidden" name="standardContentSeq" value="' + standard + '"/>');
+			'" class="standardTextContents" name="postContent" row="5" placeholder="내용을 입력하세요."' + 
+			' style="background-color: white; resize: none;  margin-bottom: 1em;"></textarea>');
+	$('#standardContent').append('<input type="hidden" name="standardContentSeq" value="' + seq + '"/>');
 };
 
 // 기본 양식 사진 미리보기
 function standardAddImage(input) {
-	// 내용 쓰는 곳에 사진 띄우기
 	let file = input.files[0];
-	$('#standardContent').append('<img src="' + URL.createObjectURL(file) + '" class="standardContents" title="' + 
-			$(input).val().substring(12) + '" style="max-width:500px;"/>');
-	let standard = $('.standardContents').length;
-	$('#standardContent').append('<input type="hidden" name="standardImageSeq" value="' + standard + '"/>');
+	let standardContents = $('.standardImgContents');
+	let standard = standardContents.length + 1;
+	let seq = $('[name="postContent"]').length + 1;
+	// 중간에 삭제 된 후 추가될 경우
+	if (standard > 1) {
+		let standardId = standardContents[standard - 2].getAttribute('id');
+		standard = Number(standardId) + 1;
+//		console.log('중간에 삭제 후 추가되는 기본 양식 이미지 파일 아이디: ' + standard);
+	};
+	// 내용 쓰는 곳에 사진 띄우기
+	$('#standardContent').append('<img src="' + URL.createObjectURL(file) + '" id="' + standard + 
+			'" class="standardImgContents" name="postContent" title="' + $(input).val().substring(12) + 
+			'" style="max-width:500px; margin-bottom: 1em;"/>');
+	$('#standardContent').append('<input type="hidden" id="standardImageSeq' + standard + '" name="standardImageSeq" value="' + seq + '"/>');
 	// 새로운 파일 첨부 버튼 생성
 	let imagesLen = $('.standardImages').length;
-	$('#standardImage' + imagesLen).after('<input type="file" id="standardImage' + (imagesLen+1) + '" class="standardImages"' + 
-			' name="files" accept=".jpg,.png" onchange="standardAddImage(this)"/>');
+	$('#standardImage' + standard).after('<label id="standardImageLabel' + (standard+1) + 
+			'" class="standardImageLabel" for="standardImage' + (standard+1) + '">파일 첨부</label>');
+	$('#standardImageLabel' + (standard+1)).after('<input type="file" id="standardImage' + (standard+1) + 
+			'" class="standardImages" name="files" accept=".jpg,.png" onchange="standardAddImage(this)"/>');
 	// 버튼 값 저장 후 숨기기
-	$('#standardImageDiv').append('<input type="text" id="standardImagesValue' + imagesLen + '" disabled/>');
-	$('#standardImagesValue' + imagesLen).val($(input).val().substring(12));
-	$(input).hide();
+	$('#standardImageDiv').append('<div id="standardImagesValueDiv' + standard + '" class="standardImagesValueDiv"></div>');
+	$('#standardImagesValueDiv' + standard).append('<input type="text" id="standardImagesValue' + standard + '" disabled/>');
+	// 나중에 수정 기능 추가하기
+//	$('#standardImagesValueDiv' + standard).append('<p name="' + standard + 
+//			'" class="standardImageBtn" style="margin-right: 0.5em;" onclick="standardUpdateImage(this)">수정</p>');
+	$('#standardImagesValueDiv' + standard).append('<p name="' + standard + 
+			'" class="standardImageBtn" onclick="standardDeleteImage(this)">X</p>');
+	$('#standardImagesValue' + standard).val($(input).val().substring(12));
+	$('#standardImageLabel' + standard).hide();
+};
+
+// 기본 양식 사진 삭제
+function standardDeleteImage(btn) {
+	let deleteId = btn.getAttribute('name');
+//	console.log('삭제할 기본 양식 이미지 파일 아이디: ' + deleteId);
+	// 아이디가 standardImagesValueDiv, standardImage, standardImageLabel인 태그 삭제
+	$('#standardImageLabel' + deleteId).remove();
+	$('#standardImage' + deleteId).remove();
+	$('#standardImagesValueDiv' + deleteId).remove();
+	$('#' + deleteId).remove();
+	$('#standardImageSeq' + deleteId).remove();
 };
 
 // 간단 양식 사진 미리보기
@@ -293,6 +324,7 @@ function thumbnailLoadFile(thnmbnail) {
 	let file = thnmbnail.files[0];
 	$('#thumbnailImg').attr('src', URL.createObjectURL(file));
 	$('#thumbnailImg').show();
+	console.log('썸네일 값: ' + $(thnmbnail).val().substring(12));
 };
 
 // 해시태그
@@ -351,13 +383,11 @@ function createPost() {
 		alert('여행 장소를 입력하세요.')
 		return false;
 	};
-	
-	if($('#thumbnailImg').val() == '') {
+	if($('#postThumbnail').val() == '') {
 		if(!confirm('대표 이미지 없이 저장하시겠습니까?')) {
 			return false;
 		};
 	};
-	
 	if($('#hashtags-hidden').val() == '') {
 		if(!confirm('태그 없이 저장하시겠습니까?')) {
 			return false;
@@ -392,27 +422,29 @@ function uploadThumbnail() {
 // 게시글 저장
 function savePost(filePath) {
 	console.log('게시글 저장한당');
-	let postForm = $('input[type="radio"]:checked').val();
-	let postStratDate = $('#startDt').val();
-	let postEndDate = $('#endDt').val();
-	let postPlace = $('#postPlace').val();
-	let postSubject = $('#postSubject').val();
-	let postTag = $('#hashtags-hidden').val();
-	let blogId = $('#blogId').val();
-	let categoryId = $("#categorySelect option:selected").val();
+	let postForm = $('input[type="radio"]:checked').val(); // 게시글 양식
+	let postStratDate = $('#startDt').val(); // 여행 시작 날짜
+	let postEndDate = $('#endDt').val(); // 여행 끝 날짜
+	let postPlace = $('#postPlace').val(); // 여행 장소
+	let postSubject = $('#postSubject').val(); // 게시글 제목
+	let postTag = $('#hashtags-hidden').val(); // 게시글 태그
+	let postThumbnail = $('#postThumbnail').val().substring(12); // 게시글 썸네일 이름
+	let blogId = $('#blogId').val(); // 게시글이 저장된 블로그 고유 번호
+	let categoryId = $("#categorySelect option:selected").val(); // 선택된 카테고리 고유 번호
 	$.ajax({
 		url: 'api/createPost',
 		type: 'POST',
 		data: { 
-			"postForm" : postForm,
-		    "postStratDate" : postStratDate,
-		    "postEndDate" : postEndDate,
-		    "postPlace" : postPlace,
-		    "postSubject" : postSubject,
-		    "postTag" : postTag,
-		    "postThumbnail" : filePath,
-		    "blogId" : blogId,
-		    "categoryId" : categoryId
+			'postForm' : postForm,
+		    'postStratDate' : postStratDate,
+		    'postEndDate' : postEndDate,
+		    'postPlace' : postPlace,
+		    'postSubject' : postSubject,
+		    'postTag' : postTag,
+		    'postThumbnail' : postThumbnail,
+		    'postThumbnailPath' : filePath, // 게시글 썸네일 경로
+		    'blogId' : blogId,
+		    'categoryId' : categoryId
 		},
 		success : function(postId) {
 //			console.log(postId);
@@ -429,12 +461,12 @@ function savePost(filePath) {
 function uploadImages(postId) {
 	let formData = new FormData();
 	for (let i=0; i < $('.standardImages').length-1; i++) {
-		formData.append("files", $('.standardImages')[i].files[0]);
+		formData.append('files', $('.standardImages')[i].files[0]);
 	};
 //	console.log(formData);
 	$.ajax({
 		url: 'api/uploadImage',
-		type : "POST",
+		type : 'POST',
         processData : false ,
         contentType : false ,
         data : formData ,
@@ -457,7 +489,7 @@ function saveImages(postId, filePathList) {
 		console.log('기본 양식으로 저장한당');
 		let postImageGup = $('#standardImageGup').val();
 		for (let i=1; i < $('.standardImages').length; i++) {
-			console.log($('#standardImage' + i).file);
+//			console.log($('#standardImage' + i).file);
 			let standardImage = $('#standardImage' + i).val().substring(12);
 			let postImageSeq = document.querySelectorAll('input[name="standardImageSeq"]')[i-1].value;
 			let postImagePath = filePathList[i-1];

@@ -83,8 +83,71 @@
 					cursor: pointer;
 				}
 				/* datepicker */
-				#standardImageDiv input {
+				#standardText {
+					border: 1px solid rgba(160, 160, 160, 0.3);
+					box-shadow: none;
+					font-weight: 700;
+					letter-spacing: 0.15em;
+					padding: 0.3em 1em;
+					height: 3em;
+					line-height: 2.5em;
+					margin-bottom: 1em;
+				}
+				.standardImageLabel {
+					display: inline-block;
+					border: 1px solid rgba(160, 160, 160, 0.3);
+					padding: 0.3em 1em;
+					cursor: pointer;
+					font-size: 0.7em;
+					transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+					letter-spacing: 0.15em;
+					text-transform: uppercase;
+					margin: 0;
+					margin-left: 1em;
+					height: 3em;
+					line-height: 2.5em;
+				}
+				.standardImageLabel:hover {
+					color: #2ebaae;
+					border-color: #2ebaae;
+				}
+				.standardImages {
+					display: none;
+				}
+				#standardImageDiv {
+					overflow: auto; 
+					max-height: 15em;
+				}
+				.standardImagesValueDiv {
+					background-color: rgba(160, 160, 160, 0.075);
+				}
+				.standardImagesValueDiv input {
+					display: inline-block;
+					background: initial;
+					width: 95%;
 					border: none;
+				}
+				.standardImageBtn {
+					margin: 0;
+					display: inline-block;
+					cursor: pointer;
+					font-size: 0.8em;
+					vertical-align: text-top;
+					/* 
+					font-size: 0.7em;
+					border: 1px solid rgba(160, 160, 160, 0.25);
+					border-radius: 20%;
+					padding: 0.1em 0.5em;
+					text-align: center;
+					 */
+				}
+				.standardImageBtn:hover {
+					color: #2ebaae;
+					border-color: #2ebaae;
+				}
+				#standardContent {
+					overflow: auto; 
+					height: 50em;
 				}
 				.simpleTables {
 					width: 90%; 
@@ -186,14 +249,15 @@
 									<!-- 누르면 내용 쓰는 곳에 textarea 생성 후 유지시키기 -->
 									<input type="button" id="standardText" value="글쓰기" onclick="standardAddText()"/> 
 									<!-- 내용 쓰는 곳에 이미지 파일 추가 -->
-									<input type="file" name="" id="standardImage1" class="standardImages" accept=".jpg,.png" onchange="standardAddImage(this)"/> 
+									<label id="standardImageLabel1" class="standardImageLabel" for="standardImage1">파일 첨부</label>
+									<input type="file" name="files" id="standardImage1" class="standardImages" accept=".jpg,.png" onchange="standardAddImage(this)"/> 
 									<div id="standardImageDiv">
 									</div>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<div id="standardContent">
+									<div id="standardContent" align="center">
 										<!-- 내용 쓰는 곳 -->
 										<!-- js로 글이라면 textarea를, 이미지라면 img 태그 추가하기 -->
 									</div>

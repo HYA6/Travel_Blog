@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.filechooser.FileSystemView;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,11 +36,11 @@ public class PostApiController {
 		// FileSystemView: 파일 시스템과 디렉토리 정보를 제공
 		// getFileSystemView(): 파일 시스템 보기를 반환
 		// getHomeDirectory(): 홈 디렉터리를 반환합니다.
-		String rootPath = FileSystemView.getFileSystemView().getHomeDirectory().toString();
-//				log.info("rootPath: {}", rootPath);
-		String basePath = rootPath + "/" + "postImages";
-//				log.info("basePath: {}", basePath);
-		File dir = new File(basePath); // C:\Users\TJ\Desktop(바탕화면)\postImages
+//		String rootPath = FileSystemView.getFileSystemView().getHomeDirectory().toString();
+//		log.info("rootPath: {}", rootPath);
+		String basePath = "C:/travelBlog/postThumbnail";
+//		log.info("basePath: {}", basePath);
+		File dir = new File(basePath); // C:\travelBlog\postThumbnail
 		// 업로드 디렉토리가 존재하지 않을 경우 업로드 디렉토리를 만든다.
 //		log.info("{}", dir.exists());
 		if (!dir.exists()) {
@@ -79,11 +77,9 @@ public class PostApiController {
 	@RequestMapping("/api/uploadImage")
 	public List<String> uploadImage(@RequestParam("files") MultipartFile[] files) throws IllegalStateException, IOException {
 		log.info("PostApiController의 uploadImage() 메소드 실행"); 
-		String rootPath = FileSystemView.getFileSystemView().getHomeDirectory().toString();
-//		log.info("rootPath: {}", rootPath);
-		String basePath = rootPath + "/" + "postImages";
+		String basePath = "C:/travelBlog/postImages";
 //		log.info("basePath: {}", basePath);
-		File dir = new File(basePath); // C:\Users\TJ\Desktop(바탕화면)\postImages
+		File dir = new File(basePath); // C:\travelBlog\postImages
 		// 업로드 디렉토리가 존재하지 않을 경우 업로드 디렉토리를 만든다.
 //		log.info("{}", dir.exists());
 		if (!dir.exists()) {
