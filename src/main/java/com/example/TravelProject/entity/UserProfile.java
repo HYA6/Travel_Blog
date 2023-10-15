@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -28,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 @Slf4j
 @IdClass(Users.class)
+@Table(name="UserProfile")
 public class UserProfile implements Serializable {
 
 	@Column(name="user_image", columnDefinition="varchar(100)")

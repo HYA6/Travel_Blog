@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @ToString
 @Slf4j
-@Table(name="POSTIMAGES")
+@Table(name="PostImages")
 public class PostImages {
 
 	@Id
