@@ -401,22 +401,28 @@ function createPost() {
 function uploadThumbnail() {
 	let formData = new FormData();
 	let postThumbnail = document.querySelector('#postThumbnail').files[0];
-	formData.append("thumbnailFile", postThumbnail)
-	$.ajax({
-		url: 'api/uploadThumbnail',
-		type : "POST",
-        processData : false ,
-        contentType : false ,
-        data : formData ,
-        success : function (filePath) {
+	// 대표 이미지가 비어있지 않을 경우 업로드한다.
+	if (postThumbnail != undefined) {
+		formData.append("thumbnailFile", postThumbnail)
+		$.ajax({
+			url: 'api/uploadThumbnail',
+			type : "POST",
+			processData : false ,
+			contentType : false ,
+			data : formData ,
+			success : function (filePath) {
 //        	console.log(filePath);
-        	savePost(filePath);
-        },
-        error: function() {
-			console.log('대표 이미지 업로드 실패');
-			return false;
-		}
-	})
+				savePost(filePath);
+			},
+			error: function() {
+				console.log('대표 이미지 업로드 실패');
+				return false;
+			}
+		})
+	} else {
+		let filePath = null;
+		savePost(filePath);
+	};
 };
 
 // 게시글 저장
@@ -488,14 +494,16 @@ function saveImages(postId, filePathList) {
 	if (postForm == 'standard') {
 		console.log('기본 양식으로 저장한당');
 		let postImageGup = $('#standardImageGup').val();
-		for (let i=1; i < $('.standardImages').length; i++) {
-//			console.log($('#standardImage' + i).file);
-			let standardImage = $('#standardImage' + i).val().substring(12);
-			let postImageSeq = document.querySelectorAll('input[name="standardImageSeq"]')[i-1].value;
-			let postImagePath = filePathList[i-1];
+		for (let i=0; i < $('.standardImages').length-1 ; i++) {
+			let standardImage = document.querySelectorAll('.standardImages')[i].value.substring(12);
+			let postImagePath = filePathList[i];
+			let postImageSeq = document.querySelectorAll('input[name="standardImageSeq"]')[i].value;
+			console.log(standardImage);
+			console.log(postImagePath);
 			$.ajax({
 				url: 'api/saveImage',
 				type: 'POST',
+				async : false,
 				data: {
 					'postImageName' : standardImage,
 					'postImagePath' : postImagePath,
@@ -512,12 +520,41 @@ function saveImages(postId, filePathList) {
 				}
 			});
 		};
+		saveTexts(postId);
 	} else if (postForm == 'simple') {
 		console.log('간단 양식으로 저장한당');
 	};
 };
 
 // 내용 저장
-function saveTexts(postForm) {
-	
+function saveTexts(postId) {
+	let postForm = $('input[type="radio"]:checked').val();
+	if (postForm == 'standard') {
+		console.log('기본 양식으로 저장한당');
+		let postContentGup = $('#standardContentGup').val();
+		for (let i=0; i < $('.standardTextContents').length; i++) {
+			let postContent = document.querySelectorAll('.standardTextContents')[i].value;
+			let postContentSeq = document.querySelectorAll('input[name="standardContentSeq"]')[i].value;
+			$.ajax({
+				url: 'api/saveContent',
+				type: 'POST',
+				async : false,
+				data: {
+					'postContent' : postContent,
+					'postContentGup' : postContentGup,
+					'postContentSeq' : postContentSeq,
+					'postId' : postId
+				},
+				success : function(data) {
+					console.log(data);
+				},
+				error: function() {
+					console.log('이미지 저장 실패');
+					return false;
+				}
+			});
+		};
+	} else if (postForm == 'simple') {
+		console.log('간단 양식으로 저장한당');
+	};
 };

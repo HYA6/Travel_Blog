@@ -21,7 +21,7 @@ public class PostDto {
 	
 	private Long postId; // 게시글 고유 번호
 	private String postForm; // 게시글 양식
-	private String postStratDate; // 게시글 여행 첫 날짜
+	private String postStartDate; // 게시글 여행 첫 날짜
 	private String postEndDate; // 게시글 여행 마지막 날짜
 	private String postPlace; // 게시글 여행 장소
 	private String postSubject; // 게시글 제목
@@ -36,7 +36,7 @@ public class PostDto {
 	// entity를 dto로 변환하는 메소드
 	public static PostDto toDto(Post post) {
 		log.info("PostDto의 toDto() 메소드 실행");
-		return new PostDto(post.getPostId(), post.getPostForm(), post.getPostStratDate(), post.getPostEndDate(), 
+		return new PostDto(post.getPostId(), post.getPostForm(), post.getPostStartDate(), post.getPostEndDate(), 
 				post.getPostPlace(), post.getPostSubject(), post.getPostTag(), post.getPostThumbnail(), post.getPostThumbnailPath(),
 				post.getPostWrite(), post.getPostUpdate(), post.getBlog().getBlogId(), post.getCategory().getCategoryId());
 	}

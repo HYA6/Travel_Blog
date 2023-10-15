@@ -33,7 +33,7 @@ public class PostController {
 		
 		// 블로그에 있는 카테고리 전부 가져오기
 		List<CategoryDto> categoryDto = categoryService.selectCategoryList(blogId);
-		log.info("categoryDto: {}", categoryDto);
+//		log.info("categoryDto: {}", categoryDto);
 		
 		model.addAttribute("userNum", userNum);
 		model.addAttribute("blogId", blogId);
@@ -46,10 +46,6 @@ public class PostController {
 	@RequestMapping("/postToMain")
 	public String createPost(PostDto postDto, Model model) {
 		log.info("PostController의 createPost() 메소드");
-		
-		
-		
-		log.info("postDto: {}", postDto);
 		
 		return "redirect:main";
 	};

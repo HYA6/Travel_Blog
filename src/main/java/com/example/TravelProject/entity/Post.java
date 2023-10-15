@@ -39,8 +39,8 @@ public class Post {
 	private Long postId; // 게시글 고유 번호
 	@Column(name="post_form", nullable=false, columnDefinition="varchar(10)")
 	private String postForm; // 게시글 양식
-	@Column(name="post_strat_date", nullable=false, columnDefinition="varchar(10)")
-	private String postStratDate; // 게시글 여행 첫 날짜
+	@Column(name="post_start_date", nullable=false, columnDefinition="varchar(10)")
+	private String postStartDate; // 게시글 여행 첫 날짜
 	@Column(name="post_end_date", nullable=false, columnDefinition="varchar(10)")
 	private String postEndDate; // 게시글 여행 마지막 날짜
 	@Column(name="post_place", nullable=false, columnDefinition="varchar(100)")
@@ -74,7 +74,7 @@ public class Post {
 	public static Post toEntity(PostDto postDto, Blog blog, Category category) {
 		log.info("Post의 toEntity() 메소드 실행");
 		// Entity 생성 및 반환
-		return new Post(postDto.getPostId(), postDto.getPostForm(), postDto.getPostStratDate(), postDto.getPostEndDate(), 
+		return new Post(postDto.getPostId(), postDto.getPostForm(), postDto.getPostStartDate(), postDto.getPostEndDate(), 
 				postDto.getPostPlace(), postDto.getPostSubject(), postDto.getPostTag(), postDto.getPostThumbnail(), 
 				postDto.getPostThumbnailPath(), postDto.getPostWrite(), postDto.getPostUpdate(), blog, category);
 	};

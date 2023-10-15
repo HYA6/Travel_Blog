@@ -15,12 +15,12 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 	List<Category> selectByBlog(Long blogId);
 	
 	// 카테고리 찾기
-	@Query(value = "SELECT * FROM category WHERE blog_id = :blogId AND category_gup = :categoryGup AND category_lev = :categoryLev AND category_seq = :categorySeq", nativeQuery = true)
-	Category selectByOption(int categoryGup, int categoryLev, int categorySeq, Long blogId);
+	@Query(value = "SELECT * FROM category WHERE blog_id = :blog_id AND category_gup = :category_gup AND category_lev = :category_lev AND category_seq = :category_seq", nativeQuery = true)
+	Category selectByOption(int category_gup, int category_lev, int category_seq, Long blog_id);
 	
 	// 메인 카테고리 + 메인에 따른 서브 카테고리 삭제
 	@Modifying
-	@Query(value = "DELETE FROM category WHERE category_gup = :categoryGup", nativeQuery = true)
-	void deleteMain(int categoryGup);
+	@Query(value = "DELETE FROM category WHERE category_gup = :category_gup", nativeQuery = true)
+	void deleteMain(int category_gup);
 	
 };

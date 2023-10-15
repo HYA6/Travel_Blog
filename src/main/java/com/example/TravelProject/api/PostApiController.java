@@ -103,7 +103,7 @@ public class PostApiController {
 	public String saveImage(PostImagesDto postImagesDto) {
 		log.info("PostApiController의 saveImage() 메소드 실행"); 
 		log.info("postImagesDto: {}", postImagesDto);
-		
+		postService.saveImage(postImagesDto);
 		return "테스트 성공";
 	};
 	
@@ -113,7 +113,7 @@ public class PostApiController {
 	public String saveContent(PostContentsDto postContentsDto) {
 		log.info("PostApiController의 saveContent() 메소드 실행"); 
 		log.info("postContentsDto: {}", postContentsDto);
-		
+		postService.saveContent(postContentsDto);
 		return "테스트 성공";
 	};
 	

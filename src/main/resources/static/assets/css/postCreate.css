@@ -1,0 +1,168 @@
+.input-group .inputDt { /* 날짜 부분 */
+	display: inline-block;
+	width: 70%; 
+	margin-right: 0.5em;
+	cursor: pointer;
+}
+.labelDt { /* 날짜 아이콘 */
+	display: inline-block; 
+	cursor: pointer;
+}
+.gm-style-mtc button { /* 구글 지도 버튼 */
+	height: 2em;
+    line-height: 2em;
+}
+#pac-input {
+	width: 70%;
+	display: inline-block;
+}
+#postPlace {
+	width: 40%;
+	display: inline-block;
+	border: none;
+	background-color: inherit;
+	border-bottom: 1px solid rgba(160, 160, 160, 0.3);
+	height: 2em;
+	padding: 0;
+}
+/* datepicker */
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
+	width: 20%;
+	display: inline-block;
+	background-image: none;
+	text-align: right;
+	padding: 0;
+	margin: 0;
+	border: none;
+	background-color: inherit;
+	cursor: pointer;
+	font-weight: bold;
+}
+.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next {
+	position: absolute;
+	top: 0;
+	width: 1.8em;
+	height: 3em;
+}
+.ui-widget-header {
+	border: none;
+	background: #47c5ba57;;
+}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+	color: #2ebaae !important;
+}
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, 
+.ui-button:active, .ui-button.ui-state-active:hover {
+	background: #b1b0b0 !important;
+	color: #ffffff !important;
+	border-radius: 50%;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, 
+html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+	border: none;
+	background: inherit;
+	text-align: center;
+}
+.ui-widget-content .ui-state-hover {
+	background: #47c5ba57;
+	border-radius: 50%;
+}
+.ui-state-hover,.ui-widget-header .ui-state-hover,.ui-state-focus,.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus,.ui-button:hover,.ui-button:focus {
+	border: none;
+	background: inherit;
+	font-weight: normal;
+	color: inherit;
+	cursor: pointer;
+}
+/* datepicker */
+#standardText {
+	border: 1px solid rgba(160, 160, 160, 0.3);
+	box-shadow: none;
+	font-weight: 700;
+	letter-spacing: 0.15em;
+	padding: 0.3em 1em;
+	height: 3em;
+	line-height: 2.5em;
+	margin-bottom: 1em;
+}
+.standardImageLabel {
+	display: inline-block;
+	border: 1px solid rgba(160, 160, 160, 0.3);
+	padding: 0.3em 1em;
+	cursor: pointer;
+	font-size: 0.7em;
+	transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+	letter-spacing: 0.15em;
+	text-transform: uppercase;
+	margin: 0;
+	margin-left: 1em;
+	height: 3em;
+	line-height: 2.5em;
+}
+.standardImageLabel:hover {
+	color: #2ebaae;
+	border-color: #2ebaae;
+}
+.standardImages {
+	display: none;
+}
+#standardImageDiv {
+	overflow: auto; 
+	max-height: 15em;
+}
+.standardImagesValueDiv {
+	background-color: rgba(160, 160, 160, 0.075);
+}
+.standardImagesValueDiv input {
+	display: inline-block;
+	background: initial;
+	width: 95%;
+	border: none;
+}
+.standardImageBtn {
+	margin: 0;
+	display: inline-block;
+	cursor: pointer;
+	font-size: 0.8em;
+	vertical-align: text-top;
+	/* 
+font-size: 0.7em;
+border: 1px solid rgba(160, 160, 160, 0.25);
+border-radius: 20%;
+padding: 0.1em 0.5em;
+text-align: center;
+ */
+}
+.standardImageBtn:hover {
+	color: #2ebaae;
+	border-color: #2ebaae;
+}
+#standardContent {
+	overflow: auto; 
+	height: 50em;
+}
+.simpleTables {
+	width: 90%; 
+	margin-left: auto; 
+	margin-right: auto;
+	display: inline-table;
+}
+.images {
+	display: inline-block;
+	width: 45%;
+	height: 20em;
+	border: 1px solid rgba(160, 160, 160, 0.3);
+	line-height: 20em;
+	position: relative;
+	vertical-align: bottom;
+}
+.remove-button {
+	padding: 0;
+	box-shadow: none;
+	margin: 0.3em;
+	margin-right: 1em;
+}
+.remove-button:hover {
+	box-shadow: none;
+}
