@@ -280,7 +280,7 @@ function standardAddImage(input) {
 //	$('#standardImagesValueDiv' + standard).append('<p name="' + standard + 
 //			'" class="standardImageBtn" style="margin-right: 0.5em;" onclick="standardUpdateImage(this)">수정</p>');
 	$('#standardImagesValueDiv' + standard).append('<p name="' + standard + 
-			'" class="standardImageBtn" onclick="standardDeleteImage(this)">X</p>');
+			'" class="standardImageBtn" onclick="standardDeleteImage(this)">X</p>'); // 삭제 버튼
 	$('#standardImagesValue' + standard).val($(input).val().substring(12));
 	$('#standardImageLabel' + standard).hide();
 };

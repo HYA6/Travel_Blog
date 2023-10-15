@@ -1,3 +1,12 @@
+// 새로고침, 뒤로가기 경고창
+var checkUnload = true;
+$(window).on("beforeunload", function(){
+	if(checkUnload) return '이 페이지를 벗어나면 작성된 내용은 저장되지 않습니다.';
+});
+$("#toMainForm").submit(function(){
+	checkUnload = false;
+});
+
 /* 메인 카테고리 추가 */
 function addMain() { /* 추가할때마다 gup +1, lev 0, seq 0 */
 	console.log('addMain() 실행');
@@ -578,6 +587,7 @@ function createCategory() {
 				$('#subId' + categoryGup + '_' + categorySeq).val(data);
 			};
 			$('#saveCheck').val(true);
+			$('#toMaincheck').val(true);
 		},
 		error: function() {
 			console.log('카테고리 저장 실패');
@@ -657,5 +667,15 @@ function execute(event) {
 		deleteSub(event);
 	} else if (id.substring(0,1) == 'p') {
 		clickP(event);
+	};
+};
+
+// 카테고리가 한 개도 없을 경우 다음으로 버튼 막기
+function checkCategory() {
+	if ($('.categoryDiv').length == 1 || $('#toMaincheck').val() == 'false') {
+		alert('카테고리를 만들어주세요.');
+		return false;
+	} else {
+		$('#toMainForm').submit();
 	};
 };
