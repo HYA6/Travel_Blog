@@ -16,6 +16,7 @@ import com.example.TravelProject.dto.PostDto;
 import com.example.TravelProject.dto.UsersDto;
 import com.example.TravelProject.service.BlogService;
 import com.example.TravelProject.service.CategoryService;
+import com.example.TravelProject.service.PostService;
 import com.example.TravelProject.service.UsersService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,8 @@ public class MainController {
 	private BlogService blogService;
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private PostService postService;
 	
 	@RequestMapping("/main")
 	public String main(Model model, HttpSession session) {
@@ -47,10 +50,11 @@ public class MainController {
 		
 		// 블로그에 있는 카테고리 전부 가져오기
 		List<CategoryDto> categoryDto = categoryService.selectCategoryList(blogId);
-		log.info("categoryDto: {}", categoryDto);
+//		log.info("categoryDto: {}", categoryDto);
 		
 		// 블로그에 있는 전체 게시글 목록 가져오기
-		List<PostDto> postDto = null;
+		List<PostDto> postDto = postService.selectAllPost(blogId);
+//		log.info("postDto: {}", postDto);
 
 		// 블로그에 있는 인기순 게시글 가져오기(5개)
 		

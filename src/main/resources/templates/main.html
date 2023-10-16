@@ -5,33 +5,30 @@
     <div layout:fragment="main">
 		<div id="main">
 			<!-- Post -->
-			<!-- th:if="${lists.size(postDto) == 0}" -->
-			<div  class="title" align="center" style="padding: 3em;">
+			<div th:if="${postDto.size == 0}" class="title" align="center" style="padding: 3em;">
 				<h2>게시글이 없습니다.</h2>
 			</div>
-			<!-- th:if="${lists.size(postDto) != 0}" -->
-			<div >
+			<div th:if="${postDto.size != 0}">
 				<article th:each="postList:${postDto}" class="post">
 					<header>
 						<div class="title">
-							<h2><a href="single">제목</a></h2>
+							<h2><a href="single" th:text="${postList.postSubject}"></a></h2>
 						</div>
 						<div class="meta">
-							<time class="published" datetime="2015-11-01">날짜</time>
+							<time class="published" th:text="${postList.postWrite}"></time>
 							<a href="#" class="author">
 								<span th:text="${usersDto.userName}" class="name"></span>
 								<img src="images/avatar.jpg" alt="" />
 							</a>
 						</div>
 					</header>
-					<a href="single.html" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
-					<p>게시글 내용</p>
+					<a href="single.html" class="image featured"><img th:src="|/image1/${postList.postThumbnail}|" alt="" /></a>
 					<footer>
 						<ul class="actions">
 							<li><a href="single" class="button large">Continue Reading</a></li>
 						</ul>
 						<ul class="stats">
-							<li><a href="#">카테고리?</a></li>
+							<li><a href="#" th:text="${postList.postTag}"></a></li>
 							<li><a href="#" class="icon solid fa-eye">조회수</a></li>
 							<li><a href="#" class="icon solid fa-heart">좋아요수</a></li>
 							<li><a href="#" class="icon solid fa-comment">댓글수</a></li>

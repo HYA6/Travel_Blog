@@ -106,6 +106,8 @@ function initAutocomplete() {
 	});
 };
 
+//====================================================================================================================================
+
 let beforeNext = 0; // 이전, 다음 버튼 누른 횟수
 let simpleNum = 0; // 간단 양식 누른 횟수
 
@@ -240,14 +242,38 @@ function simpleNext() {
 	};
 };
 
+// ====================================================================================================================================
+
 // 기본 양식 글쓰기 추가
 function standardAddText() {
 	let standard = $('.standardTextContents').length + 1;
 	let seq = $('[name="postContent"]').length + 1;
-	$('#standardContent').append('<textarea id="standardContent' + standard + 
-			'" class="standardTextContents" name="postContent" row="5" placeholder="내용을 입력하세요."' + 
-			' style="background-color: white; resize: none;  margin-bottom: 1em;"></textarea>');
-	$('#standardContent').append('<input type="hidden" name="standardContentSeq" value="' + seq + '"/>');
+	let standardContents = $('.standardTextContents');
+	// 중간에 삭제 된 후 추가될 경우
+	if (standard > 1) {
+		let postContent = $('.standardSeq');
+		let lastPostContent = postContent[postContent.length - 1];
+		seq = Number(lastPostContent.value) + 1;
+//		console.log('중간에 삭제 후 추가되는 기본 양식 순서: ' + seq);
+		let standardId = standardContents[standard - 2].getAttribute('id');
+		standard = Number(standardId[standardId.length-1]) + 1;
+//		console.log('중간에 삭제 후 추가되는 기본 양식 텍스트 아이디: ' + standard);
+	};
+	$('#standardContent').append('<div id="standardTextDiv' + standard + '" class="standardTextDiv"></div>');
+	$('#standardTextDiv' + standard).append('<textarea id="standardContent' + standard + 
+			'" class="standardTextContents" name="postContent" placeholder="내용을 입력하세요."></textarea>');
+	$('#standardTextDiv' + standard).append('<p name="' + standard +  
+			'" class="standardTextBtn" onclick="standardDeleteText(this)">X</p>');
+	$('#standardTextDiv' + standard).append('<input type="hidden" id="standardContentSeq' + standard + 
+			'" name="standardContentSeq" class="standardSeq" value="' + seq + '"/>');
+};
+
+//기본 양식 글부분 삭제
+function standardDeleteText(btn) {
+	let deleteId = btn.getAttribute('name');
+//	console.log('삭제할 기본 양식 이미지 파일 아이디: ' + deleteId);
+	// 아이디가 standardImagesValueDiv, standardImage, standardImageLabel인 태그 삭제
+	$('#standardTextDiv' + deleteId).remove();
 };
 
 // 기본 양식 사진 미리보기
@@ -258,15 +284,20 @@ function standardAddImage(input) {
 	let seq = $('[name="postContent"]').length + 1;
 	// 중간에 삭제 된 후 추가될 경우
 	if (standard > 1) {
+		let postContent = $('.standardSeq');
+		let lastPostContent = postContent[postContent.length - 1];
+		seq = Number(lastPostContent.value) + 1;
+//		console.log('중간에 삭제 후 추가되는 기본 양식 순서: ' + seq);
 		let standardId = standardContents[standard - 2].getAttribute('id');
 		standard = Number(standardId) + 1;
 //		console.log('중간에 삭제 후 추가되는 기본 양식 이미지 파일 아이디: ' + standard);
 	};
 	// 내용 쓰는 곳에 사진 띄우기
 	$('#standardContent').append('<img src="' + URL.createObjectURL(file) + '" id="' + standard + 
-			'" class="standardImgContents" name="postContent" title="' + $(input).val().substring(12) + 
-			'" style="max-width:500px; margin-bottom: 1em;"/>');
-	$('#standardContent').append('<input type="hidden" id="standardImageSeq' + standard + '" name="standardImageSeq" value="' + seq + '"/>');
+			'" class="standardImgContents" name="postContent" title="' + 
+			$(input).val().substring(12) + '"/>');
+	$('#standardContent').append('<input type="hidden" id="standardImageSeq' + standard + 
+			'" name="standardImageSeq" class="standardSeq" value="' + seq + '"/>');
 	// 새로운 파일 첨부 버튼 생성
 	let imagesLen = $('.standardImages').length;
 	$('#standardImage' + standard).after('<label id="standardImageLabel' + (standard+1) + 
@@ -285,7 +316,7 @@ function standardAddImage(input) {
 	$('#standardImageLabel' + standard).hide();
 };
 
-// 기본 양식 사진 삭제
+// 기본 양식 사진 미리보기 삭제
 function standardDeleteImage(btn) {
 	let deleteId = btn.getAttribute('name');
 //	console.log('삭제할 기본 양식 이미지 파일 아이디: ' + deleteId);
@@ -297,34 +328,41 @@ function standardDeleteImage(btn) {
 	$('#standardImageSeq' + deleteId).remove();
 };
 
+//====================================================================================================================================
+
 // 간단 양식 사진 미리보기
 function simpleLoadFile(input) {
-	let inputClass = input.getAttribute('class');
-	let inputNum = Number(inputClass[inputClass.length - 1]);
+	let inputId = input.getAttribute('id');
+	let inputIdSeq = inputId.substring(9);
+	let inputNum = Number(inputId[9]);
 	let file = input.files[0];
 	// div 안에 이미지 출력
 	$(input).after('<img src="' + URL.createObjectURL(file) + '" class="simpleImage' + inputNum + 
-			'" style="width: 100%; height: 100%; object-fit: contain;"/>');
+		'" id="simpleImage' + inputIdSeq + '"/>');
+	$(input).after('<p name="' + inputIdSeq + 
+		'" class="simpleImageBtn" onclick="simpleDeleteImage(this)">X</p>');
 	// 버튼 숨기기
-	$(input).hide();
-	// 다음 div에 있는 파일 첨부 버튼 보이기
-	let simpleImages = $('.simpleImage' + inputNum).length;
-	console.log(simpleImages);
-	if (simpleImages == 1) {
-		$('#simpleBtn' + inputNum + '_2').show();
-	} else if (simpleImages == 2) {
-		$('#simpleBtn' + inputNum + '_3').show();
-	} else if (simpleImages == 3) {
-		$('#simpleBtn' + inputNum + '_4').show();
-	};
+	$('[for="simpleBtn' + inputIdSeq + '"]').hide();
+//	$(input).hide();
 };
+
+// 간단 양식 사진 미리보기 삭제
+function simpleDeleteImage(btn) {
+	let deleteId = btn.getAttribute('name');
+	$('#simpleBtn' + deleteId).val('');
+	$('#simpleImage' + deleteId).remove();
+	$(btn).remove();
+	$('[for="simpleBtn' + deleteId + '"]').show();
+};
+
+//====================================================================================================================================
 
 // 대표 이미지
 function thumbnailLoadFile(thnmbnail) {
 	let file = thnmbnail.files[0];
 	$('#thumbnailImg').attr('src', URL.createObjectURL(file));
 	$('#thumbnailImg').show();
-	console.log('썸네일 값: ' + $(thnmbnail).val().substring(12));
+//	console.log('썸네일 값: ' + $(thnmbnail).val().substring(12));
 };
 
 // 해시태그
@@ -367,22 +405,44 @@ hashtagsInput.addEventListener("keydown", (event) => {
     };
 });
 
-// 게시글 저장
+//====================================================================================================================================
+
+// 게시글 저장 전 빈 곳 확인
 function createPost() {
-	// 빈 곳 확인
-	if($('#postSubject').val() == '') {
-		alert('제목을 입력하세요.')
-		return false;
-	} else if($('#startDt').val() == '' || $('#endDt').val() == '') {
-		alert('첫날과 마지막날을 모두 선택하세요.')
-		return false;
-	} else if($('#categorySelect option:selected').val() == '') {
-		alert('카테고리를 선택하세요.')
-		return false;
-	} else if($('#postPlace').val() == '') {
-		alert('여행 장소를 입력하세요.')
-		return false;
+	// 제목, 여행 날짜, 카테고리, 여행 장소 확인
+//	if($('#postSubject').val() == '') {
+//		alert('제목을 입력하세요.')
+//		return false;
+//	} else if($('#categorySelect option:selected').val() == '') {
+//		alert('카테고리를 선택하세요.')
+//		return false;
+//	} else if($('#startDt').val() == '' || $('#endDt').val() == '') {
+//		alert('첫날과 마지막날을 모두 선택하세요.')
+//		return false;
+//	} else if($('#postPlace').val() == '') {
+//		alert('여행 장소를 입력하세요.')
+//		return false;
+//	};
+	// 게시글 내용 부분
+	let postForm = $('input[type="radio"]:checked').val();
+	if (postForm == 'standard') {
+		let standardTextContents = $('.standardTextContents');
+		if (standardTextContents.length == 0 && $('.standardImgContents').length == 0) {
+			alert('게시글은 글 또는 사진 둘 중 하나는 반드시 있어야 합니다.');
+			return false;
+		} else if (standardTextContents.length != 0) {
+			for(let i=0; i < standardTextContents.length; i++) {
+				if (standardTextContents[i].value == '' || standardTextContents[i].value == null) {
+					alert('게시글 내용을 입력해주세요.');
+					return false;
+					break;
+				};
+			};
+		};
+	} else if (postForm == 'simple') {
+		if()
 	};
+	// 대표 이미지와 태그 확인
 	if($('#postThumbnail').val() == '') {
 		if(!confirm('대표 이미지 없이 저장하시겠습니까?')) {
 			return false;
@@ -410,9 +470,14 @@ function uploadThumbnail() {
 			processData : false ,
 			contentType : false ,
 			data : formData ,
-			success : function (filePath) {
-//        	console.log(filePath);
-				savePost(filePath);
+			success : function (saveName) {
+        		console.log(saveName);
+        		if (saveName == 'N') {
+        			alert('썸네일이 이미지 파일이 아닙니다.');
+        			return false;
+        		} else {
+        			savePost(saveName);
+        		};
 			},
 			error: function() {
 				console.log('대표 이미지 업로드 실패');
@@ -426,15 +491,14 @@ function uploadThumbnail() {
 };
 
 // 게시글 저장
-function savePost(filePath) {
+function savePost(saveName) {
 	console.log('게시글 저장한당');
 	let postForm = $('input[type="radio"]:checked').val(); // 게시글 양식
-	let postStratDate = $('#startDt').val(); // 여행 시작 날짜
+	let postStartDate = $('#startDt').val(); // 여행 시작 날짜
 	let postEndDate = $('#endDt').val(); // 여행 끝 날짜
 	let postPlace = $('#postPlace').val(); // 여행 장소
 	let postSubject = $('#postSubject').val(); // 게시글 제목
 	let postTag = $('#hashtags-hidden').val(); // 게시글 태그
-	let postThumbnail = $('#postThumbnail').val().substring(12); // 게시글 썸네일 이름
 	let blogId = $('#blogId').val(); // 게시글이 저장된 블로그 고유 번호
 	let categoryId = $("#categorySelect option:selected").val(); // 선택된 카테고리 고유 번호
 	$.ajax({
@@ -442,13 +506,12 @@ function savePost(filePath) {
 		type: 'POST',
 		data: { 
 			'postForm' : postForm,
-		    'postStratDate' : postStratDate,
+		    'postStartDate' : postStartDate,
 		    'postEndDate' : postEndDate,
 		    'postPlace' : postPlace,
 		    'postSubject' : postSubject,
 		    'postTag' : postTag,
-		    'postThumbnail' : postThumbnail,
-		    'postThumbnailPath' : filePath, // 게시글 썸네일 경로
+		    'postThumbnail' : saveName, // 게시글 썸네일 이름
 		    'blogId' : blogId,
 		    'categoryId' : categoryId
 		},
@@ -476,9 +539,9 @@ function uploadImages(postId) {
         processData : false ,
         contentType : false ,
         data : formData ,
-        success : function (filePathList) {
-//        	console.log(filePathList);
-        	saveImages(postId, filePathList);
+        success : function (fileNameList) {
+//        	console.log(fileNameList);
+        	saveImages(postId, fileNameList);
         },
         error: function() {
 			console.log('이미지 업로드 실패');
@@ -488,25 +551,20 @@ function uploadImages(postId) {
 };
 
 // 이미지 DB에 저장
-function saveImages(postId, filePathList) {
-	console.log(filePathList);
+function saveImages(postId, fileNameList) {
 	let postForm = $('input[type="radio"]:checked').val();
 	if (postForm == 'standard') {
 		console.log('기본 양식으로 저장한당');
 		let postImageGup = $('#standardImageGup').val();
 		for (let i=0; i < $('.standardImages').length-1 ; i++) {
-			let standardImage = document.querySelectorAll('.standardImages')[i].value.substring(12);
-			let postImagePath = filePathList[i];
+			let postImageName = fileNameList[i];
 			let postImageSeq = document.querySelectorAll('input[name="standardImageSeq"]')[i].value;
-			console.log(standardImage);
-			console.log(postImagePath);
 			$.ajax({
 				url: 'api/saveImage',
 				type: 'POST',
 				async : false,
 				data: {
-					'postImageName' : standardImage,
-					'postImagePath' : postImagePath,
+					'postImageName' : postImageName,
 					'postImageGup' : postImageGup,
 					'postImageSeq' : postImageSeq,
 					'postId' : postId
@@ -547,6 +605,7 @@ function saveTexts(postId) {
 				},
 				success : function(data) {
 					console.log(data);
+					location.replace('postToMain');
 				},
 				error: function() {
 					console.log('이미지 저장 실패');

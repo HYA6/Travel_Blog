@@ -51,8 +51,6 @@ public class Post {
 	private String postTag; // 게시글 태그
 	@Column(name="post_thumbnail", columnDefinition="varchar(100)")
 	private String postThumbnail; // 게시글 대표 이미지 이름
-	@Column(name="post_thumbnail_path", columnDefinition="varchar(100)")
-	private String postThumbnailPath; // 게시글 대표 이미지 경로
 	@Column(name="post_write", nullable=false)
 	@Temporal(TemporalType.DATE)
 	private Date postWrite; // 게시글 작성일
@@ -78,7 +76,7 @@ public class Post {
 		// Entity 생성 및 반환
 		return new Post(postDto.getPostId(), postDto.getPostForm(), postDto.getPostStartDate(), postDto.getPostEndDate(), 
 				postDto.getPostPlace(), postDto.getPostSubject(), postDto.getPostTag(), postDto.getPostThumbnail(), 
-				postDto.getPostThumbnailPath(), postDto.getPostWrite(), postDto.getPostUpdate(), postDto.getPostLikes(), blog, category);
+				postDto.getPostWrite(), postDto.getPostUpdate(), postDto.getPostLikes(), blog, category);
 	};
 	
 };

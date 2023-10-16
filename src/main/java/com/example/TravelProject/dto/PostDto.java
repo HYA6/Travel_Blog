@@ -27,7 +27,6 @@ public class PostDto {
 	private String postSubject; // 게시글 제목
 	private String postTag; // 게시글 태그
 	private String postThumbnail; // 게시글 대표 이미지 이름
-	private String postThumbnailPath; // 게시글 대표 이미지 경로
 	private Date postWrite; // 게시글 작성일
 	private Date postUpdate; // 게시글 수정일
 	private int postLikes; // 게시글 좋아요 수
@@ -38,8 +37,8 @@ public class PostDto {
 	public static PostDto toDto(Post post) {
 		log.info("PostDto의 toDto() 메소드 실행");
 		return new PostDto(post.getPostId(), post.getPostForm(), post.getPostStartDate(), post.getPostEndDate(), 
-				post.getPostPlace(), post.getPostSubject(), post.getPostTag(), post.getPostThumbnail(), post.getPostThumbnailPath(),
-				post.getPostWrite(), post.getPostUpdate(), post.getPostLikes(), post.getBlog().getBlogId(), post.getCategory().getCategoryId());
+				post.getPostPlace(), post.getPostSubject(), post.getPostTag(), post.getPostThumbnail(), post.getPostWrite(), 
+				post.getPostUpdate(), post.getPostLikes(), post.getBlog().getBlogId(), post.getCategory().getCategoryId());
 	}
 	
 }

@@ -1,5 +1,8 @@
 package com.example.TravelProject.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,6 +91,15 @@ public class PostService {
 		PostContents postContents = PostContents.toEntity(postContentsDto, post);
 		// 내용 저장
 		postContentsRepository.save(postContents);
+	}
+	
+	// 블로그 고유 번호로 게시글 목록 찾기
+	public List<PostDto> selectAllPost(Long blogId) {
+		log.info("PostService의 selectAllPost() 실행");
+		return postRepository.selectByBlog(blogId)
+				.stream()
+				.map(post -> PostDto.toDto(post)) // entity를 dto로 변환
+				.collect(Collectors.toList());
 	};
 	
 };

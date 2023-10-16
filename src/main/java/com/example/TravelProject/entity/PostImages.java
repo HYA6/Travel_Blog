@@ -35,8 +35,6 @@ public class PostImages {
 	private Long postImageId; // 게시글 이미지 고유 번호
 	@Column(name="image_name", nullable=false, columnDefinition="varchar(100)")
 	private String postImageName; // 게시글 이미지 이름
-	@Column(name="image_path", nullable=false, columnDefinition="varchar(100)")
-	private String postImagePath; // 게시글 이미지 경로
 	@Column(name="image_gup", columnDefinition="int")
 	private int postImageGup; // 게시글 이미지 그룹
 	@Column(name="image_seq", columnDefinition="int")
@@ -53,8 +51,7 @@ public class PostImages {
 		log.info("Postimages의 toEntity() 메소드 실행");
 		// Entity 생성 및 반환
 		return new PostImages(postImagesDto.getPostImageId(), postImagesDto.getPostImageName(), 
-				postImagesDto.getPostImagePath(), postImagesDto.getPostImageGup(), 
-				postImagesDto.getPostImageSeq(), post);
+				postImagesDto.getPostImageGup(), postImagesDto.getPostImageSeq(), post);
 	};
 	
 };

@@ -76,6 +76,15 @@ html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:activ
 	cursor: pointer;
 }
 /* datepicker */
+#table, #tagTable, #btnDiv1, #btnDiv2 {
+	width: 90%; 
+	margin-left: auto; 
+	margin-right: auto;
+}
+#standardContent {
+	overflow: auto; 
+	height: 30em;
+}
 #standardText {
 	border: 1px solid rgba(160, 160, 160, 0.3);
 	box-shadow: none;
@@ -86,7 +95,26 @@ html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:activ
 	line-height: 2.5em;
 	margin-bottom: 1em;
 }
-.standardImageLabel {
+.standardTextDiv {
+	position: relative;
+}
+.standardTextContents {
+	background-color: white;
+	resize: none;
+	margin-bottom: 1em;
+	text-align: center;
+}
+.standardTextBtn {
+	position: absolute;
+	top: 0.5em;
+	right: 1em;
+	cursor: pointer;
+	font-size: 0.8em;
+}
+.standardTextBtn:hover {
+	color: #2ebaae;
+}
+.standardImageLabel, .simpleBtnLabel {
 	display: inline-block;
 	border: 1px solid rgba(160, 160, 160, 0.3);
 	padding: 0.3em 1em;
@@ -100,12 +128,16 @@ html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:activ
 	height: 3em;
 	line-height: 2.5em;
 }
-.standardImageLabel:hover {
+.standardImageLabel:hover, .simpleBtnLabel:hover {
 	color: #2ebaae;
 	border-color: #2ebaae;
 }
-.standardImages {
+.standardImages, .simpleBtn1, .simpleBtn2, .simpleBtn3, .simpleBtn4, .simpleBtn5 {
 	display: none;
+}
+.standardImgContents {
+	max-width:500px; 
+	margin-bottom: 1em;
 }
 #standardImageDiv {
 	overflow: auto; 
@@ -127,20 +159,23 @@ html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:activ
 	font-size: 0.8em;
 	vertical-align: text-top;
 	/* 
-font-size: 0.7em;
-border: 1px solid rgba(160, 160, 160, 0.25);
-border-radius: 20%;
-padding: 0.1em 0.5em;
-text-align: center;
- */
+	font-size: 0.7em;
+	border: 1px solid rgba(160, 160, 160, 0.25);
+	border-radius: 20%;
+	padding: 0.1em 0.5em;
+	text-align: center;
+	 */
 }
 .standardImageBtn:hover {
 	color: #2ebaae;
 	border-color: #2ebaae;
 }
-#standardContent {
-	overflow: auto; 
-	height: 50em;
+#simpleLeft, #simpleRight {
+	font-size: 1.5em; 
+	position: absolute; 
+	top: 3.5%; 
+	left: 1%; 
+	cursor: pointer;
 }
 .simpleTables {
 	width: 90%; 
@@ -156,6 +191,38 @@ text-align: center;
 	line-height: 20em;
 	position: relative;
 	vertical-align: bottom;
+}
+.simpleImage1, .simpleImage2, .simpleImage3, .simpleImage4, .simpleImage5 {
+	z-index: 1;
+}
+.simpleImageBtn {
+	position: absolute;
+    top: 1em;
+    right: 1em;
+    height: 1.5em;
+    line-height: 0.5em;
+    font-size: 0.8em;
+    border-radius: 30%;
+    background-color: white;
+    padding: 0.5em;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    z-index: 2;
+}
+.simpleImageBtn:hover {
+	color: white;
+    background-color: #2ebaae;
+}
+.simpleImage1, .simpleImage2, .simpleImage3, .simpleImage4, .simpleImage5 {
+	width: 100%; 
+	height: 100%; 
+	object-fit: contain;
+}
+#simpleContent1, #simpleContent2, #simpleContent3, #simpleContent4, #simpleContent5 {
+	background-color: white; 
+	width: 80%; 
+	border: 1px solid rgba(160, 160, 160, 0.3); 
+	resize: none;
 }
 .remove-button {
 	padding: 0;

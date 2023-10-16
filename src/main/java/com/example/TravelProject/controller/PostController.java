@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.TravelProject.dto.CategoryDto;
-import com.example.TravelProject.dto.PostDto;
 import com.example.TravelProject.service.CategoryService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -44,9 +43,8 @@ public class PostController {
 	
 	// 게시글 저장(파일 디렉토리에 업로드) 후 메인 페이지
 	@RequestMapping("/postToMain")
-	public String createPost(PostDto postDto, Model model) {
-		log.info("PostController의 createPost() 메소드");
-		
+	public String postToMain() {
+		log.info("PostController의 postToMain() 메소드");
 		return "redirect:main";
 	};
 	

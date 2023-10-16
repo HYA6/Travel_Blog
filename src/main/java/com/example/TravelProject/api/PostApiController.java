@@ -2,11 +2,14 @@ package com.example.TravelProject.api;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +27,11 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class PostApiController {
 	
+	@Value("${part1.upload.path}")
+    private String uploadPath1; // 게시글 썸네일 이미지
+	@Value("${part2.upload.path}")
+	private String uploadPath2; // 게시글 내용 이미지
+	
 	@Autowired
 	private PostService postService;
 	
@@ -32,26 +40,28 @@ public class PostApiController {
 	@RequestMapping("/api/uploadThumbnail")
 	public String uploadThumbnail(@RequestParam("thumbnailFile") MultipartFile file) throws IllegalStateException, IOException {
 		log.info("PostApiController의 uploadThumbnail() 메소드 실행"); 
-		// 대표 이미지 업로드 처리 부분
-		// FileSystemView: 파일 시스템과 디렉토리 정보를 제공
-		// getFileSystemView(): 파일 시스템 보기를 반환
-		// getHomeDirectory(): 홈 디렉터리를 반환합니다.
-//		String rootPath = FileSystemView.getFileSystemView().getHomeDirectory().toString();
-//		log.info("rootPath: {}", rootPath);
-		String basePath = "C:/travelBlog/postThumbnail";
-//		log.info("basePath: {}", basePath);
-		File dir = new File(basePath); // C:\travelBlog\postThumbnail
+		File dir = new File(uploadPath1); // C:\travelBlog\postThumbnail
 		// 업로드 디렉토리가 존재하지 않을 경우 업로드 디렉토리를 만든다.
 //		log.info("{}", dir.exists());
 		if (!dir.exists()) {
 			dir.mkdirs();
 		};
+		// 실제 파일 이름
 		String originalName = file.getOriginalFilename();
-        String filePath = basePath + "/" + originalName;
-		File dest = new File(filePath);
-		file.transferTo(dest);
+		// 밀리초를 연결하여 파일 이름 중복 방지
+		String saveName = System.currentTimeMillis() + "_" + originalName;
+		String filePath = uploadPath1 + "/" + saveName;
 		
-		return filePath;
+		// 이미지 파일이 아니면 저장 막기
+		if(file.getContentType().startsWith("image") == false) {
+			log.warn("this file is not image type");
+			return "N";
+		};
+		
+		Path savePath = Paths.get(filePath);
+		file.transferTo(savePath);
+		
+		return saveName;
 	};
 	
 	// 게시글 저장
@@ -77,24 +87,24 @@ public class PostApiController {
 	@RequestMapping("/api/uploadImage")
 	public List<String> uploadImage(@RequestParam("files") MultipartFile[] files) throws IllegalStateException, IOException {
 		log.info("PostApiController의 uploadImage() 메소드 실행"); 
-		String basePath = "C:/travelBlog/postImages";
-//		log.info("basePath: {}", basePath);
-		File dir = new File(basePath); // C:\travelBlog\postImages
+		File dir = new File(uploadPath2); // C:\travelBlog\postThumbnail
 		// 업로드 디렉토리가 존재하지 않을 경우 업로드 디렉토리를 만든다.
 //		log.info("{}", dir.exists());
 		if (!dir.exists()) {
 			dir.mkdirs();
 		};
-		List<String> filePathList = new ArrayList<String>();
+		List<String> fileNameList = new ArrayList<String>();
 	    // 파일 업로드(여러개) 처리 부분
 	    for(MultipartFile file : files) {
 	        String originalName = file.getOriginalFilename();
-	        String filePath = basePath + "/" + originalName;
-	        File dest = new File(filePath);
-	        file.transferTo(dest);
-	        filePathList.add(filePath);
+	     // 밀리초를 연결하여 파일 이름 중복 방지
+			String saveName = System.currentTimeMillis() + "_" + originalName;
+	        String filePath = uploadPath2 + "/" + saveName;
+			Path savePath = Paths.get(filePath);
+			file.transferTo(savePath);
+			fileNameList.add(saveName);
 	    };
-		return filePathList;
+		return fileNameList;
 	};
 	
 	// 이미지 저장
