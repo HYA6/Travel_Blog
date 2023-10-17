@@ -7,12 +7,13 @@
 			<article class="post">
 				<header>
 					<div class="title">
-						<h2><a href="single">게시글 제목</a></h2>
-						<p>게시글 부제목</p>
+						<h2 th:text="${postDto.postSubject}"></h2>
+						<p>여행 기간: <span th:text="${postDto.postStartDate}"></span> - <span th:text="${postDto.postEndDate}"></span></p>
+						<p>여행 장소: <span th:text="${postDto.postPlace}"></span></p>
 					</div>
 					<div class="meta">
-						<time class="published" datetime="2015-11-01">작성일</time>
-						<a href="#" class="author"><span class="name">블로그 주인</span><img src="images/avatar.jpg" alt="" /></a>
+						<time class="published" datetime="2015-11-01" th:text="${postDto.postWrite}"></time>
+						<a href="#" class="author"><span class="name" th:text="${usersDto.userName}"></span><img src="images/avatar.jpg" alt="" /></a>
 					</div>
 				</header>
 				<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
@@ -20,7 +21,12 @@
 				<p></p>
 				<footer>
 					<ul class="stats">
-						<li><a href="#">카테고리?</a></li>
+						<li>
+							태그: 
+							<div th:each="postTags:${postTags}">
+								<a href="#" th:text="${postTags}"></a>
+							</div>
+						</li>
 						<li><a href="#" class="icon solid fa-eye">조회수</a></li>
 						<li><a href="#" class="icon solid fa-heart">좋아요수</a></li>
 						<li><a href="#" class="icon solid fa-comment">댓글수</a></li>
@@ -28,5 +34,7 @@
 				</footer>
 			</article>
 		</div>
+		<!-- sidebar -->
+		<section th:replace="fragments/sidebar::sidebar"></section>
 	</div>
 </html>

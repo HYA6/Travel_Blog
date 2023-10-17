@@ -100,6 +100,32 @@ public class PostService {
 				.stream()
 				.map(post -> PostDto.toDto(post)) // entity를 dto로 변환
 				.collect(Collectors.toList());
+	}
+	
+	// 게시글 고유 번호로 게시글 1건 찾기
+	public PostDto findPostById(Long postId) {
+		log.info("PostService의 findById() 실행");
+		Post post = postRepository.findById(postId)
+				.orElseThrow(() -> new IllegalArgumentException("게시글 찾기 실패! 대상 게시글이 없습니다."));
+		return PostDto.toDto(post);
+	}
+
+	// 게시글 고유 번호로 게시글 내용 목록 찾기
+	public List<PostContentsDto> findContentsByPostId(Long postId) {
+		log.info("PostService의 findContentsByPostId() 실행");
+		return postContentsRepository.findByPostId(postId)
+				.stream()
+				.map(contents -> PostContentsDto.toDto(contents)) // entity를 dto로 변환
+				.collect(Collectors.toList());
+	}
+
+	// 게시글 고유 번호로 게시글 이미지 목록 찾기
+	public List<PostImagesDto> findImagesByPostId(Long postId) {
+		log.info("PostService의 findImagesByPostId() 실행");
+		return postImagesRepository.findByPostId(postId)
+				.stream()
+				.map(images -> PostImagesDto.toDto(images)) // entity를 dto로 변환
+				.collect(Collectors.toList());
 	};
 	
 };

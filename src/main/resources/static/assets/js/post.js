@@ -180,7 +180,6 @@ function next() {
 	} else if (postForm == 'simple') {
 		beforeNext += 1;
 		if (beforeNext == 1) {
-			
 			simpleNum = 0;
 			$('#table').hide();
 			$('#simpleTable1').show();
@@ -226,15 +225,36 @@ function simpleBefore() {
 function simpleNext() {
 	simpleNum += 1;
 	if (simpleNum == 1) {
+		// 첨부된 이미지나 작성된 글이 없으면 넘어가지 못하게 하기
+		if($('.simpleImage1').length == 0 && $('#simpleContent1').val() == '') {
+			alert('내용이 비어있어 다음 포스트로 넘어갈 수 없습니다. \n이미지를 첨부하거나 글을 작성해주십시오.');
+			simpleNum -= 1;
+			return false;
+		};
 		$('#simpleTable1').hide();
 		$('#simpleTable2').show();
 	} else if (simpleNum == 2) {
+		if($('.simpleImage2').length == 0 && $('#simpleContent2').val() == '') {
+			alert('내용이 비어있어 다음 포스트로 넘어갈 수 없습니다. \n이미지를 첨부하거나 글을 작성해주십시오.');
+			simpleNum -= 1;
+			return false;
+		};
 		$('#simpleTable2').hide();
 		$('#simpleTable3').show();
 	} else if (simpleNum == 3) {
+		if($('.simpleImage3').length == 0 && $('#simpleContent3').val() == '') {
+			alert('내용이 비어있어 다음 포스트로 넘어갈 수 없습니다. \n이미지를 첨부하거나 글을 작성해주십시오.');
+			simpleNum -= 1;
+			return false;
+		};
 		$('#simpleTable3').hide();
 		$('#simpleTable4').show();
 	} else if (simpleNum == 4) {
+		if($('.simpleImage4').length == 0 && $('#simpleContent4').val() == '') {
+			alert('내용이 비어있어 다음 포스트로 넘어갈 수 없습니다. \n이미지를 첨부하거나 글을 작성해주십시오.');
+			simpleNum -= 1;
+			return false;
+		};
 		$('#simpleTable4').hide();
 		$('#simpleTable5').show();
 	} else if (simpleNum == 5) {
@@ -410,22 +430,23 @@ hashtagsInput.addEventListener("keydown", (event) => {
 // 게시글 저장 전 빈 곳 확인
 function createPost() {
 	// 제목, 여행 날짜, 카테고리, 여행 장소 확인
-//	if($('#postSubject').val() == '') {
-//		alert('제목을 입력하세요.')
-//		return false;
-//	} else if($('#categorySelect option:selected').val() == '') {
-//		alert('카테고리를 선택하세요.')
-//		return false;
-//	} else if($('#startDt').val() == '' || $('#endDt').val() == '') {
-//		alert('첫날과 마지막날을 모두 선택하세요.')
-//		return false;
-//	} else if($('#postPlace').val() == '') {
-//		alert('여행 장소를 입력하세요.')
-//		return false;
-//	};
+	if($('#postSubject').val() == '') {
+		alert('제목을 입력하세요.')
+		return false;
+	} else if($('#categorySelect option:selected').val() == '') {
+		alert('카테고리를 선택하세요.')
+		return false;
+	} else if($('#startDt').val() == '' || $('#endDt').val() == '') {
+		alert('첫날과 마지막날을 모두 선택하세요.')
+		return false;
+	} else if($('#postPlace').val() == '') {
+		alert('여행 장소를 입력하세요.')
+		return false;
+	};
 	// 게시글 내용 부분
 	let postForm = $('input[type="radio"]:checked').val();
 	if (postForm == 'standard') {
+		// 기본 양식
 		let standardTextContents = $('.standardTextContents');
 		if (standardTextContents.length == 0 && $('.standardImgContents').length == 0) {
 			alert('게시글은 글 또는 사진 둘 중 하나는 반드시 있어야 합니다.');
@@ -440,7 +461,25 @@ function createPost() {
 			};
 		};
 	} else if (postForm == 'simple') {
-		if()
+		// 간단 양식
+		if($('.simpleImageBtn').length == 0 && $('#simpleContent1').val() == '' && $('#simpleContent2').val() == ''
+				&& $('#simpleContent3').val() == '' && $('#simpleContent4').val() == '' 
+				&& $('#simpleContent5').val() == '') {
+			alert('게시글은 글 또는 사진 둘 중 하나는 반드시 있어야 합니다.');
+			return false;
+		} else {
+			for(let i=1; i < 5; i++) {
+				console.log($('.simpleImage' + (i+1)).length)
+				console.log($('#simpleContent' + (i+1)).val())
+				console.log($('.simpleImage' + i).length)
+				console.log($('#simpleContent' + i).val())
+				if(($('.simpleImage' + (i+1)).length != 0 || $('#simpleContent' + (i+1)).val() != '')
+						&& ($('.simpleImage' + i).length == 0 && $('#simpleContent' + i).val() == '')) {
+					alert('게시글 ' + i + '번이 비어있습니다.');
+					return false;
+				};
+			};
+		};
 	};
 	// 대표 이미지와 태그 확인
 	if($('#postThumbnail').val() == '') {
@@ -459,6 +498,7 @@ function createPost() {
 
 // 대표 이미지 업로드
 function uploadThumbnail() {
+	console.log('대표 이미지 저장');
 	let formData = new FormData();
 	let postThumbnail = document.querySelector('#postThumbnail').files[0];
 	// 대표 이미지가 비어있지 않을 경우 업로드한다.
@@ -492,7 +532,7 @@ function uploadThumbnail() {
 
 // 게시글 저장
 function savePost(saveName) {
-	console.log('게시글 저장한당');
+	console.log('게시글 저장');
 	let postForm = $('input[type="radio"]:checked').val(); // 게시글 양식
 	let postStartDate = $('#startDt').val(); // 여행 시작 날짜
 	let postEndDate = $('#endDt').val(); // 여행 끝 날짜
@@ -529,32 +569,64 @@ function savePost(saveName) {
 // 이미지 업로드(이미지 업로드 후 DB에 저장)
 function uploadImages(postId) {
 	let formData = new FormData();
-	for (let i=0; i < $('.standardImages').length-1; i++) {
-		formData.append('files', $('.standardImages')[i].files[0]);
+	let postForm = $('input[type="radio"]:checked').val();
+	if (postForm == 'standard') {
+		console.log('기본 양식으로 이미지 업로드');
+		for (let i=0; i < $('.standardImages').length-1; i++) {
+			formData.append('files', $('.standardImages')[i].files[0]);
+		};
+//		console.log(formData);
+		$.ajax({
+			url: 'api/uploadImage',
+			type : 'POST',
+	        processData : false ,
+	        contentType : false ,
+	        data : formData ,
+	        success : function (fileNameList) {
+//   	     	console.log(fileNameList);
+	        	saveImages(postId, fileNameList);
+	        },
+	        error: function() {
+				console.log('기본 양식으로 이미지 업로드 실패');
+				return false;
+			}
+		});
+	} else if (postForm == 'simple') {
+		console.log('간단 양식으로 이미지 업로드');
+		for (let i=1; i <= 5; i++) {
+			for (let j=1; j <= 4; j++) {
+				let simpleBtn = $('#simpleBtn' + i + '_' + j).val();
+				if (simpleBtn != '') {
+//					console.log('첨부된 이미지');
+//					console.log(simpleBtn);
+//					console.log($('.simpleBtn' + i)[j-1].files[0]);
+					formData.append('files', $('.simpleBtn' + i)[j-1].files[0]);
+				};
+			};
+		};
+		$.ajax({
+			url: 'api/uploadImage',
+			type : 'POST',
+	        processData : false ,
+	        contentType : false ,
+	        data : formData ,
+	        success : function (fileNameList) {
+//   	     	console.log(fileNameList);
+	        	saveImages(postId, fileNameList);
+	        },
+	        error: function() {
+				console.log('기본 양식으로 이미지 업로드 실패');
+				return false;
+			}
+		});
 	};
-//	console.log(formData);
-	$.ajax({
-		url: 'api/uploadImage',
-		type : 'POST',
-        processData : false ,
-        contentType : false ,
-        data : formData ,
-        success : function (fileNameList) {
-//        	console.log(fileNameList);
-        	saveImages(postId, fileNameList);
-        },
-        error: function() {
-			console.log('이미지 업로드 실패');
-			return false;
-		}
-	})
 };
 
 // 이미지 DB에 저장
 function saveImages(postId, fileNameList) {
 	let postForm = $('input[type="radio"]:checked').val();
 	if (postForm == 'standard') {
-		console.log('기본 양식으로 저장한당');
+		console.log('기본 양식으로 이미지 저장');
 		let postImageGup = $('#standardImageGup').val();
 		for (let i=0; i < $('.standardImages').length-1 ; i++) {
 			let postImageName = fileNameList[i];
@@ -580,7 +652,41 @@ function saveImages(postId, fileNameList) {
 		};
 		saveTexts(postId);
 	} else if (postForm == 'simple') {
-		console.log('간단 양식으로 저장한당');
+		console.log('간단 양식으로 이미지 저장');
+		let fileCount = 0; 
+		for (let i=1; i <= 5; i++) {
+			let postImageGup = $('#simpleImageGup' + i).val();
+			for (let j=1; j <= 4; j++) {
+				let simpleBtn = $('#simpleBtn' + i + '_' + j).val();
+				if (simpleBtn != '') {
+					let postImageName = fileNameList[fileCount];
+					fileCount += 1;
+					let postImageSeq = $('#simpleImageSeq' + i + '_' + j).val();
+//					console.log(postImageName);
+//					console.log(postImageGup);
+//					console.log(postImageSeq);
+					$.ajax({
+						url: 'api/saveImage',
+						type: 'POST',
+						async : false,
+						data: {
+							'postImageName' : postImageName,
+							'postImageGup' : postImageGup,
+							'postImageSeq' : postImageSeq,
+							'postId' : postId
+						},
+						success : function(data) {
+							console.log(data);
+						},
+						error: function() {
+							console.log('이미지 저장 실패');
+							return false;
+						}
+					});
+				};
+			};
+		};
+		saveTexts(postId);
 	};
 };
 
@@ -588,7 +694,7 @@ function saveImages(postId, fileNameList) {
 function saveTexts(postId) {
 	let postForm = $('input[type="radio"]:checked').val();
 	if (postForm == 'standard') {
-		console.log('기본 양식으로 저장한당');
+		console.log('기본 양식으로 내용 저장');
 		let postContentGup = $('#standardContentGup').val();
 		for (let i=0; i < $('.standardTextContents').length; i++) {
 			let postContent = document.querySelectorAll('.standardTextContents')[i].value;
@@ -614,6 +720,35 @@ function saveTexts(postId) {
 			});
 		};
 	} else if (postForm == 'simple') {
-		console.log('간단 양식으로 저장한당');
+		console.log('간단 양식으로 내용 저장');
+		for (let i=1; i <= 5; i++) {
+			let postContentGup = $('#simpleContentGup' + i).val();
+			let postContentSeq = 0;
+			let simpleContent = $('#simpleContent' + i).val();
+			if (simpleContent != '') {
+				console.log('작성된 내용');
+				console.log(simpleContent);
+				let postContent = simpleContent;
+				$.ajax({
+					url: 'api/saveContent',
+					type: 'POST',
+					async : false,
+					data: {
+						'postContent' : postContent,
+						'postContentGup' : postContentGup,
+						'postContentSeq' : postContentSeq,
+						'postId' : postId
+					},
+					success : function(data) {
+						console.log(data);
+						location.replace('postToMain');
+					},
+					error: function() {
+						console.log('이미지 저장 실패');
+						return false;
+					}
+				});
+			};
+		};
 	};
 };

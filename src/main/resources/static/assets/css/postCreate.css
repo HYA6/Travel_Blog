@@ -174,7 +174,6 @@ html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:activ
 	font-size: 1.5em; 
 	position: absolute; 
 	top: 3.5%; 
-	left: 1%; 
 	cursor: pointer;
 }
 .simpleTables {

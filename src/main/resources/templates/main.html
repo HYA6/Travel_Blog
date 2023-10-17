@@ -22,13 +22,13 @@
 							</a>
 						</div>
 					</header>
-					<a href="single.html" class="image featured"><img th:src="|/image1/${postList.postThumbnail}|" alt="" /></a>
+					<a th:href="@{/singlePost(postId=${postList.postId})}" class="image featured"><img th:src="|/image1/${postList.postThumbnail}|" alt="" style="height: 35em; object-fit: cover;"/></a>
 					<footer>
 						<ul class="actions">
 							<li><a href="single" class="button large">Continue Reading</a></li>
 						</ul>
 						<ul class="stats">
-							<li><a href="#" th:text="${postList.postTag}"></a></li>
+							<li>태그 <a href="#" th:text="${postList.postTag}"></a></li>
 							<li><a href="#" class="icon solid fa-eye">조회수</a></li>
 							<li><a href="#" class="icon solid fa-heart">좋아요수</a></li>
 							<li><a href="#" class="icon solid fa-comment">댓글수</a></li>
