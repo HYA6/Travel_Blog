@@ -12,26 +12,24 @@
 				<article th:each="postList:${postDto}" class="post">
 					<header>
 						<div class="title">
-							<h2><a href="single" th:text="${postList.postSubject}"></a></h2>
+							<h2><a href="@{/singlePost(postId=${postList.postId})}" th:text="${postList.postSubject}"></a></h2>
 						</div>
 						<div class="meta">
 							<time class="published" th:text="${postList.postWrite}"></time>
-							<a href="#" class="author">
+							<a href="mypage" class="author">
 								<span th:text="${usersDto.userName}" class="name"></span>
 								<img src="images/avatar.jpg" alt="" />
 							</a>
 						</div>
 					</header>
-					<a th:href="@{/singlePost(postId=${postList.postId})}" class="image featured"><img th:src="|/image1/${postList.postThumbnail}|" alt="" style="height: 35em; object-fit: cover;"/></a>
+					<a th:href="@{/singlePost(postId=${postList.postId})}" class="image featured">
+						<img th:src="|/image1/${postList.postThumbnail}|" alt="" style="height: 35em; object-fit: cover;"/>
+					</a>
 					<footer>
-						<ul class="actions">
-							<li><a href="single" class="button large">Continue Reading</a></li>
-						</ul>
 						<ul class="stats">
-							<li>태그 <a href="#" th:text="${postList.postTag}"></a></li>
-							<li><a href="#" class="icon solid fa-eye">조회수</a></li>
-							<li><a href="#" class="icon solid fa-heart">좋아요수</a></li>
-							<li><a href="#" class="icon solid fa-comment">댓글수</a></li>
+							<li>조회수</li>
+							<li>좋아요수</li>
+							<li>댓글수</li>
 						</ul>
 					</footer>
 				</article>

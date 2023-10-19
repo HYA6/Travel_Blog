@@ -13,12 +13,22 @@
 					</div>
 					<div class="meta">
 						<time class="published" datetime="2015-11-01" th:text="${postDto.postWrite}"></time>
-						<a href="#" class="author"><span class="name" th:text="${usersDto.userName}"></span><img src="images/avatar.jpg" alt="" /></a>
+						<a href="mypage" class="author">
+							<span class="name" th:text="${usersDto.userName}"></span>
+							<img src="images/avatar.jpg" alt="" />
+						</a>
 					</div>
 				</header>
-				<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
-				<p>게시글 내용</p>
-				<p></p>
+				<!-- 기본 양식이면 -->
+				<div th:if="${#string.equals(postDto.postForm, 'standard')}">
+					<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
+					<p>기본 양식</p>
+				</div>
+				<!-- 간단 양식이면 -->
+				<div th:if="${#string.equals(postDto.postForm, 'simple')}">
+					<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
+					<p>간단 양식</p>
+				</div>
 				<footer>
 					<ul class="stats">
 						<li>
@@ -27,9 +37,9 @@
 								<a href="#" th:text="${postTags}"></a>
 							</div>
 						</li>
-						<li><a href="#" class="icon solid fa-eye">조회수</a></li>
-						<li><a href="#" class="icon solid fa-heart">좋아요수</a></li>
-						<li><a href="#" class="icon solid fa-comment">댓글수</a></li>
+						<li>조회수</li>
+						<li>좋아요수</li>
+						<li>댓글수</li>
 					</ul>
 				</footer>
 			</article>

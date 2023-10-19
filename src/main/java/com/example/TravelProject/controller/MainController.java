@@ -54,7 +54,7 @@ public class MainController {
 		// 블로그에 있는 전체 게시글 목록 가져오기
 		List<PostDto> postDto = postService.selectAllPost(blogId);
 //		log.info("postDto: {}", postDto);
-
+		
 		// 블로그에 있는 인기순 게시글 가져오기(5개)
 		
 		// 블로그에 있는 최신 댓글 가져오기(5개)

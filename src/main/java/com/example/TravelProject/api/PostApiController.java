@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.TravelProject.dto.PostContentsDto;
+import com.example.TravelProject.dto.PostTextsDto;
 import com.example.TravelProject.dto.PostDto;
 import com.example.TravelProject.dto.PostImagesDto;
 import com.example.TravelProject.service.PostService;
@@ -120,7 +120,7 @@ public class PostApiController {
 	// 내용 저장
 	@ResponseBody
 	@RequestMapping("/api/saveContent")
-	public String saveContent(PostContentsDto postContentsDto) {
+	public String saveContent(PostTextsDto postContentsDto) {
 		log.info("PostApiController의 saveContent() 메소드 실행"); 
 		log.info("postContentsDto: {}", postContentsDto);
 		postService.saveContent(postContentsDto);

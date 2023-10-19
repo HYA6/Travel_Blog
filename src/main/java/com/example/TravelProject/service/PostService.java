@@ -7,17 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.TravelProject.dto.PostContentsDto;
+import com.example.TravelProject.dto.PostTextsDto;
 import com.example.TravelProject.dto.PostDto;
 import com.example.TravelProject.dto.PostImagesDto;
 import com.example.TravelProject.entity.Blog;
 import com.example.TravelProject.entity.Category;
 import com.example.TravelProject.entity.Post;
-import com.example.TravelProject.entity.PostContents;
+import com.example.TravelProject.entity.PostTexts;
 import com.example.TravelProject.entity.PostImages;
 import com.example.TravelProject.repository.BlogRepository;
 import com.example.TravelProject.repository.CategoryRepository;
-import com.example.TravelProject.repository.PostContentsRepository;
+import com.example.TravelProject.repository.PostTextsRepository;
 import com.example.TravelProject.repository.PostImagesRepository;
 import com.example.TravelProject.repository.PostRepository;
 
@@ -36,7 +36,7 @@ public class PostService {
 	@Autowired
 	private PostImagesRepository postImagesRepository;
 	@Autowired
-	private PostContentsRepository postContentsRepository;
+	private PostTextsRepository postTextsRepository;
 	
 	// 게시글 저장
 	@Transactional
@@ -83,14 +83,14 @@ public class PostService {
 	
 	// 내용 저장
 	@Transactional
-	public void saveContent(PostContentsDto postContentsDto) {
+	public void saveContent(PostTextsDto postContentsDto) {
 		log.info("PostService의 saveContent() 실행");
 		Post post = postRepository.findById(postContentsDto.getPostId())
 				.orElseThrow(() -> new IllegalArgumentException("내용 저장 실패! 대상 게시글이 없습니다."));
 		// dto를 entity로 변환
-		PostContents postContents = PostContents.toEntity(postContentsDto, post);
+		PostTexts postContents = PostTexts.toEntity(postContentsDto, post);
 		// 내용 저장
-		postContentsRepository.save(postContents);
+		postTextsRepository.save(postContents);
 	}
 	
 	// 블로그 고유 번호로 게시글 목록 찾기
@@ -111,11 +111,11 @@ public class PostService {
 	}
 
 	// 게시글 고유 번호로 게시글 내용 목록 찾기
-	public List<PostContentsDto> findContentsByPostId(Long postId) {
+	public List<PostTextsDto> findContentsByPostId(Long postId) {
 		log.info("PostService의 findContentsByPostId() 실행");
-		return postContentsRepository.findByPostId(postId)
+		return postTextsRepository.findByPostId(postId)
 				.stream()
-				.map(contents -> PostContentsDto.toDto(contents)) // entity를 dto로 변환
+				.map(contents -> PostTextsDto.toDto(contents)) // entity를 dto로 변환
 				.collect(Collectors.toList());
 	}
 

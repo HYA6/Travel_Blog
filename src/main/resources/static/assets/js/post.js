@@ -226,7 +226,7 @@ function simpleNext() {
 	simpleNum += 1;
 	if (simpleNum == 1) {
 		// 첨부된 이미지나 작성된 글이 없으면 넘어가지 못하게 하기
-		if($('.simpleImage1').length == 0 && $('#simpleContent1').val() == '') {
+		if($('.simpleImage1').length == 0 && $('#simpleText1').val() == '') {
 			alert('내용이 비어있어 다음 포스트로 넘어갈 수 없습니다. \n이미지를 첨부하거나 글을 작성해주십시오.');
 			simpleNum -= 1;
 			return false;
@@ -234,7 +234,7 @@ function simpleNext() {
 		$('#simpleTable1').hide();
 		$('#simpleTable2').show();
 	} else if (simpleNum == 2) {
-		if($('.simpleImage2').length == 0 && $('#simpleContent2').val() == '') {
+		if($('.simpleImage2').length == 0 && $('#simpleText2').val() == '') {
 			alert('내용이 비어있어 다음 포스트로 넘어갈 수 없습니다. \n이미지를 첨부하거나 글을 작성해주십시오.');
 			simpleNum -= 1;
 			return false;
@@ -242,7 +242,7 @@ function simpleNext() {
 		$('#simpleTable2').hide();
 		$('#simpleTable3').show();
 	} else if (simpleNum == 3) {
-		if($('.simpleImage3').length == 0 && $('#simpleContent3').val() == '') {
+		if($('.simpleImage3').length == 0 && $('#simpleText3').val() == '') {
 			alert('내용이 비어있어 다음 포스트로 넘어갈 수 없습니다. \n이미지를 첨부하거나 글을 작성해주십시오.');
 			simpleNum -= 1;
 			return false;
@@ -250,7 +250,7 @@ function simpleNext() {
 		$('#simpleTable3').hide();
 		$('#simpleTable4').show();
 	} else if (simpleNum == 4) {
-		if($('.simpleImage4').length == 0 && $('#simpleContent4').val() == '') {
+		if($('.simpleImage4').length == 0 && $('#simpleText4').val() == '') {
 			alert('내용이 비어있어 다음 포스트로 넘어갈 수 없습니다. \n이미지를 첨부하거나 글을 작성해주십시오.');
 			simpleNum -= 1;
 			return false;
@@ -266,26 +266,26 @@ function simpleNext() {
 
 // 기본 양식 글쓰기 추가
 function standardAddText() {
-	let standard = $('.standardTextContents').length + 1;
-	let seq = $('[name="postContent"]').length + 1;
+	let standard = $('.standardTextTexts').length + 1;
+	let seq = $('[name="postText"]').length + 1;
 	let standardContents = $('.standardTextContents');
 	// 중간에 삭제 된 후 추가될 경우
 	if (standard > 1) {
-		let postContent = $('.standardSeq');
-		let lastPostContent = postContent[postContent.length - 1];
-		seq = Number(lastPostContent.value) + 1;
+		let postText = $('.standardSeq');
+		let lastPostText = postText[postText.length - 1];
+		seq = Number(lastPostText.value) + 1;
 //		console.log('중간에 삭제 후 추가되는 기본 양식 순서: ' + seq);
 		let standardId = standardContents[standard - 2].getAttribute('id');
 		standard = Number(standardId[standardId.length-1]) + 1;
 //		console.log('중간에 삭제 후 추가되는 기본 양식 텍스트 아이디: ' + standard);
 	};
-	$('#standardContent').append('<div id="standardTextDiv' + standard + '" class="standardTextDiv"></div>');
-	$('#standardTextDiv' + standard).append('<textarea id="standardContent' + standard + 
-			'" class="standardTextContents" name="postContent" placeholder="내용을 입력하세요."></textarea>');
+	$('#standardText').append('<div id="standardTextDiv' + standard + '" class="standardTextDiv"></div>');
+	$('#standardTextDiv' + standard).append('<textarea id="standardText' + standard + 
+			'" class="standardTextContents" name="postText" placeholder="내용을 입력하세요."></textarea>');
 	$('#standardTextDiv' + standard).append('<p name="' + standard +  
 			'" class="standardTextBtn" onclick="standardDeleteText(this)">X</p>');
-	$('#standardTextDiv' + standard).append('<input type="hidden" id="standardContentSeq' + standard + 
-			'" name="standardContentSeq" class="standardSeq" value="' + seq + '"/>');
+	$('#standardTextDiv' + standard).append('<input type="hidden" id="standardTextSeq' + standard + 
+			'" name="standardTextSeq" class="standardSeq" value="' + seq + '"/>');
 };
 
 //기본 양식 글부분 삭제
@@ -301,22 +301,22 @@ function standardAddImage(input) {
 	let file = input.files[0];
 	let standardContents = $('.standardImgContents');
 	let standard = standardContents.length + 1;
-	let seq = $('[name="postContent"]').length + 1;
+	let seq = $('[name="postText"]').length + 1;
 	// 중간에 삭제 된 후 추가될 경우
 	if (standard > 1) {
-		let postContent = $('.standardSeq');
-		let lastPostContent = postContent[postContent.length - 1];
-		seq = Number(lastPostContent.value) + 1;
+		let postText = $('.standardSeq');
+		let lastPostText = postText[postText.length - 1];
+		seq = Number(lastPostText.value) + 1;
 //		console.log('중간에 삭제 후 추가되는 기본 양식 순서: ' + seq);
 		let standardId = standardContents[standard - 2].getAttribute('id');
 		standard = Number(standardId) + 1;
 //		console.log('중간에 삭제 후 추가되는 기본 양식 이미지 파일 아이디: ' + standard);
 	};
 	// 내용 쓰는 곳에 사진 띄우기
-	$('#standardContent').append('<img src="' + URL.createObjectURL(file) + '" id="' + standard + 
-			'" class="standardImgContents" name="postContent" title="' + 
+	$('#standardText').append('<img src="' + URL.createObjectURL(file) + '" id="' + standard + 
+			'" class="standardImgContents" name="postText" title="' + 
 			$(input).val().substring(12) + '"/>');
-	$('#standardContent').append('<input type="hidden" id="standardImageSeq' + standard + 
+	$('#standardText').append('<input type="hidden" id="standardImageSeq' + standard + 
 			'" name="standardImageSeq" class="standardSeq" value="' + seq + '"/>');
 	// 새로운 파일 첨부 버튼 생성
 	let imagesLen = $('.standardImages').length;
@@ -462,19 +462,19 @@ function createPost() {
 		};
 	} else if (postForm == 'simple') {
 		// 간단 양식
-		if($('.simpleImageBtn').length == 0 && $('#simpleContent1').val() == '' && $('#simpleContent2').val() == ''
-				&& $('#simpleContent3').val() == '' && $('#simpleContent4').val() == '' 
-				&& $('#simpleContent5').val() == '') {
+		if($('.simpleImageBtn').length == 0 && $('#simpleText1').val() == '' && $('#simpleText2').val() == ''
+				&& $('#simpleText3').val() == '' && $('#simpleText4').val() == '' 
+				&& $('#simpleText5').val() == '') {
 			alert('게시글은 글 또는 사진 둘 중 하나는 반드시 있어야 합니다.');
 			return false;
 		} else {
 			for(let i=1; i < 5; i++) {
-				console.log($('.simpleImage' + (i+1)).length)
-				console.log($('#simpleContent' + (i+1)).val())
-				console.log($('.simpleImage' + i).length)
-				console.log($('#simpleContent' + i).val())
-				if(($('.simpleImage' + (i+1)).length != 0 || $('#simpleContent' + (i+1)).val() != '')
-						&& ($('.simpleImage' + i).length == 0 && $('#simpleContent' + i).val() == '')) {
+//				console.log($('.simpleImage' + (i+1)).length)
+//				console.log($('#simpleText' + (i+1)).val())
+//				console.log($('.simpleImage' + i).length)
+//				console.log($('#simpleText' + i).val())
+				if(($('.simpleImage' + (i+1)).length != 0 || $('#simpleText' + (i+1)).val() != '')
+						&& ($('.simpleImage' + i).length == 0 && $('#simpleText' + i).val() == '')) {
 					alert('게시글 ' + i + '번이 비어있습니다.');
 					return false;
 				};
@@ -508,7 +508,7 @@ function uploadThumbnail() {
 			url: 'api/uploadThumbnail',
 			type : "POST",
 			processData : false ,
-			contentType : false ,
+			TextType : false ,
 			data : formData ,
 			success : function (saveName) {
         		console.log(saveName);
@@ -580,7 +580,7 @@ function uploadImages(postId) {
 			url: 'api/uploadImage',
 			type : 'POST',
 	        processData : false ,
-	        contentType : false ,
+	        TextType : false ,
 	        data : formData ,
 	        success : function (fileNameList) {
 //   	     	console.log(fileNameList);
@@ -608,7 +608,7 @@ function uploadImages(postId) {
 			url: 'api/uploadImage',
 			type : 'POST',
 	        processData : false ,
-	        contentType : false ,
+	        TextType : false ,
 	        data : formData ,
 	        success : function (fileNameList) {
 //   	     	console.log(fileNameList);
@@ -695,18 +695,18 @@ function saveTexts(postId) {
 	let postForm = $('input[type="radio"]:checked').val();
 	if (postForm == 'standard') {
 		console.log('기본 양식으로 내용 저장');
-		let postContentGup = $('#standardContentGup').val();
-		for (let i=0; i < $('.standardTextContents').length; i++) {
-			let postContent = document.querySelectorAll('.standardTextContents')[i].value;
-			let postContentSeq = document.querySelectorAll('input[name="standardContentSeq"]')[i].value;
+		let postTextGup = $('#standardTextGup').val();
+		for (let i=0; i < $('.standardTextTexts').length; i++) {
+			let postText = document.querySelectorAll('.standardTextContents')[i].value;
+			let postTextSeq = document.querySelectorAll('input[name="standardTextSeq"]')[i].value;
 			$.ajax({
-				url: 'api/saveContent',
+				url: 'api/saveText',
 				type: 'POST',
 				async : false,
 				data: {
-					'postContent' : postContent,
-					'postContentGup' : postContentGup,
-					'postContentSeq' : postContentSeq,
+					'postText' : postText,
+					'postTextGup' : postTextGup,
+					'postTextSeq' : postTextSeq,
 					'postId' : postId
 				},
 				success : function(data) {
@@ -722,21 +722,21 @@ function saveTexts(postId) {
 	} else if (postForm == 'simple') {
 		console.log('간단 양식으로 내용 저장');
 		for (let i=1; i <= 5; i++) {
-			let postContentGup = $('#simpleContentGup' + i).val();
-			let postContentSeq = 0;
-			let simpleContent = $('#simpleContent' + i).val();
-			if (simpleContent != '') {
+			let postTextGup = $('#simpleTextGup' + i).val();
+			let postTextSeq = 0;
+			let simpleText = $('#simpleText' + i).val();
+			if (simpleText != '') {
 				console.log('작성된 내용');
-				console.log(simpleContent);
-				let postContent = simpleContent;
+				console.log(simpleText);
+				let postText = simpleText;
 				$.ajax({
-					url: 'api/saveContent',
+					url: 'api/saveText',
 					type: 'POST',
 					async : false,
 					data: {
-						'postContent' : postContent,
-						'postContentGup' : postContentGup,
-						'postContentSeq' : postContentSeq,
+						'postText' : postText,
+						'postTextGup' : postTextGup,
+						'postTextSeq' : postTextSeq,
 						'postId' : postId
 					},
 					success : function(data) {

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.TravelProject.dto.BlogDto;
 import com.example.TravelProject.dto.CategoryDto;
-import com.example.TravelProject.dto.PostContentsDto;
+import com.example.TravelProject.dto.PostTextsDto;
 import com.example.TravelProject.dto.PostDto;
 import com.example.TravelProject.dto.PostImagesDto;
 import com.example.TravelProject.dto.UsersDto;
@@ -85,9 +85,9 @@ public class PostController {
 //		log.info("postId: {}", postId);
 		PostDto postDto = postService.findPostById(postId);
 //		log.info("postDto: {}", postDto);
-		List<PostContentsDto> contentsDtoList = postService.findContentsByPostId(postId);
+		List<PostTextsDto> textsList = postService.findContentsByPostId(postId);
 //		log.info("contentsDtoList: {}", contentsDtoList);
-		List<PostImagesDto> imagesDtoList = postService.findImagesByPostId(postId);
+		List<PostImagesDto> imagesList = postService.findImagesByPostId(postId);
 //		log.info("imagesDtoList: {}", imagesDtoList);
 		
 		model.addAttribute("usersDto", usersDto);
@@ -96,27 +96,27 @@ public class PostController {
 		model.addAttribute("postDto", postDto);
 		
 		String[] postTags = postDto.getPostTag().split(",");
-		for(int i=0; i<postTags.length; i++) {
-			log.info("태그: {}", postTags[i]);
-		};
+//		for(int i=0; i<postTags.length; i++) {
+//			log.info("태그: {}", postTags[i]);
+//		};
 		model.addAttribute("postTags", postTags);
 		
-		String[] postContents = null;
+		String[] postContents = new String[100];
 		if (postDto.getPostForm().equals("standard")) {
 			// 기본 양식
-			for(int i=0; i < imagesDtoList.size(); i++) {
-				for(int j=0; j < contentsDtoList.size(); j++) {
-					int imageGup = imagesDtoList.get(i).getPostImageGup();
-					int contentGup = contentsDtoList.get(j).getPostContentGup();
-					if (imageGup < contentGup) {
-						
+			for(int i=0; i < textsList.size(); i++) {
+				for(int j=0; j < imagesList.size(); j++) {
+					int textsGup = textsList.get(i).getPostTextGup();
+					int imagesGup = imagesList.get(j).getPostImageGup();
+					if (imagesGup < textsGup) {
+						postContents[i] = imagesList.get(i).getPostImageName();
 					};
 				};
 			};
 		} else {
 			// 간단 양식
-			model.addAttribute("contentsDtoList", contentsDtoList);
-			model.addAttribute("imagesDtoList", imagesDtoList);
+			model.addAttribute("textsList", textsList);
+			model.addAttribute("imagesList", imagesList);
 		};
 		
 		return "single";

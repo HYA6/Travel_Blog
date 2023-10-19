@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import com.example.TravelProject.dto.PostContentsDto;
+import com.example.TravelProject.dto.PostTextsDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,18 +27,18 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @ToString
 @Slf4j
-public class PostContents {
+public class PostTexts {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="content_id", nullable=false, columnDefinition="int")
-	private Long postContentId; // 게시글 내용 고유 번호
-	@Column(name="content", nullable=false, columnDefinition="varchar(1000)")
-	private String postContent; // 게시글 내용
-	@Column(name="content_gup", columnDefinition="int")
-	private int postContentGup; // 게시글 내용 그룹
-	@Column(name="content_seq", columnDefinition="int")
-	private int postContentSeq; // 게시글 내용 출력 순서
+	@Column(name="text_id", nullable=false, columnDefinition="int")
+	private Long postTextId; // 게시글 내용 고유 번호
+	@Column(name="text", nullable=false, columnDefinition="varchar(1000)")
+	private String postText; // 게시글 내용
+	@Column(name="text_gup", columnDefinition="int")
+	private int postTextGup; // 게시글 내용 그룹
+	@Column(name="text_seq", columnDefinition="int")
+	private int postTextSeq; // 게시글 내용 출력 순서
 	// 외래키
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -47,11 +47,11 @@ public class PostContents {
 	
 	
 //	DTO 데이터를 Entity로 변환하는 메소드(블로그, 사용자)
-	public static PostContents toEntity(PostContentsDto postContentsDto, Post post) {
-		log.info("PostContents의 toEntity() 메소드 실행");
+	public static PostTexts toEntity(PostTextsDto postTextsDto, Post post) {
+		log.info("PostTexts의 toEntity() 메소드 실행");
 		// Entity 생성 및 반환
-		return new PostContents(postContentsDto.getPostContentId(), postContentsDto.getPostContent(), 
-				postContentsDto.getPostContentGup(), postContentsDto.getPostContentSeq(), post);
+		return new PostTexts(postTextsDto.getPostTextId(), postTextsDto.getPostText(), 
+				postTextsDto.getPostTextGup(), postTextsDto.getPostTextSeq(), post);
 	};
 	
 };
