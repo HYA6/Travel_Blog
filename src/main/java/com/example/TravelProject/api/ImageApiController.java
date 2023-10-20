@@ -30,21 +30,38 @@ public class ImageApiController {
 		ResponseEntity<byte[]> result = null;
 		try{
 			String srcFileName = URLDecoder.decode(fileName,"UTF-8");
-			log.info("filename : "+srcFileName);
+//			log.info("filename : "+srcFileName);
 			File file = new File(uploadPath1 + File.separator + srcFileName);
-			log.info("file : "+file);
+//			log.info("file : "+file);
 			HttpHeaders header = new HttpHeaders();
-			
 			//MIME 타입 처리
 			header.add("Content-Type", Files.probeContentType(file.toPath()));
-			
 			result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file),header,HttpStatus.OK);
-		    
 		}catch (Exception e){
 			log.error(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	return result;
+	};
+	
+	@RequestMapping("/image2/{filename}")
+	public ResponseEntity<byte[]> image2(@PathVariable("filename") String fileName){
+		log.info("MainApiController의 image2()");
+		ResponseEntity<byte[]> result = null;
+		try{
+			String srcFileName = URLDecoder.decode(fileName,"UTF-8");
+//			log.info("filename : "+srcFileName);
+			File file = new File(uploadPath2 + File.separator + srcFileName);
+//			log.info("file : "+file);
+			HttpHeaders header = new HttpHeaders();
+			//MIME 타입 처리
+			header.add("Content-Type", Files.probeContentType(file.toPath()));
+			result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file),header,HttpStatus.OK);
+		}catch (Exception e){
+			log.error(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return result;
 	};
 	
 };

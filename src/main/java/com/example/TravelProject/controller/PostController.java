@@ -85,7 +85,7 @@ public class PostController {
 //		log.info("postId: {}", postId);
 		PostDto postDto = postService.findPostById(postId);
 //		log.info("postDto: {}", postDto);
-		List<PostTextsDto> textsList = postService.findContentsByPostId(postId);
+		List<PostTextsDto> textsList = postService.findTextsByPostId(postId);
 //		log.info("contentsDtoList: {}", contentsDtoList);
 		List<PostImagesDto> imagesList = postService.findImagesByPostId(postId);
 //		log.info("imagesDtoList: {}", imagesDtoList);
@@ -110,8 +110,12 @@ public class PostController {
 					int imagesGup = imagesList.get(j).getPostImageGup();
 					if (imagesGup < textsGup) {
 						postContents[i] = imagesList.get(i).getPostImageName();
-					};
+					} else {
+						postContents[i] = textsList.get(i).getPostText();
+						break;
+					}
 				};
+				log.info("postContents: {}", postContents[i]);
 			};
 		} else {
 			// 간단 양식

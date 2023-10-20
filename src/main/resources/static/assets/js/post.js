@@ -501,15 +501,18 @@ function uploadThumbnail() {
 	console.log('대표 이미지 저장');
 	let formData = new FormData();
 	let postThumbnail = document.querySelector('#postThumbnail').files[0];
+//	console.log(postThumbnail);
 	// 대표 이미지가 비어있지 않을 경우 업로드한다.
 	if (postThumbnail != undefined) {
-		formData.append("thumbnailFile", postThumbnail)
+		formData.append('thumbnailFile', postThumbnail);
+//		console.log(formData.get('thumbnailFile'));
 		$.ajax({
 			url: 'api/uploadThumbnail',
 			type : "POST",
-			processData : false ,
-			TextType : false ,
+			processData: false,
+		    contentType: false,
 			data : formData ,
+			async : false,
 			success : function (saveName) {
         		console.log(saveName);
         		if (saveName == 'N') {
@@ -579,9 +582,10 @@ function uploadImages(postId) {
 		$.ajax({
 			url: 'api/uploadImage',
 			type : 'POST',
-	        processData : false ,
-	        TextType : false ,
+			processData: false,
+		    contentType: false,
 	        data : formData ,
+	        async : false,
 	        success : function (fileNameList) {
 //   	     	console.log(fileNameList);
 	        	saveImages(postId, fileNameList);
@@ -607,9 +611,10 @@ function uploadImages(postId) {
 		$.ajax({
 			url: 'api/uploadImage',
 			type : 'POST',
-	        processData : false ,
-	        TextType : false ,
+			processData: false,
+		    contentType: false,
 	        data : formData ,
+	        async : false,
 	        success : function (fileNameList) {
 //   	     	console.log(fileNameList);
 	        	saveImages(postId, fileNameList);
@@ -714,7 +719,7 @@ function saveTexts(postId) {
 					location.replace('postToMain');
 				},
 				error: function() {
-					console.log('이미지 저장 실패');
+					console.log('내용 저장 실패');
 					return false;
 				}
 			});
@@ -726,8 +731,8 @@ function saveTexts(postId) {
 			let postTextSeq = 0;
 			let simpleText = $('#simpleText' + i).val();
 			if (simpleText != '') {
-				console.log('작성된 내용');
-				console.log(simpleText);
+//				console.log('작성된 내용');
+//				console.log(simpleText);
 				let postText = simpleText;
 				$.ajax({
 					url: 'api/saveText',
@@ -744,7 +749,7 @@ function saveTexts(postId) {
 						location.replace('postToMain');
 					},
 					error: function() {
-						console.log('이미지 저장 실패');
+						console.log('내용 저장 실패');
 						return false;
 					}
 				});

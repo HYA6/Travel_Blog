@@ -217,7 +217,7 @@ html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:activ
 	height: 100%; 
 	object-fit: contain;
 }
-#simpleContent1, #simpleContent2, #simpleContent3, #simpleContent4, #simpleContent5 {
+#simpleText1, #simpleText2, #simpleText3, #simpleText4, #simpleText5 {
 	background-color: white; 
 	width: 80%; 
 	border: 1px solid rgba(160, 160, 160, 0.3); 

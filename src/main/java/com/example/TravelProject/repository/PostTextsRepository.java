@@ -9,9 +9,9 @@ import com.example.TravelProject.entity.PostTexts;
 
 public interface PostTextsRepository extends JpaRepository<PostTexts, Long> {
 	
-	@Query(value="SELECT * FROM post_contents "
+	@Query(value="SELECT * FROM POST_TEXTS "
 			+ "WHERE post_id = :post_id "
-			+ "ORDER BY content_gup, content_seq", nativeQuery = true)
+			+ "ORDER BY text_gup, text_seq", nativeQuery = true)
 	List<PostTexts> findByPostId(Long post_id);
 
 };

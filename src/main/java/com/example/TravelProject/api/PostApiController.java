@@ -119,11 +119,11 @@ public class PostApiController {
 	
 	// 내용 저장
 	@ResponseBody
-	@RequestMapping("/api/saveContent")
-	public String saveContent(PostTextsDto postContentsDto) {
-		log.info("PostApiController의 saveContent() 메소드 실행"); 
-		log.info("postContentsDto: {}", postContentsDto);
-		postService.saveContent(postContentsDto);
+	@RequestMapping("/api/saveText")
+	public String saveText(PostTextsDto postTextsDto) {
+		log.info("PostApiController의 saveText() 메소드 실행"); 
+		log.info("postTextsDto: {}", postTextsDto);
+		postService.saveText(postTextsDto);
 		return "테스트 성공";
 	};
 	

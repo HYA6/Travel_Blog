@@ -1,0 +1,23 @@
+.simpleImageDivIf { /* 간단 양식 이미지 Div */
+	margin-left: auto;
+	margin-right: auto;
+}
+.simpleImageDivEach { /* 간단 양식 이미지 Div */
+	display: inline-block;
+	width: 45%;
+}
+.simpleImage { /* 간단 양식 이미지 */
+	width: 100%;
+	height: 100%;
+}
+.stats { /* 태그 ul */
+	display: block;
+	width: 100%;
+}
+.postTagLi { /* 태그 li */
+	font-size: 0.8em;
+}
+.postTagDiv { /* 태그 Div */
+	display: inline-block;
+	margin-right: 1em;
+}

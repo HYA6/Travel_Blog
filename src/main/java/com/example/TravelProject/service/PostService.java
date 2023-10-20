@@ -83,12 +83,12 @@ public class PostService {
 	
 	// 내용 저장
 	@Transactional
-	public void saveContent(PostTextsDto postContentsDto) {
-		log.info("PostService의 saveContent() 실행");
-		Post post = postRepository.findById(postContentsDto.getPostId())
+	public void saveText(PostTextsDto postTextsDto) {
+		log.info("PostService의 saveText() 실행");
+		Post post = postRepository.findById(postTextsDto.getPostId())
 				.orElseThrow(() -> new IllegalArgumentException("내용 저장 실패! 대상 게시글이 없습니다."));
 		// dto를 entity로 변환
-		PostTexts postContents = PostTexts.toEntity(postContentsDto, post);
+		PostTexts postContents = PostTexts.toEntity(postTextsDto, post);
 		// 내용 저장
 		postTextsRepository.save(postContents);
 	}
@@ -111,11 +111,11 @@ public class PostService {
 	}
 
 	// 게시글 고유 번호로 게시글 내용 목록 찾기
-	public List<PostTextsDto> findContentsByPostId(Long postId) {
-		log.info("PostService의 findContentsByPostId() 실행");
+	public List<PostTextsDto> findTextsByPostId(Long postId) {
+		log.info("PostService의 findTextsByPostId() 실행");
 		return postTextsRepository.findByPostId(postId)
 				.stream()
-				.map(contents -> PostTextsDto.toDto(contents)) // entity를 dto로 변환
+				.map(texts -> PostTextsDto.toDto(texts)) // entity를 dto로 변환
 				.collect(Collectors.toList());
 	}
 
