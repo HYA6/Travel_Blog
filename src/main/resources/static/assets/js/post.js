@@ -266,7 +266,7 @@ function simpleNext() {
 
 // 기본 양식 글쓰기 추가
 function standardAddText() {
-	let standard = $('.standardTextTexts').length + 1;
+	let standard = $('.standardTextContents').length + 1;
 	let seq = $('[name="postText"]').length + 1;
 	let standardContents = $('.standardTextContents');
 	// 중간에 삭제 된 후 추가될 경우
@@ -279,7 +279,7 @@ function standardAddText() {
 		standard = Number(standardId[standardId.length-1]) + 1;
 //		console.log('중간에 삭제 후 추가되는 기본 양식 텍스트 아이디: ' + standard);
 	};
-	$('#standardText').append('<div id="standardTextDiv' + standard + '" class="standardTextDiv"></div>');
+	$('#standardContents').append('<div id="standardTextDiv' + standard + '" class="standardTextDiv"></div>');
 	$('#standardTextDiv' + standard).append('<textarea id="standardText' + standard + 
 			'" class="standardTextContents" name="postText" placeholder="내용을 입력하세요."></textarea>');
 	$('#standardTextDiv' + standard).append('<p name="' + standard +  
@@ -313,10 +313,10 @@ function standardAddImage(input) {
 //		console.log('중간에 삭제 후 추가되는 기본 양식 이미지 파일 아이디: ' + standard);
 	};
 	// 내용 쓰는 곳에 사진 띄우기
-	$('#standardText').append('<img src="' + URL.createObjectURL(file) + '" id="' + standard + 
+	$('#standardContents').append('<img src="' + URL.createObjectURL(file) + '" id="' + standard + 
 			'" class="standardImgContents" name="postText" title="' + 
 			$(input).val().substring(12) + '"/>');
-	$('#standardText').append('<input type="hidden" id="standardImageSeq' + standard + 
+	$('#standardContents').append('<input type="hidden" id="standardImageSeq' + standard + 
 			'" name="standardImageSeq" class="standardSeq" value="' + seq + '"/>');
 	// 새로운 파일 첨부 버튼 생성
 	let imagesLen = $('.standardImages').length;
@@ -701,7 +701,7 @@ function saveTexts(postId) {
 	if (postForm == 'standard') {
 		console.log('기본 양식으로 내용 저장');
 		let postTextGup = $('#standardTextGup').val();
-		for (let i=0; i < $('.standardTextTexts').length; i++) {
+		for (let i=0; i < $('.standardTextContents').length; i++) {
 			let postText = document.querySelectorAll('.standardTextContents')[i].value;
 			let postTextSeq = document.querySelectorAll('input[name="standardTextSeq"]')[i].value;
 			$.ajax({

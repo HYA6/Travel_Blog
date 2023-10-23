@@ -101,21 +101,20 @@ public class PostController {
 //		};
 		model.addAttribute("postTags", postTags);
 		
-		String[] postContents = new String[100];
+		String[] postContents = new String[textsList.size() + imagesList.size()];
 		if (postDto.getPostForm().equals("standard")) {
+			int[] postContentsSeq = new int[textsList.size() + imagesList.size()];
 			// 기본 양식
-			for(int i=0; i < textsList.size(); i++) {
-				for(int j=0; j < imagesList.size(); j++) {
-					int textsGup = textsList.get(i).getPostTextGup();
-					int imagesGup = imagesList.get(j).getPostImageGup();
-					if (imagesGup < textsGup) {
-						postContents[i] = imagesList.get(i).getPostImageName();
-					} else {
-						postContents[i] = textsList.get(i).getPostText();
-						break;
-					}
+			for (String contents : postContents) {
+				for(int i=0; i < textsList.size(); i++) {
+					int textsSeq = textsList.get(i).getPostTextSeq();
+					log.info("textsSeq: {}", textsSeq);
+					for(int j=0; j < imagesList.size(); j++) {
+						int imagesSeq = imagesList.get(j).getPostImageSeq();
+						log.info("imagesSeq: {}", imagesSeq);
+					};
+					log.info("postContents: {}", postContents[i]);
 				};
-				log.info("postContents: {}", postContents[i]);
 			};
 		} else {
 			// 간단 양식
@@ -123,7 +122,7 @@ public class PostController {
 			model.addAttribute("imagesList", imagesList);
 		};
 		
-		return "single";
+		return "singlePost";
 	};
 	
 };

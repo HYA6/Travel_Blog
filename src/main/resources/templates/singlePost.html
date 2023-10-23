@@ -3,7 +3,7 @@
       layout:decorate="~{layouts/default}">
     <div layout:fragment="main">
     	<th:block layout:fragment="css">
-			<link rel="stylesheet" href="assets/css/single.css">
+			<link rel="stylesheet" href="assets/css/singlePost.css">
 		</th:block>
     	<div id="main">
 			<!-- Post -->
@@ -15,7 +15,7 @@
 						<p>여행 장소: <span th:text="${postDto.postPlace}"></span></p>
 					</div>
 					<div class="meta">
-						<time class="published" datetime="2015-11-01" th:text="${postDto.postWrite}"></time>
+						<time class="published" th:text="${postDto.postWrite}"></time>
 						<a href="mypage" class="author">
 							<span class="name" th:text="${usersDto.userName}"></span>
 							<img src="images/avatar.jpg" alt="" />
@@ -24,11 +24,11 @@
 				</header>
 				<!-- 기본 양식이면 -->
 				<div th:if="${postDto.postForm.toString().equals('standard')}">
-					<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
 					<p>기본 양식</p>
 				</div>
 				<!-- 간단 양식이면 -->
 				<div th:if="${postDto.postForm.toString().equals('simple')}" class="simpleImageDivIf" align="center">
+					<i id="simpleLeft" class="fas fa-chevron-left" onclick="simpleBefore()"></i>
 					<div th:each="imagesList:${imagesList}" class="simpleImageDivEach">
 						<div th:if="${imagesList.postImageGup == 1}" id="simpleImageDiv1">
 							<div th:each="postImageName:${imagesList.postImageName}">
@@ -73,6 +73,7 @@
 							<p th:text="${textsList.postText}"></p>
 						</div>
 					</div>
+					<i id="simpleRight" class="fas fa-chevron-right" onclick="simpleNext()"></i>
 				</div>
 				<footer>
 					<ul class="stats">
@@ -97,5 +98,8 @@
 		</div>
 		<!-- sidebar -->
 		<section th:replace="fragments/sidebar::sidebar"></section>
+		<th:block layout:fragment="script">
+			<script src="assets/js/singlePost.js"></script>
+		</th:block>
 	</div>
 </html>
