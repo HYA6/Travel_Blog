@@ -37,7 +37,7 @@ public class PostImages {
 	private String postImageName; // 게시글 이미지 이름
 	@Column(name="image_gup", columnDefinition="int")
 	private int postImageGup; // 게시글 이미지 그룹
-	@Column(name="image_seq", columnDefinition="int")
+	@Column(name="post_seq", columnDefinition="int")
 	private int postImageSeq; // 게시글 이미지 출력 순서
 	// 외래키
 	@ManyToOne

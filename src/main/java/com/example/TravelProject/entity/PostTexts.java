@@ -37,7 +37,7 @@ public class PostTexts {
 	private String postText; // 게시글 내용
 	@Column(name="text_gup", columnDefinition="int")
 	private int postTextGup; // 게시글 내용 그룹
-	@Column(name="text_seq", columnDefinition="int")
+	@Column(name="post_seq", columnDefinition="int")
 	private int postTextSeq; // 게시글 내용 출력 순서
 	// 외래키
 	@ManyToOne

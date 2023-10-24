@@ -103,19 +103,25 @@ public class PostController {
 		
 		String[] postContents = new String[textsList.size() + imagesList.size()];
 		if (postDto.getPostForm().equals("standard")) {
-			int[] postContentsSeq = new int[textsList.size() + imagesList.size()];
 			// 기본 양식
-			for (String contents : postContents) {
-				for(int i=0; i < textsList.size(); i++) {
-					int textsSeq = textsList.get(i).getPostTextSeq();
-					log.info("textsSeq: {}", textsSeq);
-					for(int j=0; j < imagesList.size(); j++) {
-						int imagesSeq = imagesList.get(j).getPostImageSeq();
-						log.info("imagesSeq: {}", imagesSeq);
+			int index = 0;
+			for(int i=0; i < textsList.size(); i++) {
+				int textsSeq = textsList.get(i).getPostTextSeq();
+				log.info("textsSeq: {}", textsSeq);
+				for(int j=0; j < imagesList.size(); j++) {
+					int imagesSeq = imagesList.get(j).getPostImageSeq();
+					log.info("imagesSeq: {}", imagesSeq);
+					if (imagesSeq > textsSeq) {
+						postContents[index] = textsList.get(i).getPostText();
+						index += 1;
+						break;
+					} else {
+						postContents[index] = imagesList.get(i).getPostImageName();
+						index += 1;
 					};
-					log.info("postContents: {}", postContents[i]);
 				};
 			};
+			System.out.println(postContents);
 		} else {
 			// 간단 양식
 			model.addAttribute("textsList", textsList);

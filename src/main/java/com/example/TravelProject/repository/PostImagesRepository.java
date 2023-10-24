@@ -11,7 +11,7 @@ public interface PostImagesRepository extends JpaRepository<PostImages, Long> {
 	
 	@Query(value="SELECT * FROM POST_IMAGES "
 			+ "WHERE post_id = :post_id "
-			+ "ORDER BY image_gup, image_seq", nativeQuery = true)
+			+ "ORDER BY image_gup, post_seq", nativeQuery = true)
 	List<PostImages> findByPostId(Long post_id);
 
 };
