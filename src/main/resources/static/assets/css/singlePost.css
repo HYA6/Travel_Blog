@@ -1,3 +1,14 @@
+.standardDiv { /* 기본 양식 Div */
+	margin-left: auto;
+	margin-right: auto;
+}
+.standardImgDiv { /* 기본 양식 이미지 Div */
+	display: inline-block;
+	width: 100%;
+}
+.standardImg { /* 기본 양식 이미지 */
+	max-width: 30em;
+}
 .simpleImageDivIf { /* 간단 양식 이미지 Div */
 	margin-left: auto;
 	margin-right: auto;
@@ -10,14 +21,37 @@
 	width: 100%;
 	height: 100%;
 }
-.stats { /* 태그 ul */
+footer {
+	display: block !important;
+}
+.stats { /* 태그, 조회수, 좋아요수 ul */
 	display: block;
 	width: 100%;
+	text-align: right;
 }
-.postTagLi { /* 태그 li */
-	font-size: 0.8em;
+.stats li { /* ul의 li */
+	font-size: 0.9em !important;
 }
 .postTagDiv { /* 태그 Div */
 	display: inline-block;
-	margin-right: 1em;
+	margin-right: 0.5em;
+}
+.commentsDiv { /* 댓글 Div */
+	position: relative;
+	border-top: 1px solid rgba(160, 160, 160, 0.3);
+	padding-top: 1em;
+	padding-left: 3em;
+	padding-right: 3em;
+}
+.comments { /* 댓글 입력 */
+	margin-top: 0.5em;
+	resize: none;
+}
+#commentSave { /* 댓글 저장 */
+    position: absolute;
+    right: 4em;
+    margin-top: 0.5em;
+	padding: 0 1em;
+    line-height: 2.5em;
+    height: 2.5em;
 }

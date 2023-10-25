@@ -50,7 +50,6 @@ public class Blog {
 	
 	// DTO 데이터를 Entity로 변환하는 메소드
 	public static Blog toEntity(BlogDto dto, Users users) {
-		log.info("Blog의 toEntity() 메소드 실행");
 		// Entity 생성 및 반환
 		return new Blog(dto.getBlogId(), dto.getBlogName(), dto.getBlogThema(), dto.getBlogUrl(), users);
 	};

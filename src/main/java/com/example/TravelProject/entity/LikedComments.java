@@ -18,7 +18,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
 @SuppressWarnings("serial")
 @Entity
@@ -27,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @ToString
-@Slf4j
 public class LikedComments implements Serializable {
 	
 	@Id
@@ -48,7 +46,6 @@ public class LikedComments implements Serializable {
 	
 //	DTO 데이터를 Entity로 변환하는 메소드(블로그, 사용자)
 	public static LikedComments toEntity(LikedComments commentsLikes, Users users, Comments comments) {
-		log.info("CommentsLikes의 toEntity() 메소드 실행");
 		// Entity 생성 및 반환
 		return new LikedComments(commentsLikes.getLikedCommentId(), commentsLikes.getLikedComment(), users, comments);
 	}

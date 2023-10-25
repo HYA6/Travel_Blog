@@ -7,14 +7,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-@Slf4j
 public class CategoryDto {
 	
 	private Long categoryId; // 카테고리 고유 번호
@@ -27,9 +25,8 @@ public class CategoryDto {
 	
 	// entity를 dto로 변환하는 메소드
 	public static CategoryDto toDto(Category category) {
-		log.info("CategoryDto의 toDto() 메소드 실행");
 		return new CategoryDto(category.getCategoryId(), category.getCategoryName(), category.getCategoryPrivate(), 
 				category.getCategoryGup(), category.getCategoryLev(), category.getCategorySeq(), category.getBlog().getBlogId());
-	}
+	};
 	
-}
+};

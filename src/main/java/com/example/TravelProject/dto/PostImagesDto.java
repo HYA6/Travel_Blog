@@ -7,14 +7,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-@Slf4j
 public class PostImagesDto {
 	
 	private Long postImageId; // 게시글 이미지 고유 번호
@@ -25,7 +23,6 @@ public class PostImagesDto {
 	
 	// entity를 dto로 변환하는 메소드
 	public static PostImagesDto toDto(PostImages postImages) {
-		log.info("PostImagesDto의 toDto() 메소드 실행");
 		return new PostImagesDto(postImages.getPostImageId(), postImages.getPostImageName(), 
 				postImages.getPostImageGup(), postImages.getPostImageSeq(), postImages.getPost().getPostId());
 	};

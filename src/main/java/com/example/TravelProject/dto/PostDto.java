@@ -9,14 +9,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-@Slf4j
 public class PostDto {
 	
 	private Long postId; // 게시글 고유 번호
@@ -35,10 +33,9 @@ public class PostDto {
 	
 	// entity를 dto로 변환하는 메소드
 	public static PostDto toDto(Post post) {
-		log.info("PostDto의 toDto() 메소드 실행");
 		return new PostDto(post.getPostId(), post.getPostForm(), post.getPostStartDate(), post.getPostEndDate(), 
 				post.getPostPlace(), post.getPostSubject(), post.getPostTag(), post.getPostThumbnail(), post.getPostWrite(), 
 				post.getPostUpdate(), post.getPostLikes(), post.getBlog().getBlogId(), post.getCategory().getCategoryId());
-	}
+	};
 	
-}
+};

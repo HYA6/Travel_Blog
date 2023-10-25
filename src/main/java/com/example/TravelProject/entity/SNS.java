@@ -16,7 +16,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @NoArgsConstructor
@@ -24,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @ToString
-@Slf4j
 public class SNS {
 
 //	기본키로 사용할 필드 선언
@@ -46,7 +44,6 @@ public class SNS {
 	
 //	DTO 데이터를 Entity로 변환하는 메소드(SNS, 사용자)
 	public static SNS toEntity(SNS sns, Users users) {
-		log.info("SNS의 toEntity() 메소드 실행");
 		// Entity 저장 및 반환
 		return new SNS(sns.getSnsId(), sns.getSnsUrl(), sns.getSnsName(), users);
 	};

@@ -52,7 +52,6 @@ public class Category {
 	
 //	DTO 데이터를 Entity로 변환하는 메소드(블로그, 사용자)
 	public static Category toEntity(CategoryDto dto, Blog blog) {
-		log.info("Category의 toEntity() 메소드 실행");
 		// Entity 생성 및 반환
 		return new Category(dto.getCategoryId(), dto.getCategoryName(), dto.getCategoryPrivate(),
 				dto.getCategoryGup(), dto.getCategoryLev(), dto.getCategorySeq(), blog);

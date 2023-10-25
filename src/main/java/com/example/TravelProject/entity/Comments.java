@@ -15,12 +15,13 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.example.TravelProject.dto.CommentsDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @NoArgsConstructor
@@ -28,7 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @ToString
-@Slf4j
 public class Comments {
 
 	@Id
@@ -57,11 +57,10 @@ public class Comments {
 	private Post post; // 게시글 고유 번호
 	
 //	DTO 데이터를 Entity로 변환하는 메소드
-	public static Comments toEntity(Comments comments, Users users, Post post) {
-		log.info("Comments의 toEntity() 메소드 실행");
+	public static Comments toEntity(CommentsDto dto, Users users, Post post) {
 		// Entity 생성 및 반환
-		return new Comments(comments.getCommentId(), comments.getCommentContent(), comments.getCommentDate(),
-				comments.getCommentGup(), comments.getCommentLev(), comments.getCommentSeq(), users, post);
+		return new Comments(dto.getCommentId(), dto.getCommentContent(), dto.getCommentDate(), 
+				dto.getCommentGup(), dto.getCommentLev(), dto.getCommentSeq(), users, post);
 	}
 	
 }

@@ -58,7 +58,6 @@ public class Users {
 	
 //	DTO 데이터를 Entity(테이블과 매핑되는 클래스, Users)로 변환하는(객체를 만드는) 메소드
 	public static Users toEntity(UsersDto dto) {
-		log.info("Users의 toEntity() 메소드 실행");
 		return new Users(dto.getUserNum(), dto.getUserId(), dto.getUserName(), dto.getUserAge(), dto.getUserEmail(), 
 				dto.getUserBirhtday(), dto.getUserPassword(), dto.getUserPhone(), dto.getUserGender(), 
 				dto.getUserNickname(), dto.getUserCreateDate());

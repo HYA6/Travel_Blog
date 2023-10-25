@@ -1,5 +1,6 @@
 package com.example.TravelProject.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.TravelProject.dto.BlogDto;
 import com.example.TravelProject.dto.CategoryDto;
+import com.example.TravelProject.dto.PostContentsDto;
 import com.example.TravelProject.dto.PostTextsDto;
 import com.example.TravelProject.dto.PostDto;
 import com.example.TravelProject.dto.PostImagesDto;
@@ -101,27 +103,26 @@ public class PostController {
 //		};
 		model.addAttribute("postTags", postTags);
 		
-		String[] postContents = new String[textsList.size() + imagesList.size()];
 		if (postDto.getPostForm().equals("standard")) {
 			// 기본 양식
-			int index = 0;
-			for(int i=0; i < textsList.size(); i++) {
-				int textsSeq = textsList.get(i).getPostTextSeq();
-				log.info("textsSeq: {}", textsSeq);
-				for(int j=0; j < imagesList.size(); j++) {
-					int imagesSeq = imagesList.get(j).getPostImageSeq();
-					log.info("imagesSeq: {}", imagesSeq);
-					if (imagesSeq > textsSeq) {
-						postContents[index] = textsList.get(i).getPostText();
-						index += 1;
-						break;
-					} else {
-						postContents[index] = imagesList.get(i).getPostImageName();
-						index += 1;
-					};
+			List<PostContentsDto> contents = new ArrayList<PostContentsDto>();
+			for (PostTextsDto textDto : textsList) {
+				PostContentsDto dto = PostContentsDto.textToContent(textDto, "text");
+				contents.add(dto);
+			};
+			for (PostImagesDto imageDto : imagesList) {
+				PostContentsDto dto = PostContentsDto.imageToContent(imageDto, "image");
+				contents.add(dto);
+			};
+			for (int i=0; i < contents.size()-1; i++) {
+				if (contents.get(i).getPostContentSeq() > contents.get(i+1).getPostContentSeq()) {
+					PostContentsDto dto = contents.get(i);
+					contents.set(i, contents.get(i+1));
+					contents.set(i+1, dto);
 				};
 			};
-			System.out.println(postContents);
+			log.info("contents: {}", contents);
+			model.addAttribute("contents", contents);
 		} else {
 			// 간단 양식
 			model.addAttribute("textsList", textsList);

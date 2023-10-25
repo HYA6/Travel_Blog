@@ -9,14 +9,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-@Slf4j
 public class UsersDto {
 	
 	private Long userNum; // 유저 고유 번호
@@ -33,7 +31,6 @@ public class UsersDto {
 	
 	// entity를 dto로 변환하는 메소드
 	public static UsersDto toDto(Users users) {
-		log.info("UsersDto의 toDto() 메소드 실행");
 		return new UsersDto(users.getUserNum(), users.getUserId(), users.getUserName(), users.getUserAge(),
 				users.getUserEmail(), users.getUserBirhtday(), users.getUserPassword(), users.getUserPhone(), 
 				users.getUserGender(), users.getUserNickname(), users.getUserCreateDate());
