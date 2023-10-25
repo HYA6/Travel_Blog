@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.TravelProject.dto.BlogDto;
 import com.example.TravelProject.dto.CategoryDto;
+import com.example.TravelProject.dto.CommentsDto;
 import com.example.TravelProject.dto.PostContentsDto;
 import com.example.TravelProject.dto.PostTextsDto;
 import com.example.TravelProject.dto.PostDto;
@@ -21,6 +22,7 @@ import com.example.TravelProject.dto.PostImagesDto;
 import com.example.TravelProject.dto.UsersDto;
 import com.example.TravelProject.service.BlogService;
 import com.example.TravelProject.service.CategoryService;
+import com.example.TravelProject.service.CommentsService;
 import com.example.TravelProject.service.PostService;
 import com.example.TravelProject.service.UsersService;
 
@@ -38,6 +40,8 @@ public class PostController {
 	private CategoryService categoryService;
 	@Autowired
 	private PostService postService;
+	@Autowired
+	private CommentsService commentsService;
 	
 	// 게시글 작성 페이지로 이동
 	@RequestMapping("/writePost")
@@ -121,13 +125,18 @@ public class PostController {
 					contents.set(i+1, dto);
 				};
 			};
-			log.info("contents: {}", contents);
+//			log.info("contents: {}", contents);
 			model.addAttribute("contents", contents);
 		} else {
 			// 간단 양식
 			model.addAttribute("textsList", textsList);
 			model.addAttribute("imagesList", imagesList);
 		};
+		
+		// 댓글 가져오기
+		List<CommentsDto> commentsDto = commentsService.findCommentsByPostId(postId);
+		// 댓글이 있으면 model로 넘기기
+		model.addAttribute("commentsDto", commentsDto);
 		
 		return "singlePost";
 	};

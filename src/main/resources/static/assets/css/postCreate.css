@@ -81,7 +81,7 @@ html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:activ
 	margin-left: auto; 
 	margin-right: auto;
 }
-#standardContent {
+#standardContents {
 	overflow: auto; 
 	height: 30em;
 }

@@ -36,14 +36,14 @@ footer {
 	display: inline-block;
 	margin-right: 0.5em;
 }
-.commentsDiv { /* 댓글 Div */
+.commentsDiv { /* 댓글 입력 Div */
 	position: relative;
 	border-top: 1px solid rgba(160, 160, 160, 0.3);
 	padding-top: 1em;
 	padding-left: 3em;
 	padding-right: 3em;
 }
-.comments { /* 댓글 입력 */
+.commentContents { /* 댓글 입력 */
 	margin-top: 0.5em;
 	resize: none;
 }
@@ -54,4 +54,33 @@ footer {
 	padding: 0 1em;
     line-height: 2.5em;
     height: 2.5em;
+}
+.commentsList { /* 댓글 목록 */
+	position: relative;
+}
+.commentsListDiv { /* 위의것 바로 하위 div */
+	/* border-bottom: 1px solid rgba(160, 160, 160, 0.2); */
+	vertical-align: middle;
+	padding-top: 1em;
+	padding-bottom: 0.5em;
+}
+.commentDates { /* 댓글 날짜 */
+	position: absolute;
+	right: 0;
+	font-size: 0.8em;
+}
+.commentsbtn { /* 답글, 삭제, 저장 */
+	margin-left: 0.5em;
+	padding: 0 0.8em !important;
+    line-height: 2.5em !important;
+    height: 2.5em !important;
+    font-size: 0.7em !important;
+}
+.replyDiv { /* 답글 입력 */
+	position: relative;
+	display: none;
+}
+.saveReply { /* 저장 */
+	position: absolute;
+	right: 0;
 }
