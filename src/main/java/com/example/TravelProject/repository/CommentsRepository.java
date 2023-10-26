@@ -9,7 +9,7 @@ import com.example.TravelProject.entity.Comments;
 
 public interface CommentsRepository extends JpaRepository<Comments, Long> {
 	
-	@Query(value="SELECT * FROM comments WHERE post_id = :post_id ORDER BY comment_gup, comment_lev, comment_seq",
+	@Query(value="SELECT * FROM comments WHERE post_id = :post_id ORDER BY comment_gup, comment_seq",
 			nativeQuery = true)
 	List<Comments> findCommentsByPostId(Long post_id);
 	

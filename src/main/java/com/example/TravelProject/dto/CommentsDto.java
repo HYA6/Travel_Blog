@@ -24,13 +24,14 @@ public class CommentsDto {
 	private int commentGup; // 댓글 그룹
 	private int commentLev; // 댓글 레벨
 	private int commentSeq; // 댓글 출력 순서
+	private String commentDel; // 댓글 삭제 여부
 	private Long userNum; // 유저 고유 번호
 	private Long postId; // 게시글 고유 번호
 	
 	// Entity를 Dto로 변환
 	public static CommentsDto toDto(Comments comments) {
 		return new CommentsDto(comments.getCommentId(), comments.getCommentContent(), comments.getCommentDate(),
-				comments.getCommentGup(), comments.getCommentLev(), comments.getCommentSeq(), 
+				comments.getCommentGup(), comments.getCommentLev(), comments.getCommentSeq(), comments.getCommentDel(),
 				comments.getUsers().getUserNum(), comments.getPost().getPostId());
 	};
 	

@@ -51,6 +51,17 @@ public class CommentsService {
 				commentsRepository.findCommentsByPostId(postId).stream()
 				.map(comments -> CommentsDto.toDto(comments)).collect(Collectors.toList()) 
 				: null;
+	}
+	
+	// 댓글 삭제하기(삭제로 업데이트)
+	public void deleteComment(CommentsDto commentsDto) {
+		log.info("CommentsService의 deleteComment()");
+		// 댓글 번호 없으면 삭제 못함
+		Comments comments = commentsRepository.findById(commentsDto.getCommentId())
+				.orElseThrow(() -> new IllegalArgumentException("댓글 삭제 실패! 대상 댓글이 없습니다."));
+		comments.setCommentDel(commentsDto.getCommentDel());
+		// 저장
+		commentsRepository.save(comments);
 	};
 	
-}
+};

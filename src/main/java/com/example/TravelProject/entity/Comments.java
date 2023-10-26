@@ -46,6 +46,8 @@ public class Comments {
 	private int commentLev; // 댓글 레벨
 	@Column(name="comment_seq", columnDefinition="int")
 	private int commentSeq; // 댓글 출력 순서
+	@Column(name="comment_del", columnDefinition="varchar(10)")
+	private String commentDel; // 댓글 삭제 여부
 	// 외래키
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -60,7 +62,8 @@ public class Comments {
 	public static Comments toEntity(CommentsDto dto, Users users, Post post) {
 		// Entity 생성 및 반환
 		return new Comments(dto.getCommentId(), dto.getCommentContent(), dto.getCommentDate(), 
-				dto.getCommentGup(), dto.getCommentLev(), dto.getCommentSeq(), users, post);
-	}
+				dto.getCommentGup(), dto.getCommentLev(), dto.getCommentSeq(), dto.getCommentDel(),
+				users, post);
+	};
 	
-}
+};

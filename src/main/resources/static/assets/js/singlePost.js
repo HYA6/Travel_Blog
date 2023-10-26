@@ -1,15 +1,25 @@
-// 댓글 답글 입력창 표시
-function replyOpen(event) {
-	let eventId = event.getAttribute('id');
-	let commentId = eventId.subString(8);
-	console.log(commentId);
-//	$('#reply' + commentId).show();
+$(document).ready(function() {
+	$('#topCommentGup').val($('.topComments').length + 1);
+	$('#secondCommentSeq').val($('.downComments').length + 1);
+});
+
+// 더보기
+function replyOpenMore(event) {
+	let commentGup = event.getAttribute('id').substring(9);
+	let replyDiv = $('.replyOpenMore' + commentGup).parents('.commentsListDiv');
+	replyDiv.toggle();
+	console.log(replyDiv.css('display'));
+	if (replyDiv.css('display') == 'none') {
+		$('#replyShow' + commentGup).hide();
+		$('#replyClose' + commentGup).show();
+	} else {
+		$('#replyShow' + commentGup).show();
+		$('#replyClose' + commentGup).hide();
+	};
 };
 
-// 답글 더보기
-function replyOpenMore(event) {
-	let eventId = event.getAttribute('id');
-	let commentGup = eventId.substring(9);
-	console.log(commentGup);
-//	$('#replyOpenMore' + commentGup).show();
+// 답글
+function replyOpen(event) {
+	let commentId = event.getAttribute('id').substring(8);
+	$('#reply' + commentId).toggle();
 };

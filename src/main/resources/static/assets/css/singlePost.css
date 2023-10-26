@@ -1,19 +1,19 @@
-.standardDiv { /* 기본 양식 Div */
+.standardDiv { /* 기본 양식 div */
 	margin-left: auto;
 	margin-right: auto;
 }
-.standardImgDiv { /* 기본 양식 이미지 Div */
+.standardImgDiv { /* 기본 양식 이미지 div */
 	display: inline-block;
 	width: 100%;
 }
 .standardImg { /* 기본 양식 이미지 */
 	max-width: 30em;
 }
-.simpleImageDivIf { /* 간단 양식 이미지 Div */
+.simpleImageDivIf { /* 간단 양식 이미지 div */
 	margin-left: auto;
 	margin-right: auto;
 }
-.simpleImageDivEach { /* 간단 양식 이미지 Div */
+.simpleImageDivEach { /* 간단 양식 이미지 div */
 	display: inline-block;
 	width: 45%;
 }
@@ -32,11 +32,11 @@ footer {
 .stats li { /* ul의 li */
 	font-size: 0.9em !important;
 }
-.postTagDiv { /* 태그 Div */
+.postTagDiv { /* 태그 div */
 	display: inline-block;
 	margin-right: 0.5em;
 }
-.commentsDiv { /* 댓글 입력 Div */
+.commentsDiv { /* 댓글 입력 div */
 	position: relative;
 	border-top: 1px solid rgba(160, 160, 160, 0.3);
 	padding-top: 1em;
@@ -64,11 +64,17 @@ footer {
 	padding-top: 1em;
 	padding-bottom: 0.5em;
 }
-.commentPlus { /* 더보기 */
+.commentsDelDiv { /* 댓글 div */
+	display: inline-block;
+}
+.replyPlus { /* 더보기 */
 	font-size: 0.8em;
 	cursor: pointer;
 }
-#replyClose {
+.replyPlus:hover { /* 더보기 */
+	color: #2ebaae;
+}
+.fa-caret-up {
 	display: none;
 }
 .commentDates { /* 댓글 날짜 */
@@ -76,14 +82,14 @@ footer {
 	right: 0;
 	font-size: 0.8em;
 }
-.commentsbtn { /* 답글, 삭제, 저장 */
+.commentsBtn { /* 답글, 삭제, 저장 */
 	margin-left: 0.5em;
 	padding: 0 0.8em !important;
     line-height: 2.5em !important;
     height: 2.5em !important;
     font-size: 0.7em !important;
 }
-.replyDiv { /* 답글 입력 */
+.replyDiv { /* 답글 입력 div */
 	position: relative;
 	display: none;
 }
