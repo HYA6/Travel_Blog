@@ -138,6 +138,9 @@ public class PostController {
 		// 댓글이 있으면 model로 넘기기
 		model.addAttribute("commentsDto", commentsDto);
 		
+		// 조회수 올리기
+		
+		
 		return "singlePost";
 	};
 	
