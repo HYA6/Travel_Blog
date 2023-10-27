@@ -92,9 +92,26 @@ public class PostController {
 		// 블로그에 있는 카테고리 전부 가져오기
 		List<CategoryDto> categoryDto = categoryService.selectCategoryList(blogDto.getBlogId());
 		
+		// 조회수 가져오기
+		Date nowdate = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String date = sdf.format(nowdate);
+//		log.info("date: {}", date);
+		String visitDate = postVisitService.findDate(userNum, postId);
+//		log.info("visitDate: {}", visitDate);
+		// 조회한 날짜가 다르면 조회수 올리기
+		if (!date.equals(visitDate)) {
+			PostVisitDto postVisitDto = new PostVisitDto(null, nowdate, userNum, blogDto.getBlogId(), postId);
+			postVisitService.visitUp(postVisitDto);
+		};
+		// 게시글의 전체 조회수 검색
+		int visitCount = postVisitService.selectAllVisit(postId);
+//		log.info("visitCount: {}", visitCount);
+		
 		// 게시글 1건 가져오기
 //		log.info("postId: {}", postId);
 		PostDto postDto = postService.findPostById(postId);
+		postDto.setPostVisits(visitCount);
 //		log.info("postDto: {}", postDto);
 		List<PostTextsDto> textsList = postService.findTextsByPostId(postId);
 //		log.info("contentsDtoList: {}", contentsDtoList);
@@ -139,28 +156,16 @@ public class PostController {
 			model.addAttribute("imagesList", imagesList);
 		};
 		
+		// 전체 댓글 수 가져오기
+		int commentCount = commentsService.selectAllComments(postId);
 		// 댓글 가져오기
 		List<CommentsDto> commentsDto = commentsService.findCommentsByPostId(postId);
 		// 댓글이 있으면 model로 넘기기
 		model.addAttribute("commentsDto", commentsDto);
 		
-		// 조회수 가져오기
-		Date nowdate = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String date = sdf.format(nowdate);
-		log.info("date: {}", date);
-		String visitDate = postVisitService.findDate(userNum, postId);
-		log.info("visitDate: {}", visitDate);
-		// 조회한 날짜가 다르면 조회수 올리기
-		if (!date.equals(visitDate)) {
-			PostVisitDto postVisitDto = new PostVisitDto(null, nowdate, userNum, postId);
-			postVisitService.visitUp(postVisitDto);
-		};
-		// 게시글의 조회수 검색
-		int visitCount = postVisitService.findVisit(postId);
-		log.info("visitCount: {}", visitCount);
-		// 조회수 model로 넘기기
-		model.addAttribute("visitCount", visitCount);
+		// 각 게시글 조회수, 좋아요수, 댓글수 저장
+		postDto.setPostComments(commentCount);
+		postService.savePost(postDto);
 		
 		return "singlePost";
 	};

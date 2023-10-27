@@ -19,6 +19,7 @@ public class CommentController {
 	@Autowired
 	private CommentsService commentsService;
 	
+	// 댓글 저장
 	@RequestMapping("/saveComment")
 	public String saveComment(CommentsDto commentsDto, RedirectAttributes re) {
 		log.info("CommentController의 saveComment()");
@@ -33,6 +34,7 @@ public class CommentController {
 		return "redirect:singlePost";
 	}
 	
+	// 댓글 삭제
 	@RequestMapping("/deleteComment")
 	public String deleteComment(CommentsDto commentsDto, RedirectAttributes re) {
 		log.info("CommentController의 saveComment()");

@@ -27,9 +27,18 @@
 					</a>
 					<footer>
 						<ul class="stats">
-							<li>조회수</li>
-							<li>좋아요수</li>
-							<li>댓글수</li>
+							<li style="font-size: 0.8em;">
+								<i class="fas fa-eye" title="조회수"></i>
+								<span th:text="${postList.postVisits}"></span>
+							</li>
+							<li style="font-size: 0.8em;">
+								<i class="fas fa-heart" title="좋아요수"></i>
+								<span th:text="${postList.postLikes}"></span>
+							</li>
+							<li style="font-size: 0.8em;">
+								<i class="fas fa-comment-alt" title="댓글수"></i>
+								<span th:text="${postList.postComments}"></span>
+							</li>
 						</ul>
 					</footer>
 				</article>

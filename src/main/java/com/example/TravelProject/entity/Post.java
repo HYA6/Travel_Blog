@@ -55,8 +55,12 @@ public class Post {
 	@Column(name="post_update")
 	@Temporal(TemporalType.DATE)
 	private Date postUpdate; // 게시글 수정일
-	@Column(name="post_likes", columnDefinition="int")
+	@Column(name="post_visits", columnDefinition="int default 0")
+	private int postVisits; // 게시글 조회수
+	@Column(name="post_likes", columnDefinition="int default 0")
 	private int postLikes; // 게시글 좋아요 수
+	@Column(name="post_comments", columnDefinition="int default 0")
+	private int postComments; // 게시글 전체 댓글 수
 	// 외래키
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -73,7 +77,8 @@ public class Post {
 		// Entity 생성 및 반환
 		return new Post(postDto.getPostId(), postDto.getPostForm(), postDto.getPostStartDate(), postDto.getPostEndDate(), 
 				postDto.getPostPlace(), postDto.getPostSubject(), postDto.getPostTag(), postDto.getPostThumbnail(), 
-				postDto.getPostWrite(), postDto.getPostUpdate(), postDto.getPostLikes(), blog, category);
+				postDto.getPostWrite(), postDto.getPostUpdate(), postDto.getPostLikes(), postDto.getPostVisits(),
+				postDto.getPostComments(), blog, category);
 	};
 	
 };

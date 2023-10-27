@@ -38,10 +38,10 @@ public class PostService {
 	@Autowired
 	private PostTextsRepository postTextsRepository;
 	
-	// 게시글 저장
+	// 게시글 저장 및 수정
 	@Transactional
-	public void createPost(PostDto postDto) {
-		log.info("PostService의 createPost() 메소드 실행");
+	public void savePost(PostDto postDto) {
+		log.info("PostService의 savePost() 메소드 실행");
 		Blog blog = blogRepository.findById(postDto.getBlogId())
 				.orElseThrow(() -> new IllegalArgumentException("게시글 저장 실패! 대상 블로그가 없습니다."));
 		Category category = categoryRepository.findById(postDto.getCategoryId())

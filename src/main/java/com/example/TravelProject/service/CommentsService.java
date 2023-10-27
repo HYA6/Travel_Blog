@@ -45,7 +45,7 @@ public class CommentsService {
 	// 댓글 가져오기
 	public List<CommentsDto> findCommentsByPostId(Long postId) {
 		log.info("CommentsService의 findCommentsByPostId()");
-		int commentNum = commentsRepository.findNumByPostId(postId);
+		int commentNum = commentsRepository.selectAllComments(postId);
 		// 댓글이 있으면 찾고 없으면 null 리턴
 		return commentNum != 0 ? 
 				commentsRepository.findCommentsByPostId(postId).stream()
@@ -62,6 +62,13 @@ public class CommentsService {
 		comments.setCommentDel(commentsDto.getCommentDel());
 		// 저장
 		commentsRepository.save(comments);
+	}
+	
+	// 게시글의 전체 댓글 수 가져오기
+	public int selectAllComments(Long postId) {
+		log.info("CommentsService의 selectAllComments()");
+		int commentNum = commentsRepository.selectAllComments(postId);
+		return commentNum;
 	};
 	
 };

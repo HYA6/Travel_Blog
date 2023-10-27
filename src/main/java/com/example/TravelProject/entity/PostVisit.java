@@ -47,14 +47,19 @@ public class PostVisit implements Serializable {
 	private Users users; // 유저 고유 번호
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JoinColumn(name = "blog_id", nullable=false, columnDefinition="int")
+	private Blog blog; // 블로그 고유 번호
+	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name = "post_id", nullable=false, columnDefinition="int")
 	private Post post; // 게시글 고유 번호
 	
 	
 //	DTO 데이터를 Entity로 변환하는 메소드
-	public static PostVisit toEntity(PostVisitDto postVisitDto, Users users, Post post) {
+	public static PostVisit toEntity(PostVisitDto postVisitDto, Users users, Blog blog, Post post) {
 		// Entity 생성 및 반환
-		return new PostVisit(postVisitDto.getPostVisitId(), postVisitDto.getPostVisitDate(), users, post);
+		return new PostVisit(postVisitDto.getPostVisitId(), postVisitDto.getPostVisitDate(), 
+				users, blog, post);
 	};
 	
 };

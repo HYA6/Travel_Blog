@@ -74,7 +74,7 @@ public class PostApiController {
 		postDto.setPostWrite(nowDate);
 		log.info("postDto: {}", postDto);
 		// 저장
-		postService.createPost(postDto);
+		postService.savePost(postDto);
 		// 저장한 게시글 얻어오기
 		PostDto search = postService.selectPostByOption(postDto);
 		
