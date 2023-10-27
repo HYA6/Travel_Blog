@@ -115,7 +115,12 @@
 							<span th:text="${postDto.postVisits}"></span>
 						</li>
 						<li>
-							<a th:href="savePostLike">
+							<a th:if="${#strings.isEmpty(likedPostDto.likedPost}" th:href="@{/savePostLike(postId=${postDto.postId})}"
+								style="color: red;">
+								<i class="fas fa-heart" title="좋아요수"></i>
+								<span th:text="${postDto.postLikes}"></span>
+							</a>
+							<a th:unless="${#strings.isEmpty(likedPostDto.likedPost)}" th:href="@{/deletePostLike(postId=${postDto.postId})}">
 								<i class="fas fa-heart" title="좋아요수"></i>
 								<span th:text="${postDto.postLikes}"></span>
 							</a>

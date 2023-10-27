@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.TravelProject.dto.BlogDto;
 import com.example.TravelProject.dto.CategoryDto;
 import com.example.TravelProject.dto.CommentsDto;
+import com.example.TravelProject.dto.LikedPostDto;
 import com.example.TravelProject.dto.PostContentsDto;
 import com.example.TravelProject.dto.PostTextsDto;
 import com.example.TravelProject.dto.PostVisitDto;
@@ -26,6 +27,7 @@ import com.example.TravelProject.dto.UsersDto;
 import com.example.TravelProject.service.BlogService;
 import com.example.TravelProject.service.CategoryService;
 import com.example.TravelProject.service.CommentsService;
+import com.example.TravelProject.service.LikedPostService;
 import com.example.TravelProject.service.PostService;
 import com.example.TravelProject.service.PostVisitService;
 import com.example.TravelProject.service.UsersService;
@@ -48,6 +50,8 @@ public class PostController {
 	private CommentsService commentsService;
 	@Autowired
 	private PostVisitService postVisitService;
+	@Autowired
+	private LikedPostService likedPostService;
 	
 	// 게시글 작성 페이지로 이동
 	@RequestMapping("/writePost")
@@ -101,17 +105,27 @@ public class PostController {
 //		log.info("visitDate: {}", visitDate);
 		// 조회한 날짜가 다르면 조회수 올리기
 		if (!date.equals(visitDate)) {
-			PostVisitDto postVisitDto = new PostVisitDto(null, nowdate, userNum, blogDto.getBlogId(), postId);
+			PostVisitDto postVisitDto = new PostVisitDto(null, nowdate, userNum, postId);
 			postVisitService.visitUp(postVisitDto);
 		};
 		// 게시글의 전체 조회수 검색
 		int visitCount = postVisitService.selectAllVisit(postId);
 //		log.info("visitCount: {}", visitCount);
+
+		// 전체 좋아요 수 가져오기
+		int likeCount = likedPostService.selectAllLikes(postId);
+		// 좋아요 정보 가져오기
+		LikedPostDto likedPostDto = likedPostService.findliked(userNum, postId);
+		// 좋아요 정보 model로 넘기기
+		if (likedPostDto == null) {
+			model.addAttribute("likedPostDto", "");
+		} else {
+			model.addAttribute("likedPostDto", likedPostDto);
+		};
 		
 		// 게시글 1건 가져오기
 //		log.info("postId: {}", postId);
 		PostDto postDto = postService.findPostById(postId);
-		postDto.setPostVisits(visitCount);
 //		log.info("postDto: {}", postDto);
 		List<PostTextsDto> textsList = postService.findTextsByPostId(postId);
 //		log.info("contentsDtoList: {}", contentsDtoList);
@@ -120,6 +134,8 @@ public class PostController {
 		model.addAttribute("usersDto", usersDto);
 		model.addAttribute("blogDto", blogDto);
 		model.addAttribute("categoryDto", categoryDto);
+		postDto.setPostVisits(visitCount);
+		postDto.setPostLikes(likeCount);
 		model.addAttribute("postDto", postDto);
 		
 		// 태그 가져오기

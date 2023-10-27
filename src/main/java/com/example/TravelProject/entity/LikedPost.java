@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.example.TravelProject.dto.LikedPostDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +35,7 @@ public class LikedPost implements Serializable {
 	@Column(name="liked_id", nullable=false, columnDefinition="int")
 	private Long likedPostId; // 게시글 좋아요 고유 번호
 	@Column(name="liked", columnDefinition="VARCHAR(10)")
-	private String likedPost; // 게시글 좋아요 여부(Y/N/null)
+	private String likedPost; // 게시글 좋아요 여부(Y/null)
 	// 외래키
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -46,9 +48,9 @@ public class LikedPost implements Serializable {
 	
 	
 //	DTO 데이터를 Entity로 변환하는 메소드(블로그, 사용자)
-	public static LikedPost toEntity(LikedPost postLikes, Users users, Post post) {
+	public static LikedPost toEntity(LikedPostDto likedPostDto, Users users, Post post) {
 		// Entity 생성 및 반환
-		return new LikedPost(postLikes.getLikedPostId(), postLikes.getLikedPost(), users, post);
+		return new LikedPost(likedPostDto.getLikedPostId(), likedPostDto.getLikedPost(), users, post);
 	}
 	
 }
