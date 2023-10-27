@@ -43,7 +43,10 @@ public class LikedPostService {
 		// 게시글 번호 없으면 찾지 못함
 		postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("좋아요 여부 찾기 실패! 대상 게시글이 없습니다."));
 		// 좋아요 정보 찾기
-		LikedPost likedPost = likedPostRepository.findLiked(userNum, postId);
+		LikedPost likedPost = null;
+		try {
+			likedPost = likedPostRepository.findLiked(userNum, postId);
+		} catch (Exception e) { }
 		return LikedPostDto.toDto(likedPost);
 	};
 	
