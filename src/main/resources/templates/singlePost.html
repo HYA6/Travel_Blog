@@ -11,8 +11,15 @@
 				<header>
 					<div class="title">
 						<h2 th:text="${postDto.postSubject}"></h2>
-						<p>여행 기간: <span th:text="${postDto.postStartDate}"></span> - <span th:text="${postDto.postEndDate}"></span></p>
-						<p>여행 장소: <span th:text="${postDto.postPlace}"></span></p>
+						<p style="font-size: 0.9em; font-weight: bold; margin-bottom: 0.5em;">
+							여행 기간: 
+							<span th:text="${postDto.postStartDate}"></span>
+							 - 
+							<span th:text="${postDto.postEndDate}"></span>
+						</p>
+						<p style="font-size: 0.9em; font-weight: bold;">
+							여행 장소: <span th:text="${postDto.postPlace}"></span>
+						</p>
 					</div>
 					<div class="meta">
 						<time class="published" th:text="${postDto.postWrite}"></time>
@@ -105,6 +112,7 @@
 						</li>
 						<li>
 							<i class="far fa-eye" title="조회수"></i>
+							<span th:text="${visitCount}"></span>
 						</li>
 						<li>
 							<a href="#">

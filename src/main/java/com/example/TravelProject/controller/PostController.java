@@ -1,6 +1,8 @@
 package com.example.TravelProject.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +19,7 @@ import com.example.TravelProject.dto.CategoryDto;
 import com.example.TravelProject.dto.CommentsDto;
 import com.example.TravelProject.dto.PostContentsDto;
 import com.example.TravelProject.dto.PostTextsDto;
+import com.example.TravelProject.dto.PostVisitDto;
 import com.example.TravelProject.dto.PostDto;
 import com.example.TravelProject.dto.PostImagesDto;
 import com.example.TravelProject.dto.UsersDto;
@@ -24,6 +27,7 @@ import com.example.TravelProject.service.BlogService;
 import com.example.TravelProject.service.CategoryService;
 import com.example.TravelProject.service.CommentsService;
 import com.example.TravelProject.service.PostService;
+import com.example.TravelProject.service.PostVisitService;
 import com.example.TravelProject.service.UsersService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +46,8 @@ public class PostController {
 	private PostService postService;
 	@Autowired
 	private CommentsService commentsService;
+	@Autowired
+	private PostVisitService postVisitService;
 	
 	// 게시글 작성 페이지로 이동
 	@RequestMapping("/writePost")
@@ -74,7 +80,6 @@ public class PostController {
 	@GetMapping("/singlePost")
 	public String singlePost(Model model,@RequestParam Long postId, HttpSession session) {
 		log.info("PostController의 singlePost() 메소드");
-		
 		Long userNum = (Long) session.getAttribute("userNum");
 		
 		// 로그인한 유저 정보 가져오기
@@ -95,18 +100,19 @@ public class PostController {
 //		log.info("contentsDtoList: {}", contentsDtoList);
 		List<PostImagesDto> imagesList = postService.findImagesByPostId(postId);
 //		log.info("imagesDtoList: {}", imagesDtoList);
-		
 		model.addAttribute("usersDto", usersDto);
 		model.addAttribute("blogDto", blogDto);
 		model.addAttribute("categoryDto", categoryDto);
 		model.addAttribute("postDto", postDto);
 		
+		// 태그 가져오기
 		String[] postTags = postDto.getPostTag().split(",");
 //		for(int i=0; i<postTags.length; i++) {
 //			log.info("태그: {}", postTags[i]);
 //		};
 		model.addAttribute("postTags", postTags);
 		
+		// 양식에 따른 게시글 내용 가져오기
 		if (postDto.getPostForm().equals("standard")) {
 			// 기본 양식
 			List<PostContentsDto> contents = new ArrayList<PostContentsDto>();
@@ -138,8 +144,23 @@ public class PostController {
 		// 댓글이 있으면 model로 넘기기
 		model.addAttribute("commentsDto", commentsDto);
 		
-		// 조회수 올리기
-		
+		// 조회수 가져오기
+		Date nowdate = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String date = sdf.format(nowdate);
+		log.info("date: {}", date);
+		String visitDate = postVisitService.findDate(userNum, postId);
+		log.info("visitDate: {}", visitDate);
+		// 조회한 날짜가 다르면 조회수 올리기
+		if (!date.equals(visitDate)) {
+			PostVisitDto postVisitDto = new PostVisitDto(null, nowdate, userNum, postId);
+			postVisitService.visitUp(postVisitDto);
+		};
+		// 게시글의 조회수 검색
+		int visitCount = postVisitService.findVisit(postId);
+		log.info("visitCount: {}", visitCount);
+		// 조회수 model로 넘기기
+		model.addAttribute("visitCount", visitCount);
 		
 		return "singlePost";
 	};
