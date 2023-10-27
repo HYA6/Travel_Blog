@@ -431,16 +431,16 @@ hashtagsInput.addEventListener("keydown", (event) => {
 function createPost() {
 	// 제목, 여행 날짜, 카테고리, 여행 장소 확인
 	if($('#postSubject').val() == '') {
-		alert('제목을 입력하세요.')
+		alert('제목을 입력하세요.');
 		return false;
 	} else if($('#categorySelect option:selected').val() == '') {
-		alert('카테고리를 선택하세요.')
+		alert('카테고리를 선택하세요.');
 		return false;
 	} else if($('#startDt').val() == '' || $('#endDt').val() == '') {
-		alert('첫날과 마지막날을 모두 선택하세요.')
+		alert('첫날과 마지막날을 모두 선택하세요.');
 		return false;
 	} else if($('#postPlace').val() == '') {
-		alert('여행 장소를 입력하세요.')
+		alert('여행 장소를 입력하세요.');
 		return false;
 	};
 	// 게시글 내용 부분
@@ -483,11 +483,9 @@ function createPost() {
 	};
 	// 대표 이미지와 태그 확인
 	if($('#postThumbnail').val() == '') {
-		if(!confirm('대표 이미지 없이 저장하시겠습니까?')) {
-			return false;
-		};
-	};
-	if($('#hashtags-hidden').val() == '') {
+		alert('대표 이미지를 선택해주세요.');
+		return false;
+	} else if($('#hashtags-hidden').val() == '') {
 		if(!confirm('태그 없이 저장하시겠습니까?')) {
 			return false;
 		};
@@ -502,35 +500,29 @@ function uploadThumbnail() {
 	let formData = new FormData();
 	let postThumbnail = document.querySelector('#postThumbnail').files[0];
 //	console.log(postThumbnail);
-	// 대표 이미지가 비어있지 않을 경우 업로드한다.
-	if (postThumbnail != undefined) {
-		formData.append('thumbnailFile', postThumbnail);
-//		console.log(formData.get('thumbnailFile'));
-		$.ajax({
-			url: 'api/uploadThumbnail',
-			type : "POST",
-			processData: false,
-		    contentType: false,
-			data : formData ,
-			async : false,
-			success : function (saveName) {
-        		console.log(saveName);
-        		if (saveName == 'N') {
-        			alert('썸네일이 이미지 파일이 아닙니다.');
-        			return false;
-        		} else {
-        			savePost(saveName);
-        		};
-			},
-			error: function() {
-				console.log('대표 이미지 업로드 실패');
-				return false;
-			}
-		})
-	} else {
-		let filePath = null;
-		savePost(filePath);
-	};
+	formData.append('thumbnailFile', postThumbnail);
+//	console.log(formData.get('thumbnailFile'));
+	$.ajax({
+		url: 'api/uploadThumbnail',
+		type : "POST",
+		processData: false,
+	    contentType: false,
+		data : formData ,
+		async : false,
+		success : function (saveName) {
+    		console.log(saveName);
+    		if (saveName == 'N') {
+    			alert('썸네일이 이미지 파일이 아닙니다.');
+    			return false;
+    		} else {
+    			savePost(saveName);
+    		};
+		},
+		error: function() {
+			console.log('대표 이미지 업로드 실패');
+			return false;
+		}
+	});
 };
 
 // 게시글 저장
@@ -574,56 +566,64 @@ function uploadImages(postId) {
 	let formData = new FormData();
 	let postForm = $('input[type="radio"]:checked').val();
 	if (postForm == 'standard') {
-		console.log('기본 양식으로 이미지 업로드');
-		for (let i=0; i < $('.standardImages').length-1; i++) {
-			formData.append('files', $('.standardImages')[i].files[0]);
+		if ($('.standardImgContents').length != 0) {
+			console.log('기본 양식으로 이미지 업로드');
+			for (let i=0; i < $('.standardImages').length-1; i++) {
+				formData.append('files', $('.standardImages')[i].files[0]);
+			};
+//			console.log(formData);
+			$.ajax({
+				url: 'api/uploadImage',
+				type : 'POST',
+				processData: false,
+				contentType: false,
+				data : formData ,
+				async : false,
+				success : function (fileNameList) {
+//					console.log(fileNameList);
+					saveImages(postId, fileNameList);
+				},
+				error: function() {
+					console.log('기본 양식으로 이미지 업로드 실패');
+					return false;
+				}
+			});
+		} else {
+			saveTexts(postId);
 		};
-//		console.log(formData);
-		$.ajax({
-			url: 'api/uploadImage',
-			type : 'POST',
-			processData: false,
-		    contentType: false,
-	        data : formData ,
-	        async : false,
-	        success : function (fileNameList) {
-//   	     	console.log(fileNameList);
-	        	saveImages(postId, fileNameList);
-	        },
-	        error: function() {
-				console.log('기본 양식으로 이미지 업로드 실패');
-				return false;
-			}
-		});
 	} else if (postForm == 'simple') {
-		console.log('간단 양식으로 이미지 업로드');
-		for (let i=1; i <= 5; i++) {
-			for (let j=1; j <= 4; j++) {
-				let simpleBtn = $('#simpleBtn' + i + '_' + j).val();
-				if (simpleBtn != '') {
-//					console.log('첨부된 이미지');
-//					console.log(simpleBtn);
-//					console.log($('.simpleBtn' + i)[j-1].files[0]);
-					formData.append('files', $('.simpleBtn' + i)[j-1].files[0]);
+		if ($('.simpleImageBtn').length != 0) {
+			console.log('간단 양식으로 이미지 업로드');
+			for (let i=1; i <= 5; i++) {
+				for (let j=1; j <= 4; j++) {
+					let simpleBtn = $('#simpleBtn' + i + '_' + j).val();
+					if (simpleBtn != '') {
+//						console.log('첨부된 이미지');
+//						console.log(simpleBtn);
+//						console.log($('.simpleBtn' + i)[j-1].files[0]);
+						formData.append('files', $('.simpleBtn' + i)[j-1].files[0]);
+					};
 				};
 			};
+			$.ajax({
+				url: 'api/uploadImage',
+				type : 'POST',
+				processData: false,
+				contentType: false,
+				data : formData ,
+				async : false,
+				success : function (fileNameList) {
+//   	 	    	console.log(fileNameList);
+					saveImages(postId, fileNameList);
+				},
+				error: function() {
+					console.log('기본 양식으로 이미지 업로드 실패');
+					return false;
+				}
+			});
+		} else {
+			saveTexts(postId);
 		};
-		$.ajax({
-			url: 'api/uploadImage',
-			type : 'POST',
-			processData: false,
-		    contentType: false,
-	        data : formData ,
-	        async : false,
-	        success : function (fileNameList) {
-//   	     	console.log(fileNameList);
-	        	saveImages(postId, fileNameList);
-	        },
-	        error: function() {
-				console.log('기본 양식으로 이미지 업로드 실패');
-				return false;
-			}
-		});
 	};
 };
 
@@ -655,7 +655,6 @@ function saveImages(postId, fileNameList) {
 				}
 			});
 		};
-		saveTexts(postId);
 	} else if (postForm == 'simple') {
 		console.log('간단 양식으로 이미지 저장');
 		let fileCount = 0; 
@@ -691,49 +690,21 @@ function saveImages(postId, fileNameList) {
 				};
 			};
 		};
-		saveTexts(postId);
 	};
+	saveTexts(postId);
 };
 
 // 내용 저장
 function saveTexts(postId) {
 	let postForm = $('input[type="radio"]:checked').val();
 	if (postForm == 'standard') {
-		console.log('기본 양식으로 내용 저장');
-		let postTextGup = $('#standardTextGup').val();
-		for (let i=0; i < $('.standardTextContents').length; i++) {
-			let postText = document.querySelectorAll('.standardTextContents')[i].value;
-			let postTextSeq = document.querySelectorAll('input[name="standardTextSeq"]')[i].value;
-			$.ajax({
-				url: 'api/saveText',
-				type: 'POST',
-				async : false,
-				data: {
-					'postText' : postText,
-					'postTextGup' : postTextGup,
-					'postTextSeq' : postTextSeq,
-					'postId' : postId
-				},
-				success : function(data) {
-					console.log(data);
-					location.replace('postToMain');
-				},
-				error: function() {
-					console.log('내용 저장 실패');
-					return false;
-				}
-			});
-		};
-	} else if (postForm == 'simple') {
-		console.log('간단 양식으로 내용 저장');
-		for (let i=1; i <= 5; i++) {
-			let postTextGup = $('#simpleTextGup' + i).val();
-			let postTextSeq = 0;
-			let simpleText = $('#simpleText' + i).val();
-			if (simpleText != '') {
-//				console.log('작성된 내용');
-//				console.log(simpleText);
-				let postText = simpleText;
+		// 내용이 있으면 저장
+		if ($('.standardTextContents').length != 0) {
+			console.log('기본 양식으로 내용 저장');
+			let postTextGup = $('#standardTextGup').val();
+			for (let i=0; i < $('.standardTextContents').length; i++) {
+				let postText = document.querySelectorAll('.standardTextContents')[i].value;
+				let postTextSeq = document.querySelectorAll('input[name="standardTextSeq"]')[i].value;
 				$.ajax({
 					url: 'api/saveText',
 					type: 'POST',
@@ -754,6 +725,46 @@ function saveTexts(postId) {
 					}
 				});
 			};
+		} else {
+			location.replace('postToMain');
+		};
+	} else if (postForm == 'simple') {
+		// 내용이 있으면 저장
+		if ($('#simpleText1').val() != '' || $('#simpleText2').val() != '' 
+			|| $('#simpleText3').val() != '' || $('#simpleText4').val() != '' 
+			|| $('#simpleText5').val() != '') {
+			console.log('간단 양식으로 내용 저장');
+			for (let i=1; i <= 5; i++) {
+				let postTextGup = $('#simpleTextGup' + i).val();
+				let postTextSeq = 0;
+				let simpleText = $('#simpleText' + i).val();
+				if (simpleText != '') {
+//					console.log('작성된 내용');
+//					console.log(simpleText);
+					let postText = simpleText;
+					$.ajax({
+						url: 'api/saveText',
+						type: 'POST',
+						async : false,
+						data: {
+							'postText' : postText,
+							'postTextGup' : postTextGup,
+							'postTextSeq' : postTextSeq,
+							'postId' : postId
+						},
+						success : function(data) {
+							console.log(data);
+							location.replace('postToMain');
+						},
+						error: function() {
+							console.log('내용 저장 실패');
+							return false;
+						}
+					});
+				};
+			};
+		} else {
+			location.replace('postToMain');
 		};
 	};
 };

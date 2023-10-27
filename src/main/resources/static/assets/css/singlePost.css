@@ -1,4 +1,5 @@
 .standardDiv { /* 기본 양식 div */
+    margin: 5em;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -9,17 +10,48 @@
 .standardImg { /* 기본 양식 이미지 */
 	max-width: 30em;
 }
-.simpleImageDivIf { /* 간단 양식 이미지 div */
+.simpleDiv { /* 간단 양식 div */
+    margin: 5em;
+	position: relative;
 	margin-left: auto;
 	margin-right: auto;
+	width: 100%;
+	min-width: 40em;
+	min-height: 20em;
 }
 .simpleImageDivEach { /* 간단 양식 이미지 div */
 	display: inline-block;
-	width: 45%;
+	width: 40%;
+}
+.simpleTextDivEach { /* 간단 양식 텍스트 div */
+	width: 100%;
+	height: 100%;
+}
+.simpleTextDiv { /* 간단 양식 텍스트 div */
+	width: 100%;
+	height: 100%;
+	vertical-align: middle;
 }
 .simpleImage { /* 간단 양식 이미지 */
 	width: 100%;
 	height: 100%;
+}
+#simpleLeftBtn, #simpleRightBtn { /* 이전, 다음 버튼 */
+	position: absolute;
+    top: 30%;
+	border: none;
+	box-shadow: none;
+	font-size: 1em;
+	cursor: pointer;
+}
+#simpleLeftBtn:hover, #simpleRightBtn:hover {
+	color: #2ebaae;
+}
+#simpleLeftBtn { /* 이전 */
+	left: 1em;
+}
+#simpleRightBtn { /* 다음 */
+	right: 1em;
 }
 footer {
 	display: block !important;

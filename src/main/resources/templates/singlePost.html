@@ -22,6 +22,7 @@
 						</a>
 					</div>
 				</header>
+				<!-- 게시글 -->
 				<!-- 기본 양식이면 -->
 				<div th:if="${postDto.postForm.toString().equals('standard')}">
 					<div th:each="contents:${contents}" class="standardDiv" align="center">
@@ -40,36 +41,38 @@
 					</div>
 				</div>
 				<!-- 간단 양식이면 -->
-				<div th:if="${postDto.postForm.toString().equals('simple')}" class="simpleImageDivIf" align="center">
-					<i id="simpleLeft" class="fas fa-chevron-left" onclick="simpleBefore()"></i>
+				<div th:if="${postDto.postForm.toString().equals('simple')}" class="simpleDiv" align="center">
+				 	<button id="simpleLeftBtn" onclick="simpleBefore()">
+				 		<i id="simpleLeft" class="fas fa-chevron-left"></i>
+				 	</button>
 					<div th:each="imagesList:${imagesList}" class="simpleImageDivEach">
-						<div th:if="${imagesList.postImageGup == 1}" id="simpleImageDiv1">
+						<div th:if="${imagesList.postImageGup == 1}" class="simpleImageDiv1">
 							<div th:each="postImageName:${imagesList.postImageName}">
 								<img th:src="|/image2/${imagesList.postImageName}|" class="simpleImage"/>
 							</div>
 						</div>
-						<div th:if="${imagesList.postImageGup == 2}" id="simpleImageDiv2">
+						<div th:if="${imagesList.postImageGup == 2}" class="simpleImageDiv2">
 							<div th:each="postImageName:${imagesList.postImageName}">
 								<img th:src="|/image2/${imagesList.postImageName}|" class="simpleImage"/>
 							</div>
 						</div>
-						<div th:if="${imagesList.postImageGup == 3}" id="simpleImageDiv3">
+						<div th:if="${imagesList.postImageGup == 3}" class="simpleImageDiv3">
 							<div th:each="postImageName:${imagesList.postImageName}">
 								<img th:src="|/image2/${imagesList.postImageName}|" class="simpleImage"/>
 							</div>
 						</div>
-						<div th:if="${imagesList.postImageGup == 4}" id="simpleImageDiv4">
+						<div th:if="${imagesList.postImageGup == 4}" class="simpleImageDiv4">
 							<div th:each="postImageName:${imagesList.postImageName}">
 								<img th:src="|/image2/${imagesList.postImageName}|" class="simpleImage"/>
 							</div>
 						</div>
-						<div th:if="${imagesList.postImageGup == 5}" id="simpleImageDiv5">
+						<div th:if="${imagesList.postImageGup == 5}" class="simpleImageDiv5">
 							<div th:each="postImageName:${imagesList.postImageName}">
 								<img th:src="|/image2/${imagesList.postImageName}|" class="simpleImage"/>
 							</div>
-						</div> 
+						</div>
 					</div>
-					<div th:each="textsList:${textsList}">
+					<div th:each="textsList:${textsList}" class="simpleTextDivEach">
 						<div th:if="${textsList.postTextGup == 1}" id="simpleTextDiv1" class="simpleTextDiv">
 							<p th:text="${textsList.postText}"></p>
 						</div>
@@ -86,24 +89,30 @@
 							<p th:text="${textsList.postText}"></p>
 						</div>
 					</div>
-					<i id="simpleRight" class="fas fa-chevron-right" onclick="simpleNext()"></i>
+					<button id="simpleRightBtn" onclick="simpleNext()">
+						<i id="simpleRight" class="fas fa-chevron-right"></i>
+					</button>
 				</div>
+				<!-- 태그, 조회수, 좋아요수 -->
 				<footer>
 					<ul class="stats">
 						<li class="postTagLi">
-							<div th:each="postTags:${postTags}" class="postTagDiv">
+							<div th:if="${postTags.length != 0}" th:each="postTags:${postTags}" class="postTagDiv">
 								<a href="#" class="postTags">
 									#<span th:text="${postTags}"></span>
 								</a>
 							</div>
 						</li>
-						<li><i class="far fa-eye"></i></li>
+						<li>
+							<i class="far fa-eye" title="조회수"></i>
+						</li>
 						<li>
 							<a href="#">
-								<i class="fas fa-heart"></i>
+								<i class="fas fa-heart" title="좋아요수"></i>
 							</a>
 						</li>
 					</ul>
+					<!-- 댓글 -->
 					<div class="commentsDiv">
 						<form action="saveComment" method="post">
 							Comments
