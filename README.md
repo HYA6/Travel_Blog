@@ -28,3 +28,5 @@ Java, JavaScript, JQuery, Ajax, REST API, JPA, Thymeleaf, CSS, Bootstrap, Spring
 - 양식에 따른 게시글 작성 : 카테고리 선택, 구글 지도 API를 이용한 여행 장소 검색, 이미지 로컬 파일에 저장<br/>
 - 게시글 목록, 게시글 한 건 출력 : 양식에 따른 게시글 출력, 저장된 이미지 출력<br/>
 - 댓글 작성 및 삭제<br/>
+- 조회수<br/>
+- 좋아요 기능 구현중
