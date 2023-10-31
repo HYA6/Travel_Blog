@@ -40,7 +40,7 @@ public class Flow {
 	@Column(name="flow_date", nullable=false)
 	@Temporal(TemporalType.DATE)
 	private Date flowDate; // 팔로 날짜
-	@Column(name="flow_status", nullable=false, columnDefinition="varchar(20)")
+	@Column(name="flow_status", columnDefinition="varchar(20)")
 	private String flowStatus; // 팔로 상태
 	@Column(name="flow_nickname", columnDefinition="varchar(10)")
 	private String flowNickname; // 팔로 닉네임

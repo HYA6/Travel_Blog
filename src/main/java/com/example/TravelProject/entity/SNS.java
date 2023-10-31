@@ -31,10 +31,10 @@ public class SNS {
 	@Column(name="sns_id", nullable=false, columnDefinition="int")
 	private Long snsId; // SNS 고유 번호
 //	데이터를 저장할 필드 선언
-	@Column(name="sns_url", nullable=false, columnDefinition="varchar(100)")
-	private String snsUrl; // SNS 주소
 	@Column(name="sns_name", nullable=false, columnDefinition="varchar(20)")
 	private String snsName; // SNS 이름
+	@Column(name="sns_url", nullable=false, columnDefinition="varchar(100)")
+	private String snsUrl; // SNS 주소
 	// 외래키
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
