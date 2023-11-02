@@ -36,7 +36,7 @@
 
 ## 🛠 사용한 기술
   * <b>BACK-END</b>
-      * Java, Spring Boot, JPA, Ajax, Maven
+      * Java, Spring Boot, JPA, Lombok, Json, Ajax, Maven
   * <b>API</b>
       * Naver Login API, Google Map API, REST API
   * <b>FRONT-END</b>
