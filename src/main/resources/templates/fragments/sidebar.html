@@ -31,14 +31,11 @@
 								<time class="published" th:text="${popularPost.postWrite}"></time>
 								<a th:href="@{/singlePost(postId=${popularPost.postId})}" class="author"><img th:src="|/image1/${popularPost.postThumbnail}|" alt="" /></a>
 						</header>
-						<a th:href="@{/singlePost(postId=${popularPost.postId})}" class="image"><img th:src="|/image1/${popularPost.postThumbnail}|" alt="" /></a>
-						<br/>
 					</div>
 				</article>
 			</div>
 		</section>
 		<!-- Posts List -->
-		<!-- 
 		<section>
 			<div>
 				<header>
@@ -48,16 +45,17 @@
 			<ul class="posts">
 				<li>
 					<article>
-						<header>
-							<h3><a href="single.html">댓글 내용</a></h3>
-							<time class="published" datetime="2015-10-20">댓글 작성일</time>
-						</header>
-						<a href="single.html" class="image"><img src="images/pic08.jpg" alt="" /></a>
+						<div>
+							<header th:each="recentComment:${recentComment}">
+								<h3 class="comment"><a th:href="@{/singlePost(postId=${recentComment.postId})}" th:text="${recentComment.commentContent}"></a></h3>
+								<time class="published" th:text="${recentComment.commentDate}"></time>
+							</header>
+						</div>
 					</article>
 				</li>
 			</ul>
 		</section>
-		About
+		<!-- 
 		<section class="blurb">
 			<h2>여기엔</h2>
 			<p>무얼 쓸까..</p>

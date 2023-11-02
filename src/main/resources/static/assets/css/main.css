@@ -2589,10 +2589,10 @@ input, select, textarea {
 			-webkit-align-items: -webkit-flex-start;
 			-ms-align-items: -ms-flex-start;
 			align-items: flex-start;
-			-moz-flex-direction: row-reverse;
-			-webkit-flex-direction: row-reverse;
-			-ms-flex-direction: row-reverse;
-			flex-direction: row-reverse;
+			-moz-flex-direction: row;
+			-webkit-flex-direction: row;
+			-ms-flex-direction: row;
+			flex-direction: row;
 		}
 
 			ul.posts article .image {
@@ -2617,10 +2617,11 @@ input, select, textarea {
 				ul.posts article header h3 {
 					font-size: 0.7em;
 					margin-top: 0.125em;
+					display: inline-block;
 				}
 
 				ul.posts article header .published {
-					display: block;
+					display: inline-block;
 					font-family: "Raleway", Helvetica, sans-serif;
 					font-size: 0.6em;
 					font-weight: 400;

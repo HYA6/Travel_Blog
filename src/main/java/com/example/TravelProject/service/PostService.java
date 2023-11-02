@@ -126,11 +126,11 @@ public class PostService {
 				.stream()
 				.map(images -> PostImagesDto.toDto(images)) // entity를 dto로 변환
 				.collect(Collectors.toList());
-	}
+	};
 	
 	// 좋아요 많은 순으로 게시글 목록 찾기
 	public List<PostDto> selectPopularPost(Long blogId) {
-		log.info("PostService의 findImagesByPostId() 실행");
+		log.info("PostService의 selectPopularPost() 실행");
 		return postRepository.findPopularPost(blogId)
 				.stream()
 				.map(popularPost -> PostDto.toDto(popularPost)) // entity를 dto로 변환

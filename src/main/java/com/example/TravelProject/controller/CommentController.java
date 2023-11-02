@@ -32,7 +32,7 @@ public class CommentController {
 		// 값 넘겨주기
 		re.addAttribute("postId", commentsDto.getPostId());
 		return "redirect:singlePost";
-	}
+	};
 	
 	// 댓글 삭제
 	@RequestMapping("/deleteComment")
@@ -45,6 +45,6 @@ public class CommentController {
 		// 값 넘겨주기
 		re.addAttribute("postId", commentsDto.getPostId());
 		return "redirect:singlePost";
-	}
+	};
 	
-}
+};

@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.TravelProject.dto.BlogDto;
 import com.example.TravelProject.dto.CategoryDto;
+import com.example.TravelProject.dto.CommentsDto;
 import com.example.TravelProject.dto.PostDto;
 import com.example.TravelProject.dto.UsersDto;
 import com.example.TravelProject.service.BlogService;
 import com.example.TravelProject.service.CategoryService;
+import com.example.TravelProject.service.CommentsService;
 import com.example.TravelProject.service.PostService;
 import com.example.TravelProject.service.UsersService;
 
@@ -32,6 +34,8 @@ public class MainController {
 	private CategoryService categoryService;
 	@Autowired
 	private PostService postService;
+	@Autowired
+	private CommentsService commentsService;
 	
 	@RequestMapping("/main")
 	public String main(Model model, HttpSession session) {
@@ -57,15 +61,18 @@ public class MainController {
 		
 		// 블로그에 있는 인기순 게시글 가져오기(5개)
 		List<PostDto> popularPost = postService.selectPopularPost(blogId);
-		log.info("popularPost: {}", popularPost);
+//		log.info("popularPost: {}", popularPost);
 		
 		// 블로그에 있는 최신 댓글 가져오기(5개)
+		List<CommentsDto> recentComment = commentsService.selectRecentComment(blogId);
+		log.info("recentComment: {}", recentComment);
 		
 		model.addAttribute("usersDto", usersDto);
 		model.addAttribute("blogDto", blogDto);
 		model.addAttribute("categoryDto", categoryDto);
 		model.addAttribute("postDto", postDto);
 		model.addAttribute("popularPost", popularPost);
+		model.addAttribute("recentComment", recentComment);
 		
 		return "main";
 	}
