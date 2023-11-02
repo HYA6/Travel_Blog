@@ -18,25 +18,24 @@
 	
 		<!-- Mini Posts -->
 		<section>
-			<!-- 
 			<div>
-				Mini Posts Header
 				<header>
 					<h3>인기글</h3>
 				</header>
 			</div>
 			<div class="mini-posts">
-				Mini Post
 				<article class="mini-post">
-					<header>
-						<h3><a href="single.html">인기 게시글</a></h3>
-						<time class="published" datetime="2015-10-20">게시글 작성일</time>
-						<a href="#" class="author"><img src="images/avatar.jpg" alt="" /></a>
-					</header>
-					<a href="single.html" class="image"><img src="images/pic04.jpg" alt="" /></a>
+					<div class="miniDiv" th:each="popularPost:${popularPost}">
+						<header>
+								<h3><a th:href="@{/singlePost(postId=${popularPost.postId})}" th:text="${popularPost.postSubject}"></a></h3>
+								<time class="published" th:text="${popularPost.postWrite}"></time>
+								<a th:href="@{/singlePost(postId=${popularPost.postId})}" class="author"><img th:src="|/image1/${popularPost.postThumbnail}|" alt="" /></a>
+						</header>
+						<a th:href="@{/singlePost(postId=${popularPost.postId})}" class="image"><img th:src="|/image1/${popularPost.postThumbnail}|" alt="" /></a>
+						<br/>
+					</div>
 				</article>
 			</div>
-			 -->
 		</section>
 		<!-- Posts List -->
 		<!-- 

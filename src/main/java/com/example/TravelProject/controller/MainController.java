@@ -56,6 +56,8 @@ public class MainController {
 //		log.info("postDto: {}", postDto);
 		
 		// 블로그에 있는 인기순 게시글 가져오기(5개)
+		List<PostDto> popularPost = postService.selectPopularPost(blogId);
+		log.info("popularPost: {}", popularPost);
 		
 		// 블로그에 있는 최신 댓글 가져오기(5개)
 		
@@ -63,6 +65,7 @@ public class MainController {
 		model.addAttribute("blogDto", blogDto);
 		model.addAttribute("categoryDto", categoryDto);
 		model.addAttribute("postDto", postDto);
+		model.addAttribute("popularPost", popularPost);
 		
 		return "main";
 	}

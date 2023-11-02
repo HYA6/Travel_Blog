@@ -67,7 +67,7 @@ public class PostService {
 				post.getPostEndDate(), post.getBlog().getBlogId(), post.getCategory().getCategoryId());
 		log.info("search: {}", search);
 		return PostDto.toDto(search);
-	}
+	};
 	
 	// 이미지 저장
 	@Transactional
@@ -91,7 +91,7 @@ public class PostService {
 		PostTexts postContents = PostTexts.toEntity(postTextsDto, post);
 		// 내용 저장
 		postTextsRepository.save(postContents);
-	}
+	};
 	
 	// 블로그 고유 번호로 게시글 목록 찾기
 	public List<PostDto> selectAllPost(Long blogId) {
@@ -100,7 +100,7 @@ public class PostService {
 				.stream()
 				.map(post -> PostDto.toDto(post)) // entity를 dto로 변환
 				.collect(Collectors.toList());
-	}
+	};
 	
 	// 게시글 고유 번호로 게시글 1건 찾기
 	public PostDto findPostById(Long postId) {
@@ -108,7 +108,7 @@ public class PostService {
 		Post post = postRepository.findById(postId)
 				.orElseThrow(() -> new IllegalArgumentException("게시글 찾기 실패! 대상 게시글이 없습니다."));
 		return PostDto.toDto(post);
-	}
+	};
 
 	// 게시글 고유 번호로 게시글 내용 목록 찾기
 	public List<PostTextsDto> findTextsByPostId(Long postId) {
@@ -117,7 +117,7 @@ public class PostService {
 				.stream()
 				.map(texts -> PostTextsDto.toDto(texts)) // entity를 dto로 변환
 				.collect(Collectors.toList());
-	}
+	};
 
 	// 게시글 고유 번호로 게시글 이미지 목록 찾기
 	public List<PostImagesDto> findImagesByPostId(Long postId) {
@@ -125,6 +125,15 @@ public class PostService {
 		return postImagesRepository.findByPostId(postId)
 				.stream()
 				.map(images -> PostImagesDto.toDto(images)) // entity를 dto로 변환
+				.collect(Collectors.toList());
+	}
+	
+	// 좋아요 많은 순으로 게시글 목록 찾기
+	public List<PostDto> selectPopularPost(Long blogId) {
+		log.info("PostService의 findImagesByPostId() 실행");
+		return postRepository.findPopularPost(blogId)
+				.stream()
+				.map(popularPost -> PostDto.toDto(popularPost)) // entity를 dto로 변환
 				.collect(Collectors.toList());
 	};
 	

@@ -82,7 +82,7 @@ public class PostController {
 	
 	// 게시글 1건 보기
 	@GetMapping("/singlePost")
-	public String singlePost(Model model,@RequestParam Long postId, HttpSession session) {
+	public String singlePost(Model model, @RequestParam Long postId, HttpSession session) {
 		log.info("PostController의 singlePost() 메소드");
 		Long userNum = (Long) session.getAttribute("userNum");
 		
@@ -178,6 +178,9 @@ public class PostController {
 		List<CommentsDto> commentsDto = commentsService.findCommentsByPostId(postId);
 		// 댓글이 있으면 model로 넘기기
 		model.addAttribute("commentsDto", commentsDto);
+		
+		// 인기글
+		
 		
 		// 각 게시글 조회수, 좋아요수, 댓글수 저장
 		postDto.setPostComments(commentCount);
