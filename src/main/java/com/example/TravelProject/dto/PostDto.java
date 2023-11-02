@@ -37,7 +37,7 @@ public class PostDto {
 	public static PostDto toDto(Post post) {
 		return new PostDto(post.getPostId(), post.getPostForm(), post.getPostStartDate(), post.getPostEndDate(), 
 				post.getPostPlace(), post.getPostSubject(), post.getPostTag(), post.getPostThumbnail(), post.getPostWrite(), 
-				post.getPostUpdate(), post.getPostLikes(), post.getPostVisits(), post.getPostComments(),
+				post.getPostUpdate(), post.getPostVisits(), post.getPostLikes(), post.getPostComments(),
 				post.getBlog().getBlogId(), post.getCategory().getCategoryId());
 	};
 	

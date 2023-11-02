@@ -36,13 +36,10 @@ public class LikedPostController {
 	
 	// 게시글 좋아요 삭제
 	@GetMapping("/deletePostLike")
-	public String deletePostLike(@RequestParam Long postId, HttpSession session, RedirectAttributes re) {
+	public String deletePostLike(@RequestParam Long likedPostId, @RequestParam Long postId, RedirectAttributes re) {
 		log.info("LikedPostController의 deletePostLike() 메소드");
-		Long userNum = (Long) session.getAttribute("userNum");
-		// 게시글 정보 가져오기
-		LikedPostDto likedPostDto = likedPostService.findliked(userNum, postId);
 		// 삭제
-		likedPostService.deletePostLike(likedPostDto.getLikedPostId());
+		likedPostService.deletePostLike(likedPostId);
 		// 게시글 번호 넘겨주기
 		re.addAttribute("postId", postId);
 		return "redirect:singlePost";

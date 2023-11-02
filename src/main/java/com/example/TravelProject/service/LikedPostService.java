@@ -47,7 +47,8 @@ public class LikedPostService {
 		try {
 			likedPost = likedPostRepository.findLiked(userNum, postId);
 		} catch (Exception e) { }
-		return LikedPostDto.toDto(likedPost);
+		log.info("likedPost: {}", likedPost);
+		return likedPost != null ? LikedPostDto.toDto(likedPost) : null;
 	};
 	
 	// 좋아요 정보 저장

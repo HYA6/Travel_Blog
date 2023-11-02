@@ -77,7 +77,7 @@ public class Post {
 		// Entity 생성 및 반환
 		return new Post(postDto.getPostId(), postDto.getPostForm(), postDto.getPostStartDate(), postDto.getPostEndDate(), 
 				postDto.getPostPlace(), postDto.getPostSubject(), postDto.getPostTag(), postDto.getPostThumbnail(), 
-				postDto.getPostWrite(), postDto.getPostUpdate(), postDto.getPostLikes(), postDto.getPostVisits(),
+				postDto.getPostWrite(), postDto.getPostUpdate(), postDto.getPostVisits(), postDto.getPostLikes(),
 				postDto.getPostComments(), blog, category);
 	};
 	
