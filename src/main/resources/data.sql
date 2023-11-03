@@ -8,7 +8,7 @@ INSERT INTO category(category_id, category_name, category_private, category_gup,
  VALUES (1, '1번째 카테고리', 'N', 1, 0, 0, 1);
 
 INSERT INTO post(post_id, post_form, post_start_date, post_end_date, post_place, post_subject, post_tag, post_thumbnail, post_write, post_likes, blog_id, category_id)
- VALUES (1, 'simple', '2023-10-11', '2023-10-14', '스위스', '1번째 게시글', '테스트', '1698890505707_1572710025871-9.jpg', NOW(), 5, 1, 1);
+ VALUES (1, 'simple', '2023-10-11', '2023-10-14', '스위스', '1번째 게시글', '테스트', '1698890505707_1572710025871-9.jpg', NOW(), 0, 1, 1);
 INSERT INTO post(post_id, post_form, post_start_date, post_end_date, post_place, post_subject, post_tag, post_thumbnail, post_write, post_likes, blog_id, category_id)
  VALUES (2, 'simple', '2023-10-11', '2023-10-14', '스위스', '2번째 게시글', '테스트', '1698890505707_1572710025871-9.jpg', NOW(), 7, 1, 1);
 INSERT INTO post(post_id, post_form, post_start_date, post_end_date, post_place, post_subject, post_tag, post_thumbnail, post_write, post_likes, blog_id, category_id)

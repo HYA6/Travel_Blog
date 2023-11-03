@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,13 +94,19 @@ public class PostService {
 		postTextsRepository.save(postContents);
 	};
 	
-	// 블로그 고유 번호로 게시글 목록 찾기
-	public List<PostDto> selectAllPost(Long blogId) {
+	// 블로그 고유 번호로 게시글 페이지별 목록 찾기
+	public List<PostDto> selectAllPost(Long blogId, Pageable pageable) {
 		log.info("PostService의 selectAllPost() 실행");
-		return postRepository.selectByBlog(blogId)
+		return postRepository.selectAllPost(blogId, pageable)
 				.stream()
 				.map(post -> PostDto.toDto(post)) // entity를 dto로 변환
 				.collect(Collectors.toList());
+	};
+	
+	// 전체 게시글 수
+	public int selectTotalPost(Long blogId) {
+		log.info("PostService의 selectTotalPost() 실행");
+		return postRepository.selectTotalPost(blogId);
 	};
 	
 	// 게시글 고유 번호로 게시글 1건 찾기

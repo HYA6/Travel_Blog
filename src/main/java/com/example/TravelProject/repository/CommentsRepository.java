@@ -16,7 +16,7 @@ public interface CommentsRepository extends JpaRepository<Comments, Long> {
 	@Query(value="SELECT COUNT(*) FROM comments WHERE post_id = :post_id", nativeQuery = true)
 	int selectAllComments(Long post_id);
 
-	@Query(value="SELECT * FROM comments WHERE blog_id = :blog_id ORDER BY comment_id DESC Limit 0, 5",
+	@Query(value="SELECT * FROM comments WHERE blog_id = :blog_id AND comment_del IS NULL ORDER BY comment_id DESC Limit 0, 5",
 			nativeQuery = true)
 	List<Comments> findCommentsByBlogId(Long blog_id);
 	

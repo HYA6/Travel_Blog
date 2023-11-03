@@ -65,7 +65,7 @@ public class CommentsService {
 		// 댓글 번호 없으면 삭제 못함
 		Comments comments = commentsRepository.findById(commentsDto.getCommentId())
 				.orElseThrow(() -> new IllegalArgumentException("댓글 삭제 실패! 대상 댓글이 없습니다."));
-		comments.setCommentDel(commentsDto.getCommentDel());
+		comments.setCommentDel("Y");
 		// 저장
 		commentsRepository.save(comments);
 	};

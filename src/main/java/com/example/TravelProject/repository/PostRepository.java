@@ -2,6 +2,8 @@ package com.example.TravelProject.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -14,9 +16,13 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	Post selectPostByOption(String post_subject, String post_start_date, String post_end_date, Long blog_id, Long category_id);
 	
 	@Query(value="SELECT * FROM post WHERE blog_id = :blog_id", nativeQuery = true)
-	List<Post> selectByBlog(Long blog_id);
+	Page<Post> selectAllPost(Long blog_id, Pageable pageable);
 	
-	@Query(value="SELECT * FROM post WHERE blog_id = :blog_id ORDER BY post_likes DESC, post_id Limit 0, 5", nativeQuery = true)
+	@Query(value="SELECT COUNT(*) FROM post WHERE blog_id = :blog_id", nativeQuery = true)
+	int selectTotalPost(Long blog_id);
+	
+	@Query(value="SELECT * FROM post WHERE blog_id = :blog_id AND post_likes > 0 ORDER BY post_likes DESC, post_id Limit 0, 5", nativeQuery = true)
 	List<Post> findPopularPost(Long blog_id);
+
 
 };

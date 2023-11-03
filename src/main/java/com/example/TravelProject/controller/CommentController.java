@@ -39,7 +39,6 @@ public class CommentController {
 	public String deleteComment(CommentsDto commentsDto, RedirectAttributes re) {
 		log.info("CommentController의 saveComment()");
 //		log.info("commentsDto: {}", commentsDto);
-		commentsDto.setCommentDel("Y");
 		// 저장하기
 		commentsService.deleteComment(commentsDto);
 		// 값 넘겨주기

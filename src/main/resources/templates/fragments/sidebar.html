@@ -25,12 +25,17 @@
 			</div>
 			<div class="mini-posts">
 				<article class="mini-post">
-					<div class="miniDiv" th:each="popularPost:${popularPost}">
-						<header>
-								<h3><a th:href="@{/singlePost(postId=${popularPost.postId})}" th:text="${popularPost.postSubject}"></a></h3>
-								<time class="published" th:text="${popularPost.postWrite}"></time>
-								<a th:href="@{/singlePost(postId=${popularPost.postId})}" class="author"><img th:src="|/image1/${popularPost.postThumbnail}|" alt="" /></a>
-						</header>
+					<div th:if="${popularPost.size() == 0}">
+						인기글이 없습니다.
+					</div>
+					<div th:unless="${popularPost.size() == 0}">
+						<div class="miniDiv" th:each="popularPost:${popularPost}">
+							<header>
+									<h3><a th:href="@{/singlePost(postId=${popularPost.postId})}" th:text="${popularPost.postSubject}"></a></h3>
+									<time class="published" th:text="${popularPost.postWrite}"></time>
+									<a th:href="@{/singlePost(postId=${popularPost.postId})}" class="author"><img th:src="|/image1/${popularPost.postThumbnail}|" alt="" /></a>
+							</header>
+						</div>
 					</div>
 				</article>
 			</div>
@@ -45,7 +50,10 @@
 			<ul class="posts">
 				<li>
 					<article>
-						<div>
+						<div th:if="${recentComment.size() == 0}">
+							댓글이 없습니다.
+						</div>
+						<div th:unless="${recentComment.size() == 0}">
 							<header th:each="recentComment:${recentComment}">
 								<h3 class="comment"><a th:href="@{/singlePost(postId=${recentComment.postId})}" th:text="${recentComment.commentContent}"></a></h3>
 								<time class="published" th:text="${recentComment.commentDate}"></time>

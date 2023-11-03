@@ -9,6 +9,22 @@
 				<h2>게시글이 없습니다.</h2>
 			</div>
 			<div th:if="${postDto.size != 0}">
+				<!-- 게시글 목록 나중에 구현 
+				<div style="background-color: white; border: 1px solid rgba(160, 160, 160, 0.3); margin-bottom: 1em; padding: 1em 2em;">
+					<h2 style="display: inline-block; margin:0; margin-right: 0.5em; margin-bottom: 0.5em;">게시글 목록</h2>
+					<div th:each="postList:${postDto}" class="postListDiv" 
+						style="position: relative; padding: 0.5em;">
+						<a th:href="@{/singlePost(postId=${postList.postId})}" style="padding-left: 1em;">
+							<span th:text="${postList.postSubject}"></span>
+							<time class="published" th:text="${postList.postWrite}" style="position: absolute; right: 1em;"></time>
+						</a>
+					</div>
+					<ul class="actions pagination" style="display: block; text-align: center; margin: 0;">
+						<li style="display: inline-block; font-weight: bold;" onclick="postListBefore()">&lt;</li>
+						<li style="display: inline-block; font-weight: bold;" onclick="postListNext()">&gt;</li>
+					</ul>
+				</div>
+				 -->
 				<article th:each="postList:${postDto}" class="post">
 					<header>
 						<div class="title">
@@ -45,11 +61,23 @@
 			</div>
 			<!-- Pagination -->
 			<ul class="actions pagination">
-				<!-- 
-				<li><a href="" class="disabled button large previous">Previous Page</a></li>
-				<li><a href="#" class="button large next">Next Page</a></li>
-				 -->
-				<!-- 다른 사람 블로그이면 작성하기 버튼 없애기 -->
+				<li th:if="${postDto.size != 0}">
+					<a th:href="@{/main(currentPage=0)}" th:if="${currentPage == 0}" class="disabled button large previous">First Page</a>
+					<a th:href="@{/main(currentPage=0)}" th:unless="${currentPage == 0}" class="button large previous">First Page</a>
+				</li>
+				<li th:if="${postDto.size != 0}">
+					<a th:href="@{/main(currentPage=${currentPage - 1})}" th:if="${currentPage == 0}" class="disabled button large previous">Previous Page</a>
+					<a th:href="@{/main(currentPage=${currentPage - 1})}" th:unless="${currentPage == 0}" class="button large previous">Previous Page</a>
+				</li>
+				<li th:if="${postDto.size != 0}">
+					<a th:href="@{/main(currentPage=${currentPage + 1})}" th:if="${currentPage == totalPage}" class="disabled button large next">Next Page</a>
+					<a th:href="@{/main(currentPage=${currentPage + 1})}" th:unless="${currentPage == totalPage}" class="button large next">Next Page</a>
+				</li>
+				<li th:if="${postDto.size != 0}">
+					<a th:href="@{/main(currentPage=${totalPage})}" th:if="${currentPage == totalPage}" class="disabled button large next">Final Page</a>
+					<a th:href="@{/main(currentPage=${totalPage})}" th:unless="${currentPage == totalPage}" class="button large next">Final Page</a>
+				</li>
+				<!-- 다른 사람 블로그면 작성하기 버튼 없애기 -->
 				<li style="margin-left: auto;"><a href="writePost" class="button large next">Write Post</a></li>
 			</ul>
 		</div>

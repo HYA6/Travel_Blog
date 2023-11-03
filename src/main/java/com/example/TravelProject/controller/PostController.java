@@ -180,7 +180,11 @@ public class PostController {
 		model.addAttribute("commentsDto", commentsDto);
 		
 		// 인기글
-		
+		List<PostDto> popularPost = postService.selectPopularPost(blogDto.getBlogId());
+		model.addAttribute("popularPost", popularPost); // 인기글 목록
+		// 블로그에 있는 최신 댓글 가져오기(5개)
+		List<CommentsDto> recentComment = commentsService.selectRecentComment(blogDto.getBlogId());
+		model.addAttribute("recentComment", recentComment); // 최신 댓글 목록
 		
 		// 각 게시글 조회수, 좋아요수, 댓글수 저장
 		postDto.setPostComments(commentCount);
