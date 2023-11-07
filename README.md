@@ -70,9 +70,26 @@
 <br/>
 
 ## 🔍 기능 설명
-
+![게시글 작성1](https://github.com/HYA6/Travel_Blog/assets/130038444/b36484ca-77d7-4129-a27e-021299ad5229)
+![게시글 작성2 - 간단 결과](https://github.com/HYA6/Travel_Blog/assets/130038444/423b90ab-f450-48f0-bf5f-c7ceb4aa6e42)
+![게시글 작성2 - 간단](https://github.com/HYA6/Travel_Blog/assets/130038444/89f62443-556f-4f46-82ea-f7b4e406266f)
+![게시글 작성2 - 기본 결과](https://github.com/HYA6/Travel_Blog/assets/130038444/8293a8da-b9a5-4b88-9fa1-2e3c19c06355)
+![게시글 작성2 - 기본](https://github.com/HYA6/Travel_Blog/assets/130038444/579ed153-5ada-4cfa-802c-73de77184458)
+![게시글 작성3](https://github.com/HYA6/Travel_Blog/assets/130038444/0d08459d-61ab-44fa-9c94-ed1173e54076)
+![게시글 좋아요](https://github.com/HYA6/Travel_Blog/assets/130038444/3e3a592a-03f2-45a3-8ad7-00c9edf36d51)
+![내 정보 수정](https://github.com/HYA6/Travel_Blog/assets/130038444/74f0bfd7-03c2-44fd-baee-62e440b3a00f)
+![댓글 답글](https://github.com/HYA6/Travel_Blog/assets/130038444/1c004cb9-5618-4854-bbf7-6eaf018bb5d9)
+![블로그 삭제](https://github.com/HYA6/Travel_Blog/assets/130038444/4c9dbbba-793c-4e1e-af0a-05604031475e)
+![블로그 생성](https://github.com/HYA6/Travel_Blog/assets/130038444/f6c4ddfb-ef8c-4191-993a-f2cf8892f7ff)
+![블로그 수정](https://github.com/HYA6/Travel_Blog/assets/130038444/cd271293-c890-41d7-9651-f69e6e1762a9)
+![카테고리 생성](https://github.com/HYA6/Travel_Blog/assets/130038444/55229103-107c-4f43-9da2-d413a4398bd7)
+![회원탈퇴](https://github.com/HYA6/Travel_Blog/assets/130038444/05963f84-bd7a-4ae2-b138-37eec7d6248e)
+![회원가입](https://github.com/HYA6/Travel_Blog/assets/130038444/f31d469e-9733-49ba-9a07-954bfcc979cf)
+![로그인 아이디, 비번 일치 확인](https://github.com/HYA6/Travel_Blog/assets/130038444/5fdad99c-ce23-43d5-89d8-250c43665426)
+![페이징](https://github.com/HYA6/Travel_Blog/assets/130038444/c444a986-10ac-43bc-9edf-50abe9469e91)
 - ### 로그인
-  <img src=""/>
+  * 로그인 아이디, 비밀번호 일치 확인
+  <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/5fdad99c-ce23-43d5-89d8-250c43665426"/>
 - ### 회원가입
   
 - ### 블로그 생성
