@@ -83,6 +83,7 @@
     - 블로그 URL 중복 확인 (URL은 이후 검색 기능에 쓰일 예정입니다.)
   * 수정<br/>
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/cd271293-c890-41d7-9651-f69e6e1762a9"/><br/>
+    - 블로그 URL 중복 확인
   * 삭제<br/>
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/4c9dbbba-793c-4e1e-af0a-05604031475e"/><br/>
     - 삭제 후 블로그 생성 페이지로 이동합니다.
