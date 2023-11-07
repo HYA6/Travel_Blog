@@ -73,7 +73,7 @@
 
 - ### 로그인
   * 로그인 아이디, 비밀번호 일치 확인
-  <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/5fdad99c-ce23-43d5-89d8-250c43665426"/>
+    <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/5fdad99c-ce23-43d5-89d8-250c43665426"/><br/>
 - ### 회원가입
   
 - ### 블로그 생성
