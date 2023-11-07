@@ -89,6 +89,9 @@ function simpleNext() {
 		simpleTextDiv2.show();
 		// 이전 버튼 활성화
 		$('#simpleLeftBtn').attr("disabled", false);
+		if (simpleImageDiv3.length == 0) {
+			$('#simpleRightBtn').attr("disabled", true);
+		};
 	} else if ((simpleImageDiv2.css('display') != 'none' && simpleImageDiv2.css('display') != undefined 
 				|| simpleTextDiv2.css('display') != 'none' && simpleTextDiv2.css('display') != undefined) 
 				&& (simpleImageDiv3.length != 0 || simpleTextDiv3.length != 0)) {
@@ -96,6 +99,10 @@ function simpleNext() {
 		simpleTextDiv2.hide();
 		simpleImageDiv3.show();
 		simpleTextDiv3.show();
+		// 다음 게시글이 없으면 다음 버튼 비활성화
+		if (simpleImageDiv4.length == 0) {
+			$('#simpleRightBtn').attr("disabled", true);
+		};
 	} else if ((simpleImageDiv3.css('display') != 'none' && simpleImageDiv3.css('display') != undefined 
 			|| simpleTextDiv3.css('display') != 'none' && simpleTextDiv3.css('display') != undefined) 
 			&& (simpleImageDiv4.length != 0 || simpleTextDiv4.length != 0)) {

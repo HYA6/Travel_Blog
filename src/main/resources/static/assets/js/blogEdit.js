@@ -38,7 +38,7 @@ function blogEdit() {
 	
 	// fetch Ajax를 이용해서 REST API를 호출한다.
 	const url = '/api/blogUrlCheck/' + blogUrl.val();
-	 console.log(url);
+	console.log(url);
 	if (blogUrl.val() != DBUrl.val()){
 		fetch(url)
 		.then(response =>{

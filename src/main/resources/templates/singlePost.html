@@ -151,8 +151,8 @@
 								<div th:if="${commentsDto.commentLev == 0}">
 								<!-- 최상위 댓글 -->
 									<div th:if="${#strings.isEmpty(commentsDto.commentDel)}" class="commentsDelDiv">
-										<span th:if="${commentsDto.userNickname != null}" th:text="${commentsDto.userNickname}" class="topCommentsUser"></span>
-										<span th:unless="${commentsDto.userNickname != null}" th:text="${commentsDto.userName}" class="topCommentsUser"></span>
+										<span th:if="${#strings.isEmpty(commentsDto.userNickname)}" th:text="${commentsDto.userName}" class="topCommentsUser"></span>
+										<span th:unless="${#strings.isEmpty(commentsDto.userNickname)}" th:text="${commentsDto.userNickname}" class="topCommentsUser"></span>
 										<span th:text="${commentsDto.commentContent}" class="topComments"></span>
 									</div>
 									<div th:unless="${#strings.isEmpty(commentsDto.commentDel)}" class="commentsDelDiv">
@@ -190,8 +190,8 @@
 									<!-- 하위 댓글 -->
 										&nbsp;&nbsp;&nbsp;&nbsp;└ 
 										<div th:if="${#strings.isEmpty(commentsDto.commentDel)}" class="commentsDelDiv">
-											<span th:if="${commentsDto.userNickname != null}" th:text="${commentsDto.userNickname}" class="downCommentsUser"></span>
-											<span th:unless="${commentsDto.userNickname != null}" th:text="${commentsDto.userName}" class="downCommentsUser"></span>
+											<span th:if="${#strings.isEmpty(commentsDto.userNickname)}" th:text="${commentsDto.userName}" class="downCommentsUser"></span>
+											<span th:unless="${#strings.isEmpty(commentsDto.userNickname)}" th:text="${commentsDto.userNickname}" class="downCommentsUser"></span>
 											<span th:text="${commentsDto.commentContent}" class="downComments"></span>
 										</div>
 										<div th:unless="${#strings.isEmpty(commentsDto.commentDel)}" class="commentsDelDiv">
