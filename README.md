@@ -72,9 +72,11 @@
 - ### 로그인
   * 로그인 아이디, 비밀번호 일치 확인
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/5fdad99c-ce23-43d5-89d8-250c43665426"/><br/>
+---
 - ### 회원가입
   * 아이디 중복 검사, 비밀번호 확인, 이메일 유효성 검사
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/f31d469e-9733-49ba-9a07-954bfcc979cf"/><br/>
+---
 - ### 블로그
   * 생성<br/>
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/f6c4ddfb-ef8c-4191-993a-f2cf8892f7ff"/><br/>
@@ -84,9 +86,11 @@
   * 삭제<br/>
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/4c9dbbba-793c-4e1e-af0a-05604031475e"/><br/>
     - 삭제 후 블로그 생성 페이지로 이동합니다.
+---
 - ### 계층형 카테고리
   * 생성<br/>
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/55229103-107c-4f43-9da2-d413a4398bd7"/><br/>
+---
 - ### 게시글 작성
   * 게시글 기본 정보 입력
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/b36484ca-77d7-4129-a27e-021299ad5229"/><br/>
@@ -102,12 +106,13 @@
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/423b90ab-f450-48f0-bf5f-c7ceb4aa6e42"/><br/>
   * 기본 양식 게시글 결과
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/8293a8da-b9a5-4b88-9fa1-2e3c19c06355"/><br/>
-    
+---
 - ### 게시글 옵션
   * 조회수 증가 및 좋아요 표시
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/3e3a592a-03f2-45a3-8ad7-00c9edf36d51"/><br/>
     - 조회수는 회원 아이디, 조회한 날짜에 따라 증가합니다. (날이 바뀌면 조회 수 증가)
     - 좋아요는 회원 아이디에 따라 표시 가능하며 좋아요 수에 따라 인기글에 표시됩니다.
+---
 - ### 댓글 및 답글
   * 댓글 및 답글 작성, 삭제
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/1c004cb9-5618-4854-bbf7-6eaf018bb5d9"/><br/>
