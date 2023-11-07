@@ -85,18 +85,14 @@
   * 아이디 중복 검사, 비밀번호 확인, 이메일 유효성 검사
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/f31d469e-9733-49ba-9a07-954bfcc979cf"/><br/>
 - ### 블로그
-  * 생성
-    
+  * 생성<br/>
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/f6c4ddfb-ef8c-4191-993a-f2cf8892f7ff"/><br/>
-  * 수정
-    
+  * 수정<br/>
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/cd271293-c890-41d7-9651-f69e6e1762a9"/><br/>
-  * 삭제
-    
+  * 삭제<br/>
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/4c9dbbba-793c-4e1e-af0a-05604031475e"/><br/>
 - ### 계층형 카테고리
-  * 생성
-    
+  * 생성<br/>
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/55229103-107c-4f43-9da2-d413a4398bd7"/><br/>
 - ### 게시글 작성
   * 게시글 기본 정보 입력
