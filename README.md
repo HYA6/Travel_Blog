@@ -97,6 +97,8 @@
 - ### 게시글 작성
   * 게시글 기본 정보 입력
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/b36484ca-77d7-4129-a27e-021299ad5229"/><br/>
+    - 생성된 카테고리 중에서 선택 가능합니다.
+    - 구글 Map API를 이용하여 장소 검색 기능을 구현하였습니다.
   * 간단 양식 게시글 작성
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/89f62443-556f-4f46-82ea-f7b4e406266f"/><br/>
   * 기본 양식 게시글 작성
