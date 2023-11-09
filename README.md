@@ -20,6 +20,7 @@
 <br/>
 
 ## 📃 프로젝트 개요
+<img src="https://github.com/HYA6/Travel_Blog/assets/130038444/318bb23d-c18c-44cc-9319-20ee37dd02aa"/>
 
 > <b>주제</b> : 여행 블로그
 > 
