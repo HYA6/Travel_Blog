@@ -52,7 +52,7 @@
   * <b>SERVER</b>
       * Tomcat
   * <b>TOOLS & COMMUNICATION</b>
-      * STS Eclipse, GitHub
+      * STS, GitHub
 
 <br/>
 
