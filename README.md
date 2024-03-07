@@ -27,10 +27,9 @@
 > <b>기간</b> : 2023.09 - 2023.11
 >
 > <b>목적</b>
->   1. 경험해보지 않은 기술 활용 (Spring Boot, JPA, REST API 등)
->   2. 팀 프로젝트에서 안해보았던 기능 구현 (로그인, 회원가입, 지도 API 사용 등)
+>   1. 경험해보지 않은 기술 활용 (Spring Boot, JPA)
+>   2. 팀 프로젝트에서 안해보았던 기능 구현 (로그인, 회원가입, 네이버 로그인 및 회원가입, 지도 API)
 >   3. 여행 도중에도 간단하게 작성할 수 있는 블로그
->   4. 다른 사람들과 여행 정보 및 후기 공유
 >
 > <b>문의</b> : sjo6382@naver.com
 
@@ -38,16 +37,16 @@
 
 ## 🛠 사용한 기술
   * <b>BACK-END</b>
-      * Java, Spring Boot, JPA, Lombok, Json, Ajax, Maven
+      * Java, Spring Boot, JPA, Lombok, Ajax, Maven
   * <b>API</b>
-      * Naver Login API, Google Map API, REST API
+      * Naver Login API, Google Map API
   * <b>FRONT-END</b>
       * JavaScript, JQuery, Thymeleaf, CSS, Bootstrap
   * <b>DB</b>
       * MySQL, H2 Database
   * <b>SERVER</b>
       * Tomcat
-  * <b>TOOLS & COMMUNICATION</b>
+  * <b>TOOLS</b>
       * STS, GitHub
 
 <br/>
