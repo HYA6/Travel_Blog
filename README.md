@@ -76,7 +76,7 @@
 - ### 블로그
   * 생성<br/>
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/f6c4ddfb-ef8c-4191-993a-f2cf8892f7ff"/><br/>
-    - 블로그 URL 중복 확인 (URL은 이후 검색 기능에 쓰일 예정입니다.)
+    - 블로그 URL 중복 확인
   * 수정<br/>
     <img src="https://github.com/HYA6/Travel_Blog/assets/130038444/cd271293-c890-41d7-9651-f69e6e1762a9"/><br/>
     - 블로그 URL 중복 확인
