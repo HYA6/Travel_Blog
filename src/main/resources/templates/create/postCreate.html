@@ -2,6 +2,9 @@
 <html xmlns:th="http//www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default}">
+    <!-- The callback parameter is required, so we use console.debug as a noop -->
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5PdkMborGE_Byl6t3nd5X85ss4iHewSs&callback=console.debug&libraries=maps,marker&v=beta">
+    </script>
     <div layout:fragment="main">
     	<th:block layout:fragment="css">
 			<link rel="stylesheet" href="assets/css/postCreate.css">
@@ -64,7 +67,11 @@
 							<td align="center"><label for="pac-input" style="margin: 0; font-size: 1.2em;">여행 장소</label></td>
 							<td>
 								<input type="text" id="pac-input" class="controls" placeholder="여행 장소를 검색하세요."/>
-								<div id="googleMap" style="width: 80%; height: 25em; margin-top: 0.5em;"></div>
+								<div id="googleMap" style="width: 80%; height: 25em; margin-top: 0.5em;">
+                                    <gmp-map center="40.12150192260742,-100.45039367675781" zoom="4" map-id="DEMO_MAP_ID">
+                                        <gmp-advanced-marker position="40.12150192260742,-100.45039367675781" title="My location"></gmp-advanced-marker>
+                                    </gmp-map>
+                                </div>
 								<div id="postPlaceDiv" style="margin-top: 1em; display: none;">
 									저장할 여행 장소: &nbsp;&nbsp;
 									<input type="text" id="postPlace" disabled="disabled"/>
