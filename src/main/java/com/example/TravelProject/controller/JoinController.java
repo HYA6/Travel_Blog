@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -33,33 +32,30 @@ public class JoinController {
 	
 	// 아이디가 있는지 확인 후 유저 회원가입 및 로그인
 	@RequestMapping("/usersInsert")
-	public String usersInsert(HttpSession session, Model model, UsersDto usersDto, RedirectAttributes rttr) {
+	public String usersInsert(HttpSession session, UsersDto usersDto, RedirectAttributes rttr) {
 		log.info("JoinController의 usersInsert() 메소드");
 		Date nowDate = new Date();
 		
 		// DTO 데이터 처리
 		if (usersDto.getUserId() == null) {
-			// form 사용X (로그인 API 이용)
-			usersDto = (UsersDto) session.getAttribute("usersDto");
+			usersDto = (UsersDto) session.getAttribute("usersDto"); // form 사용X (로그인 API 이용)
 		} else {
-			// form으로 넘어온 생일 데이터로 나이 저장 (회원가입 이용)
+            // form으로 넘어온 생일 데이터로 나이 저장 (회원가입 이용)
 			int birthYear = Integer.parseInt(usersDto.getUserBirhtday().substring(0,4));
-//			log.info("birthYear: {}", birthYear);
 			@SuppressWarnings("deprecation")
 			int year = nowDate.getYear() + 1900;
 			usersDto.setUserAge(year - birthYear);
 		}
-		// 생성일에 오늘 날짜 넣어주기(yyyy-MM-dd)
+
+        // 생성일에 오늘 날짜 넣어주기(yyyy-MM-dd)
 		usersDto.setUserCreateDate(nowDate);
 		
 		// 이미 있는 유저 고유 번호인지 확인
 		UsersDto userInfo = usersService.findByuserId(usersDto.getUserId());
-//		log.info("userInfo: {}", userInfo);
 		Long userEntityId = null;
 		try {
 			userEntityId = userInfo.getUserNum();
 		} catch (NullPointerException e) { }
-//		log.info("userEntityId: {}", userEntityId);
 		
 		// 저장된 데이터나 유저 고유 번호가 없으면 DB에 새로 저장한다.
 		if (userInfo == null || userEntityId == null) {
@@ -71,11 +67,8 @@ public class JoinController {
 			}
 			// 유저 정보 저장
 			usersService.saveUser(usersDto);
-			// 저장된 유저 정보 가져오기
-			userInfo = usersService.findByuserId(usersDto.getUserId());
-			// 유저 고유 번호
-			userEntityId = userInfo.getUserNum();
-//			log.info("userEntityId: {}", userEntityId);
+			userInfo = usersService.findByuserId(usersDto.getUserId()); // 저장된 유저 정보 가져오기
+			userEntityId = userInfo.getUserNum(); // 유저 고유 번호
 			session.setAttribute("userNum", userEntityId);
 			// 새로 가입한 유저면 블로그 생성 페이지로 이동
 			return "redirect:blog";
