@@ -18,23 +18,23 @@ function blankCheck() {
 	var mail = emailId+"@"+emailDomain;
 	$("#mail").val(mail);
 	
-	if (userName.value == null || userName.value == '') {
+	if (userName.value == null || userName.value === '') {
 		alert("이름을 입력해주세요.");
 		userName.focus();
 		return false;
-	} else if (userId.value == null || userId.value == '') {
+	} else if (userId.value == null || userId.value === '') {
 		alert("아이디를 입력해주세요.");
 		userId.focus();
 		return false;
-	} else if (password1.value == null || password1.value == '') {
+	} else if (password1.value == null || password1.value === '') {
 		alert("비밀번호를 입력해주세요.");
 		password1.focus();
 		return false;
-	} else if (password2.value == null || password2.value == '') {
+	} else if (password2.value == null || password2.value === '') {
 		alert("비밀번호를 확인해주세요.");
 		password2.focus();
 		return false;
-	} else if (userBirhtday.value == null || userBirhtday.value == '') {
+	} else if (userBirhtday.value == null || userBirhtday.value === '') {
 		alert("생년월일을 선택해주세요.");
 		userBirhtday.focus();
 		return false;
@@ -50,7 +50,7 @@ function blankCheck() {
 // 아이디 중복 확인
 function idCheck() {
 	var userId = document.querySelector('#userId');
-	if (userId.value == null || userId.value == '') {
+	if (userId.value == null || userId.value === '') {
 		alert("아이디를 입력해주세요.");
 		userId.focus();
 		return false;
@@ -77,7 +77,7 @@ function passwordCheck() {
 	console.log('passwordCheck() 실행');
 	var password1 = document.querySelector('#password1');
 	var password2 = document.querySelector('#password2');
-	if (password1.value == password2.value){
+	if (password1.value === password2.value){
 		return true;
 	} else {
 		alert("비밀번호가 일치하지 않습니다.");
@@ -99,14 +99,12 @@ function emailCheck() {
 		type: 'POST',
 		data: {'userEmail' : userEmail},
 		success : function (data){
-			// console.log(data);
 			email = data;
-			if (blankCheck() == false) { // 빈 칸 있는지 확인
+			if (blankCheck() === false) { // 빈 칸 있는지 확인
 				return false;
 			}
-			// console.log(email);
-			// console.log(userEmail);
-			if (userEmail != email){
+            // 이메일이 없으면 회원가입 함수(join()) 호출, 있으면 알림 표시
+			if (userEmail !== email){
 				join();
 			} else {
 				alert("이미 있는 이메일입니다.");
@@ -125,19 +123,21 @@ function join() {
 	console.log('join() 실행');
 	var joinForm = document.querySelector('#joinForm'); // form 태그
 	
-	if ($('#idCheckBtn').val() == 'false') { // 아이디 중복 체크 여부
+	if ($('#idCheckBtn').val() === 'false') { // 아이디 중복 체크 여부
 		alert('아이디 중복 체크를 해주세요.');
 		return false;
 	}
-	if (passwordCheck() == false) { // 비밀번호 일치하는지 확인
+	if (passwordCheck() === false) { // 비밀번호 일치하는지 확인
 		return false;
 	}
+
+    var userPhone = $("#userPhone").val();
 	
 	// 전화번호 패턴
 	var patt = new RegExp("[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}");
-	var res = patt.test($("#userPhone").val());
+	var res = patt.test(userPhone);
 	// console.log($("#userPhone").val())
-	if($("#userPhone").val() != null && $("#userPhone").val() != '' && !res){ // 전화번호 내용이 있으면서 형식이 맞는지 확인
+	if(userPhone != null && userPhone !== '' && !res){ // 전화번호 내용이 있으면서 형식이 맞는지 확인
 		alert("전화번호를 정확히 입력하여 주십시오.");
 		$("#userPhone").focus();
 		return false;

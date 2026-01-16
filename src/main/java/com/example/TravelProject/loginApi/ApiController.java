@@ -62,8 +62,6 @@ public class ApiController {
 		usersDto.setUserEmail(email);
 		usersDto.setUserBirhtday(birthday);
 		
-//		log.info("usersDto: {}", usersDto);
-		
 		// 파싱된 값을 세션에 저장한다.
 		session.setAttribute("usersDto", usersDto);
 		

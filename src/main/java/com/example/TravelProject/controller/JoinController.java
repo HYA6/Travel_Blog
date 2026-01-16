@@ -74,14 +74,13 @@ public class JoinController {
 			return "redirect:blog";
 		} else {
 			session.setAttribute("userNum", userEntityId);
-			// 이미 가입한 유저지만 블로그가 없으면 블로그 생성 페이지로 이동
 			BlogDto blogDto = blogService.selectBlog(userEntityId);
+			// 이미 가입한 유저지만 블로그가 없으면 블로그 생성 페이지로 이동
 			if (blogDto == null) {
 				return "redirect:blog";
 			} else {
 				session.setAttribute("blogId", blogDto.getBlogId());
 				List<CategoryDto> categoryDto = categoryService.selectCategoryList(blogDto.getBlogId());
-//				log.info("categoryDto: {}", categoryDto);
 				// 이미 가입한 유저고 블로그는 있지만 카테고리가 없으면 카테고리 생성 페이지로 이동
 				if (categoryDto == null || categoryDto.isEmpty()) {
 					return "redirect:category";
