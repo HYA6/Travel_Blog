@@ -41,10 +41,8 @@ public class LoginController {
 	public String login(Model model, HttpSession session) throws UnsupportedEncodingException {
 		log.info("LoginController의 login() 실행");
 		
-		// 네이버 아이디로 인증 URL을 생성하기 위해서 NaverLoginBO 클래스의 getAuthorizationUrl() 메소드를
-		// 호출한다.
+		// 네이버 아이디로 인증 URL을 생성하기 위해서 NaverLoginBO 클래스의 getAuthorizationUrl() 메소드를 호출한다.
 		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
-//		log.info("네이버: {}", naverAuthUrl);
 		
 		model.addAttribute("NaverLoginUrl", naverAuthUrl);
 	    
@@ -58,7 +56,7 @@ public class LoginController {
 		
 		// 이미 있는 유저 고유 번호인지 확인
 		UsersDto userInfo = usersService.findByuserId(usersDto.getUserId());
-//		log.info("users: {}", users);
+
 		// 데이터가 없으면 로그인 페이지로 리턴한다.
 		if (userInfo == null) {
 			rttr.addFlashAttribute("msg", "존재하지 않는 아이디입니다.");
@@ -80,7 +78,6 @@ public class LoginController {
 		} else {
 			session.setAttribute("blogId", blogDto.getBlogId());
 			List<CategoryDto> categoryDto = categoryService.selectCategoryList(blogDto.getBlogId());
-//			log.info("categoryDto: {}", categoryDto);
 			// 카테고리가 없으면 카테고리 생성 페이지로 이동
 			if (categoryDto == null || categoryDto.isEmpty()) {
 				return "redirect:category";
