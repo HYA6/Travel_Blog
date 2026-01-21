@@ -2,10 +2,11 @@ package com.example.TravelProject.blog;
 
 import javax.servlet.http.HttpSession;
 
+import com.example.TravelProject.auth.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.TravelProject.auth.UsersDto;
 import com.example.TravelProject.auth.entity.Users;
@@ -18,75 +19,84 @@ import lombok.extern.slf4j.Slf4j;
 public class BlogController {
 	
 	@Autowired
-	private UsersRepository usersRepository;
+	private UsersService usersService;
 	@Autowired
 	private BlogService blogService;
+
+    // 블로그 유무 확인
+    @GetMapping("/blogChk")
+    public String blogChk(Model model, HttpSession session) {
+        log.info("BlogController의 blogChk() 메소드");
+        Long userNum = (Long) session.getAttribute("userNum");
+        BlogDto blogDto = blogService.selectBlog(userNum);
+        // 블로그가 없으면 생성 메소드 실행
+        if (blogDto == null) {
+            return "redirect:blog";
+        } else {
+            // 있으면 카테고리 유무 여부 확인 메소드로 이동
+            session.setAttribute("blogId",  blogDto.getBlogId());
+            return "redirect:categoryChk";
+        }
+    };
 	
 	// 블로그 생성 페이지로 이동
-	@RequestMapping("/blog")
+	@GetMapping("/blog")
 	public String blog(Model model, HttpSession session) {
 		log.info("BlogController의 blog() 메소드");
 		Long userNum = (Long) session.getAttribute("userNum");
-//		log.info("userNum: {}", userNum);
 		// 로그인한 사용자 정보 가져오기
-		Users users = usersRepository.findById(userNum).orElse(null);
-//		log.info("users: {}", users);
-		UsersDto usersDto = UsersDto.toDto(users);
+		UsersDto usersDto = usersService.selectIUser(userNum);
 		model.addAttribute("userNum", usersDto.getUserNum());
 		return "create/blogCreate";
 	};
 	
 	// 블로그 생성
-	@RequestMapping("/blogCreate")
-	public String blogCreate(HttpSession session, BlogDto blogDto, UsersDto usersDto) {
+	@PostMapping("/blogCreate")
+	public String blogCreate(HttpSession session, BlogDto blogDto) {
 		log.info("BlogController의 blogCreate() 메소드");
-//		log.info("blogDto: {}", blogDto);
-		Long userNum = usersDto.getUserNum();
+
+		Long userNum = (Long) session.getAttribute("userNum");
 		// 블로그 생성하기
 		blogService.blogCreate(blogDto, userNum);
 		// 로그인한 사용자 블로그 선택
 		BlogDto dto = blogService.selectBlog(userNum);
-//		log.info("dto: {}", dto);
+
 		session.setAttribute("blogId", dto.getBlogId());
 		return "redirect:category";
 	};
 	
-	// 블로그 설정 페이지로
-	@RequestMapping("/blogEdit")
+	// 블로그 수정 페이지로
+	@GetMapping("/blogEdit")
 	public String blogEdit(HttpSession session, Model model) {
 		log.info("BlogController의 blogEdit() 메소드");
+
 		Long userNum = (Long) session.getAttribute("userNum");
-//		log.info("userNum: {}", userNum);
-		// 로그인한 사용자 정보 가져오기
-		Users users = usersRepository.findById(userNum).orElse(null);
-//		log.info("users: {}", users);
-		UsersDto usersDto = UsersDto.toDto(users);
+        // 로그인한 사용자 정보 가져오기
+        UsersDto usersDto = usersService.selectIUser(userNum);
 		// 로그인한 사용자 블로그 선택
-		BlogDto dto = blogService.selectBlog(userNum);
-//		log.info("dto: {}", dto);
-		model.addAttribute("blogDto", dto);
+		BlogDto blogDto = blogService.selectBlog(userNum);
+
+		model.addAttribute("blogDto", blogDto);
 		model.addAttribute("usersDto", usersDto);
 		return "edit/blogEdit";
 	}
 	
 	// 블로그 수정
-	@RequestMapping("/blogEditOK")
+	@PutMapping("/blogEditOK")
 	public String blogEditOK(HttpSession session, BlogDto blogDto) {
 		log.info("BlogController의 blogEditOK() 메소드");
+
 		// 블로그 수정하기
 		blogService.blogEditOK(blogDto);
-		
-		session.setAttribute("userNum", blogDto.getUserNum());
+
 		return "redirect:blogEdit";
 	}
 	
 	// 블로그 삭제 후 생성 페이지로 이동
-	@RequestMapping("/blogDelete")
+	@DeleteMapping("/blogDelete")
 	public String blogDelete(HttpSession session) {
 		log.info("BlogController의 blogDelete() 메소드");
-		Long userNum = (Long) session.getAttribute("userNum");
-//		log.info("userNum: {}", userNum);
-		session.setAttribute("userNum", userNum);
+
 		return "redirect:blog";
 	}
 	

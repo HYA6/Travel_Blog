@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -47,8 +48,8 @@ public class LoginController {
 		return "create/login";
 	}
 	
-	// 로그인 가능 여부 확인
-	@RequestMapping("/usersSignup")
+	// 로그인 가능 여부 확인 후 로그인
+	@PostMapping("/usersSignup")
 	public String usersSignup(UsersDto usersDto, RedirectAttributes rttr, HttpSession session) {
 		log.info("LoginController의 usersSignup() 메소드 실행");
 		
@@ -66,34 +67,22 @@ public class LoginController {
 			return "redirect:/";
 		};
 		
-		// 아이디가 같은 데이터가 있으면 로그인한다.
+		// 아이디가 같은 데이터가 있으면 세션을 이용하여 로그인한다.
 		session.setAttribute("userNum", userInfo.getUserNum());
-		// 블로그 정보 불러오기
-		BlogDto blogDto = blogService.selectBlog(userInfo.getUserNum());
-		// 블로그가 없으면 블로그 생성 페이지로 이동
-		if (blogDto == null) {
-			return "redirect:blog";
-		} else {
-			session.setAttribute("blogId", blogDto.getBlogId());
-			List<CategoryDto> categoryDto = categoryService.selectCategoryList(blogDto.getBlogId());
-			// 카테고리가 없으면 카테고리 생성 페이지로 이동
-			if (categoryDto == null || categoryDto.isEmpty()) {
-				return "redirect:category";
-			} else {
-				return "redirect:main";
-			}
-		}
+
+        // 블로그 유무 확인 메소드로 이동
+        return "redirect:blogChk";
 	};
 	
 	// 회원가입 페이지로 이동
-	@RequestMapping("/join")
+	@GetMapping("/join")
 	public String join() {
 		log.info("LoginController의 join() 메소드 실행");
 		return "create/join";
 	};
 	
 	// 로그아웃
-	@RequestMapping("/logout")
+	@PostMapping("/logout")
 	public String logout(HttpSession session) {
 		log.info("LoginController의 logout() 메소드 실행");
 		session.invalidate();
@@ -101,7 +90,7 @@ public class LoginController {
 	};
 	
 	// 템플릿 설명 페이지로
-	@RequestMapping("/TempleteInfo")
+	@GetMapping("/TempleteInfo")
 	public String TempleteInfo() {
 		log.info("LoginController의 TempleteInfo() 메소드 실행");
 		return "TempleteInfo";
