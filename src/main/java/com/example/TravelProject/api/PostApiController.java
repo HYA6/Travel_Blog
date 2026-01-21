@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.TravelProject.dto.PostTextsDto;
-import com.example.TravelProject.dto.PostDto;
-import com.example.TravelProject.dto.PostImagesDto;
-import com.example.TravelProject.service.PostService;
+import com.example.TravelProject.post.PostTextsDto;
+import com.example.TravelProject.post.PostDto;
+import com.example.TravelProject.post.PostImagesDto;
+import com.example.TravelProject.post.PostService;
 
 import lombok.extern.slf4j.Slf4j;
 

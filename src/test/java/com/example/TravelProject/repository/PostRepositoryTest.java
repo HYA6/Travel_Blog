@@ -1,5 +1,6 @@
 package com.example.TravelProject.repository;
 
+import com.example.TravelProject.post.PostRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +11,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.TravelProject.entity.Post;
+import com.example.TravelProject.post.entity.Post;
 
 @DataJpaTest
 @Transactional
 class PostRepositoryTest {
 	
 	@Autowired
-	PostRepository postRepository;
+    PostRepository postRepository;
 	
 	@Test
 	@DisplayName("페이징 게시글 조회")
