@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.TravelProject.dto.UsersDto;
-import com.example.TravelProject.service.UsersService;
+import com.example.TravelProject.auth.UsersDto;
+import com.example.TravelProject.auth.UsersService;
 
 import lombok.extern.slf4j.Slf4j;
 
