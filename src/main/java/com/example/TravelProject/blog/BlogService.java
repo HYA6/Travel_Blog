@@ -28,7 +28,6 @@ public class BlogService {
 				.orElseThrow(() -> new IllegalArgumentException("블로그 생성 실패! 대상 유저가 없습니다."));
 		// dto를 entity로 변환
 		Blog blog = Blog.toEntity(dto, users);
-//		log.info("blog: {}", blog);
 		// 블로그 저장
 		blogRepository.save(blog);
 	}
@@ -38,7 +37,6 @@ public class BlogService {
 	public BlogDto selectBlog(Long userNum) {
 		log.info("BlogService의 selectBlog() 메소드 실행");
 		Blog blog = blogRepository.findById(userNum).orElse(null);
-//		log.info("blog: {}", blog);
 		try {
 			return BlogDto.toDto(blog);
 		} catch (NullPointerException e) {
@@ -50,7 +48,6 @@ public class BlogService {
 	public String findBlogUrl(String blogUrl) {
 		log.info("BlogService의 findBlogUrl() 메소드 실행");
 		String url = blogRepository.findByUrl(blogUrl);
-//		log.info("url: {}", url);
 		return url;
 	}
 	

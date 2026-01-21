@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.transaction.Transactional;
+
 @Slf4j
 @Service
 public class UsersService {
@@ -17,7 +19,6 @@ public class UsersService {
 	public UsersDto selectIUser(Long userNum) {
 		log.info("UsersService의 selectIUser() 메소드 실행");
 		Users users = usersRepository.findById(userNum).orElse(null);
-//		log.info("users: {}", users);
 		// Entity 데이터를 Dto로 바꿔주기
 		return users != null ? UsersDto.toDto(users) : null;
 	};
@@ -45,7 +46,8 @@ public class UsersService {
 		// Entity 데이터를 Dto로 바꿔주기
 		return users != null ? UsersDto.toDto(users) : null;
 	};
-	
+
+    @Transactional
 	// 유저 정보 저장
 	public void saveUser(UsersDto usersDto) {
 		log.info("UsersService의 findByuserEmail() 메소드 실행");
@@ -63,7 +65,8 @@ public class UsersService {
 		Users users = usersRepository.findByuserId(userId);
 		return users.getUserId();
 	};
-	
+
+    @Transactional
 	// 유저 정보 수정
 	public UsersDto updateInfo(UsersDto usersDto) {
 		log.info("UsersService의 updateInfo() 메소드 실행");
@@ -77,7 +80,8 @@ public class UsersService {
 		Users updated = usersRepository.save(users);
 		return UsersDto.toDto(updated);
 	};
-	
+
+    @Transactional
 	// 유저 정보 삭제
 	public void deleteUsers(Long userNum) {
 		log.info("UsersService의 deleteUsers() 메소드 실행");
