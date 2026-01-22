@@ -44,6 +44,7 @@ public class BlogController {
 	public String blog(Model model, HttpSession session) {
 		log.info("BlogController의 blog() 메소드");
 		Long userNum = (Long) session.getAttribute("userNum");
+
 		// 로그인한 사용자 정보 가져오기
 		UsersDto usersDto = usersService.selectIUser(userNum);
 		model.addAttribute("userNum", usersDto.getUserNum());
@@ -54,8 +55,8 @@ public class BlogController {
 	@PostMapping("/blogCreate")
 	public String blogCreate(HttpSession session, BlogDto blogDto) {
 		log.info("BlogController의 blogCreate() 메소드");
-
 		Long userNum = (Long) session.getAttribute("userNum");
+
 		// 블로그 생성하기
 		blogService.blogCreate(blogDto, userNum);
 		// 로그인한 사용자 블로그 선택
@@ -69,8 +70,8 @@ public class BlogController {
 	@GetMapping("/blogEdit")
 	public String blogEdit(HttpSession session, Model model) {
 		log.info("BlogController의 blogEdit() 메소드");
-
 		Long userNum = (Long) session.getAttribute("userNum");
+
         // 로그인한 사용자 정보 가져오기
         UsersDto usersDto = usersService.selectIUser(userNum);
 		// 로그인한 사용자 블로그 선택
@@ -85,10 +86,8 @@ public class BlogController {
 	@PutMapping("/blogEditOK")
 	public String blogEditOK(HttpSession session, BlogDto blogDto) {
 		log.info("BlogController의 blogEditOK() 메소드");
-
 		// 블로그 수정하기
 		blogService.blogEditOK(blogDto);
-
 		return "redirect:blogEdit";
 	}
 	
