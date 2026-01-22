@@ -47,8 +47,7 @@ public class BlogService {
 	// 블로그 주소 찾기
 	public String findBlogUrl(String blogUrl) {
 		log.info("BlogService의 findBlogUrl() 메소드 실행");
-		String url = blogRepository.findByUrl(blogUrl);
-		return url;
+        return blogRepository.findByUrl(blogUrl);
 	}
 	
 	// 블로그 수정
