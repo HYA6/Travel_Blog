@@ -20,7 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class JoinController {
-	
+
+    @Autowired
+    private JoinService joinService;
 	@Autowired
 	private UsersService usersService;
 	@Autowired
@@ -33,20 +35,9 @@ public class JoinController {
 	public String usersInsert(HttpSession session, UsersDto usersDto, RedirectAttributes rttr) {
 		log.info("JoinController의 usersInsert() 메소드");
 		Date nowDate = new Date();
-		
-		// DTO 데이터 처리
-		if (usersDto.getUserId() == null) {
-			usersDto = (UsersDto) session.getAttribute("usersDto"); // form 사용X (로그인 API 이용)
-		} else {
-            // form으로 넘어온 생일 데이터로 나이 저장 (회원가입 이용)
-			int birthYear = Integer.parseInt(usersDto.getUserBirhtday().substring(0,4));
-			@SuppressWarnings("deprecation")
-			int year = nowDate.getYear() + 1900;
-			usersDto.setUserAge(year - birthYear);
-		}
 
-        // 생성일에 오늘 날짜 넣어주기(yyyy-MM-dd)
-		usersDto.setUserCreateDate(nowDate);
+        // 로그인 경로 확인 후 각 요소(컬럼)를 DB 형식에 맞게 변환
+		usersDto = joinService.joinChk(session, usersDto);
 		
 		// 이미 있는 유저 고유 번호인지 확인
 		UsersDto userInfo = usersService.findByuserId(usersDto.getUserId());
