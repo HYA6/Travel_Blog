@@ -1,6 +1,6 @@
 package com.example.TravelProject.blog;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 import com.example.TravelProject.auth.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;

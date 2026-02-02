@@ -4,86 +4,120 @@ function setEmailDomain(domain){
 }
 
 // 빈칸 확인
-function blankCheck() {
-	console.log('blankCheck() 실행');
-	var userName = document.querySelector('#userName');
-	var userId = document.querySelector('#userId');
-	var password1 = document.querySelector('#password1');
-	var password2 = document.querySelector('#password2');
-	var userBirhtday = document.querySelector('#userBirhtday');
-	// 이메일 형식
-	var emailRule =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-	var emailId =$("#emailId").val();
-	var emailDomain =$("#emailDomain").val();
-	var mail = emailId+"@"+emailDomain;
-	$("#mail").val(mail);
-	
-	if (userName.value == null || userName.value === '') {
-		alert("이름을 입력해주세요.");
-		userName.focus();
-		return false;
-	} else if (userId.value == null || userId.value === '') {
-		alert("아이디를 입력해주세요.");
-		userId.focus();
-		return false;
-	} else if (password1.value == null || password1.value === '') {
-		alert("비밀번호를 입력해주세요.");
-		password1.focus();
-		return false;
-	} else if (password2.value == null || password2.value === '') {
-		alert("비밀번호를 확인해주세요.");
-		password2.focus();
-		return false;
-	} else if (userBirhtday.value == null || userBirhtday.value === '') {
-		alert("생년월일을 선택해주세요.");
-		userBirhtday.focus();
-		return false;
-	} else if (!emailRule.test(mail)) {
-		alert("이메일을 형식에 맞게 입력해주세요.");
-		$("#emailId").focus();
-		return false;
-	} else {
-		return true;
-	}
-}
+// function blankCheck() {
+// 	console.log('blankCheck() 실행');
+// 	var userName = document.querySelector('#userName');
+// 	var userId = document.querySelector('#userId');
+// 	var password1 = document.querySelector('#password1');
+// 	var password2 = document.querySelector('#password2');
+// 	var userBirthday = document.querySelector('#userBirthday');
+// 	// 이메일 형식
+// 	var emailRule =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+// 	var emailId =$("#emailId").val();
+// 	var emailDomain =$("#emailDomain").val();
+// 	var mail = emailId+"@"+emailDomain;
+// 	$("#mail").val(mail);
+//
+// 	if (userName.value == null || userName.value === '') {
+// 		alert("이름을 입력해주세요.");
+// 		userName.focus();
+// 		return false;
+// 	} else if (userId.value == null || userId.value === '') {
+// 		alert("아이디를 입력해주세요.");
+// 		userId.focus();
+// 		return false;
+// 	} else if (password1.value == null || password1.value === '') {
+// 		alert("비밀번호를 입력해주세요.");
+// 		password1.focus();
+// 		return false;
+// 	} else if (password2.value == null || password2.value === '') {
+// 		alert("비밀번호를 확인해주세요.");
+// 		password2.focus();
+// 		return false;
+// 	} else if (userBirthday.value == null || userBirthday.value === '') {
+// 		alert("생년월일을 선택해주세요.");
+//         userBirthday.focus();
+// 		return false;
+// 	} else if (!emailRule.test(mail)) {
+// 		alert("이메일을 형식에 맞게 입력해주세요.");
+// 		$("#emailId").focus();
+// 		return false;
+// 	} else {
+// 		return true;
+// 	}
+// }
 
 // 아이디 중복 확인
+// function idCheck() {
+// 	var userId = document.querySelector('#userId');
+// 	if (userId.value == null || userId.value === '') {
+// 		alert("아이디를 입력해주세요.");
+// 		userId.focus();
+// 		return false;
+// 	}
+// 	// fetch Ajax를 이용해서 REST API를 호출한다.
+// 	const url = '/api/idCheck/' + userId.value;
+// 	console.log(url);
+// 	fetch(url)
+// 		.then(response => {
+// 			console.log(response);
+// 			// http 응답 코드에 따른 메시지 출력
+// 			if (response.ok) {
+// 				alert('사용 가능한 아이디입니다.');
+// 				$('#idCheckBtn').val(true);
+// 			} else {
+// 				alert('중복된 아이디입니다.');
+// 				userId.focus();
+// 			}
+// 		});
+// }
+// 아이디 중복 확인
 function idCheck() {
-	var userId = document.querySelector('#userId');
-	if (userId.value == null || userId.value === '') {
-		alert("아이디를 입력해주세요.");
-		userId.focus();
-		return false;
-	}
-	// fetch Ajax를 이용해서 REST API를 호출한다.
-	const url = '/api/idCheck/' + userId.value;
-	console.log(url);
-	fetch(url)
-		.then(response => {
-			console.log(response);
-			// http 응답 코드에 따른 메시지 출력
-			if (response.ok) {
-				alert('사용 가능한 아이디입니다.');
-				$('#idCheckBtn').val(true);
-			} else {
-				alert('중복된 아이디입니다.');
-				userId.focus();
-			}
-		});
+    const userId = $("#userId").val();
+
+    if (!userId) {
+        alert("아이디를 입력해주세요.");
+        return;
+    }
+
+    fetch(`/api/idCheck/${userId}`)
+        .then(response => {
+            if (response.ok) {
+                alert("사용 가능한 아이디입니다.");
+                $("#idCheckBtn").val("true");
+            } else {
+                alert("이미 사용 중인 아이디입니다.");
+                $("#idCheckBtn").val("false");
+                $("#userId").focus();
+            }
+        })
+        .catch(() => alert("아이디 확인 중 오류가 발생했습니다."));
 }
 
 // 비밀번호 확인
+// function passwordCheck() {
+// 	console.log('passwordCheck() 실행');
+// 	var password1 = document.querySelector('#password1');
+// 	var password2 = document.querySelector('#password2');
+// 	if (password1.value === password2.value){
+// 		return true;
+// 	} else {
+// 		alert("비밀번호가 일치하지 않습니다.");
+// 		password2.focus();
+// 		return false;
+// 	}
+// }
+// 비밀번호 확인 (UX용)
 function passwordCheck() {
-	console.log('passwordCheck() 실행');
-	var password1 = document.querySelector('#password1');
-	var password2 = document.querySelector('#password2');
-	if (password1.value === password2.value){
-		return true;
-	} else {
-		alert("비밀번호가 일치하지 않습니다.");
-		password2.focus();
-		return false;
-	}
+    const pw1 = $("#password1").val();
+    const pw2 = $("#password2").val();
+
+    if (pw1 !== pw2) {
+        alert("비밀번호가 일치하지 않습니다.");
+        $("#password2").focus();
+        return false;
+    }
+    return true;
 }
 
 // 이메일 중복 확인

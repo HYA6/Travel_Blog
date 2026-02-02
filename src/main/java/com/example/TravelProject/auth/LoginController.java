@@ -3,7 +3,7 @@ package com.example.TravelProject.auth;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,9 +41,9 @@ public class LoginController {
 		log.info("LoginController의 login() 실행");
 		
 		// 네이버 아이디로 인증 URL을 생성하기 위해서 NaverLoginBO 클래스의 getAuthorizationUrl() 메소드를 호출한다.
-		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
-		
-		model.addAttribute("NaverLoginUrl", naverAuthUrl);
+//		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+//
+//		model.addAttribute("NaverLoginUrl", naverAuthUrl);
 	    
 		return "create/login";
 	}

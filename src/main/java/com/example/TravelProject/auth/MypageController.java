@@ -1,6 +1,6 @@
 package com.example.TravelProject.auth;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 import com.example.TravelProject.auth.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
