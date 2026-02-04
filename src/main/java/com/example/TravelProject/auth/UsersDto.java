@@ -3,10 +3,7 @@ package com.example.TravelProject.auth;
 import java.time.LocalDate;
 
 import com.example.TravelProject.auth.entity.Users;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,7 +36,12 @@ public class UsersDto {
     @NotBlank(message = "비밀번호를 입력해주세요.")
     private String userPassword;
 
+    @Pattern(
+            regexp = "^$|^01[016789]-?\\d{3,4}-?\\d{4}$",
+            message = "전화번호 형식이 올바르지 않습니다"
+    )
 	private String userPhone; // 유저 전화번호
+
 	private String userGender; // 유저 성별
 	private String userNickname; // 유저 닉네임
 	private LocalDate userCreateDate; // 유저 생성일
