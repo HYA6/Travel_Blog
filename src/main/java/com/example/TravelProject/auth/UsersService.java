@@ -27,7 +27,7 @@ public class UsersService {
 		log.info("UsersService의 findByuserId() 메소드 실행");
 		Users users = null;
 		try {
-			users = usersRepository.findByuserId(userId);
+			users = usersRepository.findByUserId(userId);
 		} catch (NullPointerException e) { }
 //		log.info("users: {}", users);
 		// Entity 데이터를 Dto로 바꿔주기
@@ -39,7 +39,7 @@ public class UsersService {
 		log.info("UsersService의 findByuserEmail() 메소드 실행");
 		Users users = null;
 		try {
-			users = usersRepository.findByuserEmail(userEmail);
+			users = usersRepository.findByUserEmail(userEmail);
 		} catch (NullPointerException e) { }
 //		log.info("users: {}", users);
 		// Entity 데이터를 Dto로 바꿔주기
@@ -61,9 +61,17 @@ public class UsersService {
 	public String usersId(String userId) {
 		log.info("UsersService의 usersId() 메소드 실행");
 		// 넘어온 아이디가 같은게 있는지 확인
-		Users users = usersRepository.findByuserId(userId);
+		Users users = usersRepository.findByUserId(userId);
 		return users.getUserId();
 	};
+
+    // 이메일 중복 조회
+    public String usersEmail(String userEmail) {
+        log.info("UsersService의 usersId() 메소드 실행");
+        // 넘어온 아이디가 같은게 있는지 확인
+        Users users = usersRepository.findByUserEmail(userEmail);
+        return users.getUserEmail();
+    };
 
     @Transactional
 	// 유저 정보 수정

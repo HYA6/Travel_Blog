@@ -80,7 +80,7 @@ function idCheck() {
         return;
     }
 
-    fetch(`/api/idCheck/${userId}`)
+    fetch(`/api/usersIdCheck/${userId}`)
         .then(response => {
             if (response.ok) {
                 alert("사용 가능한 아이디입니다.");
@@ -126,30 +126,41 @@ function emailCheck() {
 	var emailId =$("#emailId").val();
 	var emailDomain =$("#emailDomain").val();
 	var userEmail = emailId+"@"+emailDomain;
-	var email = '';
-	
-	$.ajax({
-		url: 'api/usersEmailCheck',
-		type: 'POST',
-		data: {'userEmail' : userEmail},
-		success : function (data){
-			email = data;
-			if (blankCheck() === false) { // 빈 칸 있는지 확인
-				return false;
-			}
-            // 이메일이 없으면 회원가입 함수(join()) 호출, 있으면 알림 표시
-			if (userEmail !== email){
-				join();
-			} else {
-				alert("이미 있는 이메일입니다.");
-				$("#emailId").focus();
-				return false;
-			}
-        },
-		error: function(){
-			alert("아작스 실패");
-        }
-	});
+
+    fetch(`/api/usersEmailCheck/${userEmail}`)
+        .then(response => {
+            if (response.ok) {
+                $("#mail").val(userEmail);
+                join();
+            } else {
+                alert("이미 사용 중인 이메일입니다.");
+                $("#emailId").focus();
+            }
+        })
+        .catch(() => alert("이메일 확인 중 오류가 발생했습니다."));
+
+	// $.ajax({
+	// 	url: 'api/usersEmailCheck',
+	// 	type: 'POST',
+	// 	data: {'userEmail' : userEmail},
+	// 	success : function (data){
+	// 		email = data;
+	// 		if (blankCheck() === false) { // 빈 칸 있는지 확인
+	// 			return false;
+	// 		}
+    //         // 이메일이 없으면 회원가입 함수(join()) 호출, 있으면 알림 표시
+	// 		if (userEmail !== email){
+	// 			join();
+	// 		} else {
+	// 			alert("이미 있는 이메일입니다.");
+	// 			$("#emailId").focus();
+	// 			return false;
+	// 		}
+    //     },
+	// 	error: function(){
+	// 		alert("아작스 실패");
+    //     }
+	// });
 }
 
 // 회원가입
@@ -168,14 +179,14 @@ function join() {
     var userPhone = $("#userPhone").val();
 	
 	// 전화번호 패턴
-	var patt = new RegExp("[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}");
-	var res = patt.test(userPhone);
-	// console.log($("#userPhone").val())
-	if(userPhone != null && userPhone !== '' && !res){ // 전화번호 내용이 있으면서 형식이 맞는지 확인
-		alert("전화번호를 정확히 입력하여 주십시오.");
-		$("#userPhone").focus();
-		return false;
-	}
+	// var patt = new RegExp("[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}");
+	// var res = patt.test(userPhone);
+	// // console.log($("#userPhone").val())
+	// if(userPhone != null && userPhone !== '' && !res){ // 전화번호 내용이 있으면서 형식이 맞는지 확인
+	// 	alert("전화번호를 정확히 입력하여 주십시오.");
+	// 	$("#userPhone").focus();
+	// 	return false;
+	// }
 	
 	return confirm("회원가입 하시겠습니까?") ? joinForm.submit() : false;
 }

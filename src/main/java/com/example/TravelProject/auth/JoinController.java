@@ -5,8 +5,10 @@ import java.util.List;
 
 import jakarta.servlet.http.HttpSession;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -32,27 +34,24 @@ public class JoinController {
 	
 	// 아이디가 있는지 확인 후 유저 회원가입 및 로그인
 	@RequestMapping("/usersInsert")
-	public String usersInsert(HttpSession session, UsersDto usersDto, RedirectAttributes rttr) {
+	public String usersInsert(HttpSession session, @Valid UsersDto usersDto, BindingResult bindingResult, RedirectAttributes rttr) {
 		log.info("JoinController의 usersInsert() 메소드");
 		Date nowDate = new Date();
 
         // 회원가입 전처리 (소셜/일반 구분 등)
         usersDto = joinService.joinChk(session, usersDto);
 
-        // 아이디 중복 체크
-        if (usersService.findByuserId(usersDto.getUserId()) != null) {
-            rttr.addFlashAttribute("msg", "이미 존재하는 아이디입니다.");
-            return "redirect:/join";
-        }
-
-        // 이메일 중복 체크
-        if (usersService.findByuserEmail(usersDto.getUserEmail()) != null) {
-            rttr.addFlashAttribute("msg", "이미 가입된 이메일입니다.");
-            return "redirect:/join";
-        }
-
         // 회원 저장
         usersService.saveUser(usersDto);
+
+        if (bindingResult.hasErrors()) {
+            String errorMessage = bindingResult.getFieldErrors()
+                    .get(0)
+                    .getDefaultMessage();
+
+            rttr.addFlashAttribute("alertMsg", errorMessage);
+            return "redirect:/join";
+        }
 
         // 로그인 처리
         UsersDto savedUser = usersService.findByuserId(usersDto.getUserId());

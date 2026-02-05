@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,6 +32,7 @@ public class UsersDto {
 
     @Past(message = "생년월일은 과거 날짜여야 합니다.")
     @NotNull(message = "생년월일을 선택해주세요.")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate userBirthday;
 
     @NotBlank(message = "비밀번호를 입력해주세요.")

@@ -16,9 +16,9 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 	
 	// @Query 어노테이션으로 query를 만들어 사용할 수 있다.
 	@Query(value = "SELECT * FROM users WHERE user_id = :user_id", nativeQuery = true)
-	Users findByuserId(String user_id);
+	Users findByUserId(String user_id);
 	
 	@Query(value = "SELECT * FROM users WHERE user_email = :user_email", nativeQuery = true)
-	Users findByuserEmail(String user_email);
+	Users findByUserEmail(String user_email);
 	
 }

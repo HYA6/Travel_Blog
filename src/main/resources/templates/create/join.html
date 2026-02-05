@@ -50,7 +50,7 @@
 						<tr>
 							<td style="text-align: center;"><label for="userBirthday">* 생년월일</label></td>
 							<td colspan="2">
-								<input type="date" name="userBirhtday" id="userBirthday" style="width: 35%; cursor: pointer;">
+								<input type="date" name="userBirthday" id="userBirthday" style="width: 35%; cursor: pointer;">
 							</td>
 						</tr>
 						<tr>
@@ -104,7 +104,12 @@
 			<p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a href="http://unsplash.com">Unsplash</a>.</p>
 		</section>
 	</div>
-	
+
+    <script th:if="${alertMsg}">
+        var msg = alertMsg;
+        alert(msg);
+    </script>
+
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/browser.min.js"></script>
 	<script src="assets/js/breakpoints.min.js"></script>

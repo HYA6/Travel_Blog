@@ -22,12 +22,12 @@ public class JoinApiController {
 	private UsersService usersService;
 	
 	// 아이디 중복 조회 fetch
-	@GetMapping("/api/idCheck/{users_id}")
-	public ResponseEntity<String> usersId(@PathVariable String users_id) {
+	@GetMapping("/api/usersIdCheck/{userId}")
+	public ResponseEntity<String> usersIdCheck(@PathVariable String userId) {
 		log.info("JoinApiController의 usersId() 메소드 실행");
 		String id = "";
 		try {
-			id = usersService.usersId(users_id);
+			id = usersService.usersId(userId);
 		} catch (Exception e) {
 			id = null;
 		}
@@ -36,20 +36,19 @@ public class JoinApiController {
 				ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	};
 
-	// 이메일 중복 확인 ajax
-	@ResponseBody
-	@RequestMapping("api/usersEmailCheck")
-	public String usersEmailCheck(UsersDto usersDto) {
+	// 이메일 중복 확인 fetch
+	@GetMapping("api/usersEmailCheck/{userEmail}")
+	public ResponseEntity<String> usersEmailCheck(@PathVariable String userEmail) {
 		log.info("JoinController의 usersEmailCheck() 메소드");
-		String email = null;
-//		log.info("usersDto.getUsers_email(): {}", usersDto.getUsers_email());
-		UsersDto dto = usersService.findByuserEmail(usersDto.getUserEmail());
-		try { // null이 넘어올 수 있기 때문에 예외 처리해준다.
-			email = dto.getUserEmail();
-		} catch (NullPointerException e) { }
-//		log.info("email: {}", email);
-		
-		return email;
+		String email = "";
+        try {
+            email = usersService.usersEmail(userEmail);
+        } catch (Exception e) {
+            email = null;
+        }
+		return email == null ?
+                ResponseEntity.status(HttpStatus.OK).body(email) :
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	};
 	
 };
