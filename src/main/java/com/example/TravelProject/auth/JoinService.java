@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpSession;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.Date;
 
 @Slf4j
