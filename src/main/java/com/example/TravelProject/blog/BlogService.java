@@ -33,15 +33,11 @@ public class BlogService {
 	}
 	
 	// 로그인한 유저의 블로그 찾기
-	@Transactional
 	public BlogDto selectBlog(Long userNum) {
 		log.info("BlogService의 selectBlog() 메소드 실행");
 		Blog blog = blogRepository.findById(userNum).orElse(null);
-		try {
-			return BlogDto.toDto(blog);
-		} catch (NullPointerException e) {
-			return null;
-		}
+		if (blog != null) return BlogDto.toDto(blog);
+        else return null;
 	}
 	
 	// 블로그 주소 찾기
@@ -51,6 +47,7 @@ public class BlogService {
 	}
 	
 	// 블로그 수정
+    @Transactional
 	public void blogEditOK(BlogDto blogDto) {
 		log.info("BlogService의 blogEditOK() 메소드 실행");
 		// 수정하려는 블로그가 있으면 얻어오고 없으면 예외를 발생시킨다.
@@ -63,6 +60,7 @@ public class BlogService {
 	}
 	
 	// 블로그 삭제
+    @Transactional
 	public void blogDelete(Long blogId) {
 		log.info("BlogService의 blogDelete() 메소드 실행");
 		blogRepository.deleteById(blogId);

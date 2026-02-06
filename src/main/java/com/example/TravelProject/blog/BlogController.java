@@ -9,8 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.TravelProject.auth.UsersDto;
-import com.example.TravelProject.auth.entity.Users;
-import com.example.TravelProject.auth.UsersRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +23,7 @@ public class BlogController {
 
     // 블로그 유무 확인
     @GetMapping("/blogChk")
-    public String blogChk(Model model, HttpSession session) {
+    public String blogChk(HttpSession session) {
         log.info("BlogController의 blogChk() 메소드");
         Long userNum = (Long) session.getAttribute("userNum");
         BlogDto blogDto = blogService.selectBlog(userNum);
@@ -37,7 +35,7 @@ public class BlogController {
             session.setAttribute("blogId",  blogDto.getBlogId());
             return "redirect:categoryChk";
         }
-    };
+    }
 	
 	// 블로그 생성 페이지로 이동
 	@GetMapping("/blog")
@@ -49,7 +47,7 @@ public class BlogController {
 		UsersDto usersDto = usersService.selectIUser(userNum);
 		model.addAttribute("userNum", usersDto.getUserNum());
 		return "create/blogCreate";
-	};
+	}
 	
 	// 블로그 생성
 	@PostMapping("/blogCreate")
@@ -64,7 +62,7 @@ public class BlogController {
 
 		session.setAttribute("blogId", dto.getBlogId());
 		return "redirect:category";
-	};
+	}
 	
 	// 블로그 수정 페이지로
 	@GetMapping("/blogEdit")
@@ -83,8 +81,8 @@ public class BlogController {
 	}
 	
 	// 블로그 수정
-	@PutMapping("/blogEditOK")
-	public String blogEditOK(HttpSession session, BlogDto blogDto) {
+	@PostMapping("/blogEditOK")
+	public String blogEditOK(BlogDto blogDto) {
 		log.info("BlogController의 blogEditOK() 메소드");
 		// 블로그 수정하기
 		blogService.blogEditOK(blogDto);
@@ -92,8 +90,8 @@ public class BlogController {
 	}
 	
 	// 블로그 삭제 후 생성 페이지로 이동
-	@DeleteMapping("/blogDelete")
-	public String blogDelete(HttpSession session) {
+	@PostMapping("/blogDelete")
+	public String blogDelete() {
 		log.info("BlogController의 blogDelete() 메소드");
 
 		return "redirect:blog";
