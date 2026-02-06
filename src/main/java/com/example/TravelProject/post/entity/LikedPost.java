@@ -32,18 +32,18 @@ public class LikedPost implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="liked_id", nullable=false, columnDefinition="int")
+	@Column(name="liked_id", nullable=false)
 	private Long likedPostId; // 게시글 좋아요 고유 번호
-	@Column(name="liked", columnDefinition="VARCHAR(10)")
+	@Column(name="liked", length = 10)
 	private String likedPost; // 게시글 좋아요 여부(Y/null)
 	// 외래키
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "user_num", nullable=false, columnDefinition="int")
+	@JoinColumn(name = "user_num", nullable=false)
 	private Users users; // 유저 고유 번호
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "post_id", nullable=false, columnDefinition="int")
+	@JoinColumn(name = "post_id", nullable=false)
 	private Post post; // 게시글 고유 번호
 	
 	

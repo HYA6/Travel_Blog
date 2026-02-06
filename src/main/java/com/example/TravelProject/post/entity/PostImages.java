@@ -28,18 +28,18 @@ public class PostImages {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="image_id", nullable=false, columnDefinition="int")
+	@Column(name="image_id", nullable=false)
 	private Long postImageId; // 게시글 이미지 고유 번호
-	@Column(name="image_name", nullable=false, columnDefinition="varchar(100)")
+	@Column(name="image_name", nullable=false, length = 100)
 	private String postImageName; // 게시글 이미지 이름
-	@Column(name="image_gup", columnDefinition="int")
+	@Column(name="image_gup")
 	private int postImageGup; // 게시글 이미지 그룹
-	@Column(name="image_seq", columnDefinition="int")
+	@Column(name="image_seq")
 	private int postImageSeq; // 게시글 이미지 출력 순서
 	// 외래키
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "post_id", nullable=false, columnDefinition="int")
+	@JoinColumn(name = "post_id", nullable=false)
 	private Post post; // 게시글 고유 번호
 	
 	

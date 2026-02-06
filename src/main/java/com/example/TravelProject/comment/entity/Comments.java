@@ -35,33 +35,33 @@ public class Comments {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="comment_id", nullable=false, columnDefinition="int")
+	@Column(name="comment_id", nullable=false)
 	private Long commentId; // 댓글 고유 번호
-	@Column(name="comment_content", nullable=false, columnDefinition="varchar(200)")
+	@Column(name="comment_content", nullable=false, length = 200)
 	private String commentContent; // 댓글 내용
 	@Column(name="comment_date", nullable=false)
 	@Temporal(TemporalType.DATE)
 	private Date commentDate; // 댓글 작성일
-	@Column(name="comment_gup", columnDefinition="int")
+	@Column(name="comment_gup")
 	private int commentGup; // 댓글 그룹
-	@Column(name="comment_lev", columnDefinition="int")
+	@Column(name="comment_lev")
 	private int commentLev; // 댓글 레벨
-	@Column(name="comment_seq", columnDefinition="int")
+	@Column(name="comment_seq")
 	private int commentSeq; // 댓글 출력 순서
-	@Column(name="comment_del", columnDefinition="varchar(10)")
+	@Column(name="comment_del", length = 10)
 	private String commentDel; // 댓글 삭제 여부
 	// 외래키
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "user_num", nullable=false, columnDefinition="int")
+	@JoinColumn(name = "user_num")
 	private Users users; // 유저 고유 번호
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "blog_id", nullable=false, columnDefinition="int")
+	@JoinColumn(name = "blog_id")
 	private Blog blog; // 블로그 고유 번호
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "post_id", nullable=false, columnDefinition="int")
+	@JoinColumn(name = "post_id")
 	private Post post; // 게시글 고유 번호
 	
 //	DTO 데이터를 Entity로 변환하는 메소드

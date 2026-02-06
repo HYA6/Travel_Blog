@@ -28,18 +28,18 @@ public class PostTexts {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="text_id", nullable=false, columnDefinition="int")
+	@Column(name="text_id", nullable=false)
 	private Long postTextId; // 게시글 내용 고유 번호
-	@Column(name="text", nullable=false, columnDefinition="varchar(1000)")
+	@Column(name="text", nullable=false, length = 1000)
 	private String postText; // 게시글 내용
-	@Column(name="text_gup", columnDefinition="int")
+	@Column(name="text_gup")
 	private int postTextGup; // 게시글 내용 그룹
-	@Column(name="text_seq", columnDefinition="int")
+	@Column(name="text_seq")
 	private int postTextSeq; // 게시글 내용 출력 순서
 	// 외래키
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "post_id", nullable=false, columnDefinition="int")
+	@JoinColumn(name = "post_id", nullable=false)
 	private Post post; // 게시글 고유 번호
 	
 	

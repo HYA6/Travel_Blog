@@ -32,22 +32,22 @@ public class Flow {
 //	기본키로 사용할 필드 선언
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="flow_num", nullable=false, columnDefinition="int")
+	@Column(name="flow_num", nullable=false)
 	private Long flowNum; // 팔로 고유 번호
 //	데이터를 저장할 필드 선언
-	@Column(name="flow_id", nullable=false, columnDefinition="varchar(100)")
+	@Column(name="flow_id", nullable=false, length = 100)
 	private String flowId; // 팔로 아이디
 	@Column(name="flow_date", nullable=false)
 	@Temporal(TemporalType.DATE)
 	private Date flowDate; // 팔로 날짜
-	@Column(name="flow_status", columnDefinition="varchar(20)")
+	@Column(name="flow_status", length = 20)
 	private String flowStatus; // 팔로 상태
-	@Column(name="flow_nickname", columnDefinition="varchar(10)")
+	@Column(name="flow_nickname", length = 10)
 	private String flowNickname; // 팔로 닉네임
 	// 외래키
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "user_num", nullable=false, columnDefinition="int") // user_num 컬럼에 Users의 대표값(기본키)을 저장한다.
+	@JoinColumn(name = "user_num", nullable=false) // user_num 컬럼에 Users의 대표값(기본키)을 저장한다.
 	private Users users; // 유저 고유 번호
 	
 	

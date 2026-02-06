@@ -34,21 +34,21 @@ public class Post {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="post_id", nullable=false, columnDefinition="int")
+	@Column(name="post_id", nullable=false)
 	private Long postId; // 게시글 고유 번호
-	@Column(name="post_form", nullable=false, columnDefinition="varchar(10)")
+	@Column(name="post_form", nullable=false, length = 10)
 	private String postForm; // 게시글 양식
-	@Column(name="post_start_date", nullable=false, columnDefinition="varchar(10)")
+	@Column(name="post_start_date", nullable=false, length = 10)
 	private String postStartDate; // 게시글 여행 첫 날짜
-	@Column(name="post_end_date", nullable=false, columnDefinition="varchar(10)")
+	@Column(name="post_end_date", nullable=false, length = 10)
 	private String postEndDate; // 게시글 여행 마지막 날짜
-	@Column(name="post_place", nullable=false, columnDefinition="varchar(100)")
+	@Column(name="post_place", nullable=false, length = 100)
 	private String postPlace; // 게시글 여행 장소
-	@Column(name="post_subject", nullable=false, columnDefinition="varchar(100)")
+	@Column(name="post_subject", nullable=false, length = 100)
 	private String postSubject; // 게시글 제목
-	@Column(name="post_tag", columnDefinition="varchar(100)")
+	@Column(name="post_tag", length = 100)
 	private String postTag; // 게시글 태그
-	@Column(name="post_thumbnail", columnDefinition="varchar(100)")
+	@Column(name="post_thumbnail", length = 100)
 	private String postThumbnail; // 게시글 대표 이미지 이름
 	@Column(name="post_write", nullable=false)
 	@Temporal(TemporalType.DATE)
@@ -65,11 +65,11 @@ public class Post {
 	// 외래키
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "blog_id", nullable=false, columnDefinition="int")
+	@JoinColumn(name = "blog_id", nullable=false)
 	private Blog blog; // 블로그 고유 번호
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "category_id", nullable=false, columnDefinition="int")
+	@JoinColumn(name = "category_id", nullable=false)
 	private Category category; // 카테고리 고유 번호
 	
 	

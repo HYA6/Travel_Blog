@@ -27,15 +27,15 @@ import lombok.ToString;
 @ToString
 public class UserProfile implements Serializable {
 
-	@Column(name="user_image", columnDefinition="varchar(100)")
+	@Column(name="user_image", length = 100)
 	private String userImage; // 프로필 이미지
-	@Column(name="user_info", columnDefinition="varchar(300)")
+	@Column(name="user_info", length = 300)
 	private String userInfo; // 프로필 소개글
 	// 외래키
 	@Id
 	@OneToOne // 1:1 단방향 관계
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "user_num", nullable=false, columnDefinition="int") // user_num 컬럼에 Users의 대표값(기본키)을 저장한다.
+	@JoinColumn(name = "user_num", nullable=false) // user_num 컬럼에 Users의 대표값(기본키)을 저장한다.
 	private Users users; // 유저 고유 번호
 	
 	

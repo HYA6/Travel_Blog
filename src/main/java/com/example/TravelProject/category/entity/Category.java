@@ -31,22 +31,22 @@ public class Category {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="category_id", nullable=false, columnDefinition="int")
+	@Column(name="category_id", nullable=false)
 	private Long categoryId; // 카테고리 고유 번호
-	@Column(name="category_name", nullable=false, columnDefinition="varchar(100)")
+	@Column(name="category_name", nullable=false, length = 100)
 	private String categoryName; // 카테고리 이름
-	@Column(name="category_private", nullable=false, columnDefinition="varchar(10)")
+	@Column(name="category_private", nullable=false, length = 10)
 	private String categoryPrivate; // 카테고리 공개 여부
-	@Column(name="category_gup", columnDefinition="int")
+	@Column(name="category_gup")
 	private int categoryGup; // 카테고리 그룹(상위 카테고리 구분)
-	@Column(name="category_lev", columnDefinition="int")
+	@Column(name="category_lev")
 	private int categoryLev; // 카테고리 레벨(상,하위 카테고리 구분)
-	@Column(name="category_seq", columnDefinition="int")
+	@Column(name="category_seq")
 	private int categorySeq; // 카테고리 출력 순서(카테고리 내의 출력 순서)
 	// 외래키
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "blog_id", nullable=false, columnDefinition="int") // blog_id 컬럼에 Blog의 대표값(기본키)을 저장한다.
+	@JoinColumn(name = "blog_id", nullable=false) // blog_id 컬럼에 Blog의 대표값(기본키)을 저장한다.
 	private Blog blog; // 블로그 고유 번호
 	
 	

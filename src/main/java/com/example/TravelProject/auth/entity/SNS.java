@@ -28,17 +28,17 @@ public class SNS {
 //	기본키로 사용할 필드 선언
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="sns_id", nullable=false, columnDefinition="int")
+	@Column(name="sns_id", nullable=false)
 	private Long snsId; // SNS 고유 번호
 //	데이터를 저장할 필드 선언
-	@Column(name="sns_name", nullable=false, columnDefinition="varchar(20)")
+	@Column(name="sns_name", nullable=false, length = 20)
 	private String snsName; // SNS 이름
-	@Column(name="sns_url", nullable=false, columnDefinition="varchar(100)")
+	@Column(name="sns_url", nullable=false, length = 100)
 	private String snsUrl; // SNS 주소
 	// 외래키
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "user_num", nullable=false, columnDefinition="int") // user_num 컬럼에 Users의 대표값(기본키)을 저장한다.
+	@JoinColumn(name = "user_num", nullable=false) // user_num 컬럼에 Users의 대표값(기본키)을 저장한다.
 	private Users users; // 유저 고유 번호
 	
 	

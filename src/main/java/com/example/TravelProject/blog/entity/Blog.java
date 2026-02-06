@@ -32,19 +32,19 @@ public class Blog {
 //	기본키로 사용할 필드 선언
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="blog_id", nullable=false, columnDefinition="int")
+	@Column(name="blog_id", nullable=false)
 	private Long blogId; // 블로그 고유 번호
-	@Column(name="blog_name", nullable=false, columnDefinition="varchar(20)")
+	@Column(name="blog_name", nullable=false, length = 20)
 	private String blogName; // 블로그 이름
-	@Column(name="blog_thema", nullable=false, columnDefinition="varchar(200)")
+	@Column(name="blog_thema", nullable=false, length = 200)
 	private String blogThema; // 블로그 테마
 //	데이터를 저장할 필드 선언
-	@Column(name="blog_url", nullable=false, columnDefinition="varchar(100)")
+	@Column(name="blog_url", nullable=false, length = 200)
 	private String blogUrl; // 블로그 주소
 	// 외래키
 	@OneToOne // 1:1 단방향 관계
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "user_num", nullable=false, columnDefinition="int") // user_num 컬럼에 Users의 대표값(기본키)을 저장한다.
+	@JoinColumn(name = "user_num", nullable=false) // user_num 컬럼에 Users의 대표값(기본키)을 저장한다.
 	private Users users; // 유저 고유 번호
 	
 	
