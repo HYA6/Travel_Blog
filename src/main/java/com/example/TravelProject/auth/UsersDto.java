@@ -39,7 +39,7 @@ public class UsersDto {
     private String userPassword;
 
     @Pattern(
-            regexp = "^$|^01[016789]-?\\d{3,4}-?\\d{4}$",
+            regexp = "^$|^0\\d{1,2}-\\d{3,4}-\\d{4}$",
             message = "전화번호 형식이 올바르지 않습니다"
     )
 	private String userPhone; // 유저 전화번호

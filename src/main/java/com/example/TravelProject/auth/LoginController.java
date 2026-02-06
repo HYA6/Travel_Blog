@@ -1,7 +1,6 @@
 package com.example.TravelProject.auth;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -10,14 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.TravelProject.blog.BlogDto;
-import com.example.TravelProject.category.CategoryDto;
 import com.example.TravelProject.auth.loginApi.NaverLoginBO;
-import com.example.TravelProject.blog.BlogService;
-import com.example.TravelProject.category.CategoryService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,10 +24,6 @@ public class LoginController {
 	private NaverLoginBO naverLoginBO;
 	@Autowired
 	private UsersService usersService;
-	@Autowired
-	private BlogService blogService;
-	@Autowired
-	private CategoryService categoryService;
 	
 	// 첫 실행
 	@GetMapping("/")
@@ -53,33 +43,33 @@ public class LoginController {
 	public String usersSignup(UsersDto usersDto, RedirectAttributes rttr, HttpSession session) {
 		log.info("LoginController의 usersSignup() 메소드 실행");
 		
-		// 이미 있는 유저 고유 번호인지 확인
-		UsersDto userInfo = usersService.findByuserId(usersDto.getUserId());
+		// 이미 있는 유저 아이디인지 확인
+		UsersDto userInfo = usersService.findByUserId(usersDto.getUserId());
 
 		// 데이터가 없으면 로그인 페이지로 리턴한다.
 		if (userInfo == null) {
 			rttr.addFlashAttribute("msg", "존재하지 않는 아이디입니다.");
 			return "redirect:/";
-		};
+		}
 		// 비밀번호가 일치하지 않으면 로그인 페이지로 리턴한다.
 		if (!userInfo.getUserPassword().equals(usersDto.getUserPassword())) {
 			rttr.addFlashAttribute("msg", "비밀번호가 일치하지 않습니다.");
 			return "redirect:/";
-		};
+		}
 		
 		// 아이디가 같은 데이터가 있으면 세션을 이용하여 로그인한다.
 		session.setAttribute("userNum", userInfo.getUserNum());
 
         // 블로그 유무 확인 메소드로 이동
         return "redirect:blogChk";
-	};
+	}
 	
 	// 회원가입 페이지로 이동
 	@GetMapping("/join")
 	public String join() {
 		log.info("LoginController의 join() 메소드 실행");
 		return "create/join";
-	};
+	}
 	
 	// 로그아웃
 	@PostMapping("/logout")
@@ -87,13 +77,13 @@ public class LoginController {
 		log.info("LoginController의 logout() 메소드 실행");
 		session.invalidate();
 		return "redirect:/";
-	};
+	}
 	
 	// 템플릿 설명 페이지로
 	@GetMapping("/TempleteInfo")
 	public String TempleteInfo() {
 		log.info("LoginController의 TempleteInfo() 메소드 실행");
 		return "TempleteInfo";
-	};
+	}
 	
-};
+}

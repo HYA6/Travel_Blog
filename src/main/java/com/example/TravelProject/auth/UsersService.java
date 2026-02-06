@@ -20,31 +20,26 @@ public class UsersService {
 		Users users = usersRepository.findById(userNum).orElse(null);
 		// Entity 데이터를 Dto로 바꿔주기
 		return users != null ? UsersDto.toDto(users) : null;
-	};
+	}
 	
 	// 유저 아이디로 로그인한 유저 정보 가져오기
-	public UsersDto findByuserId(String userId) {
-		log.info("UsersService의 findByuserId() 메소드 실행");
-		Users users = null;
-		try {
-			users = usersRepository.findByUserId(userId);
-		} catch (NullPointerException e) { }
-//		log.info("users: {}", users);
+	public UsersDto findByUserId(String userId) {
+		log.info("UsersService의 findByUserId() 메소드 실행");
+		Users users = usersRepository.findByUserId(userId);
 		// Entity 데이터를 Dto로 바꿔주기
 		return users != null ? UsersDto.toDto(users) : null;
-	};
+	}
 	
-	// 유저 이메일로 로그인한 유저 정보 가져오기
-	public UsersDto findByuserEmail(String userEmail) {
-		log.info("UsersService의 findByuserEmail() 메소드 실행");
-		Users users = null;
-		try {
-			users = usersRepository.findByUserEmail(userEmail);
-		} catch (NullPointerException e) { }
-//		log.info("users: {}", users);
-		// Entity 데이터를 Dto로 바꿔주기
-		return users != null ? UsersDto.toDto(users) : null;
-	};
+//	// 유저 이메일로 로그인한 유저 정보 가져오기
+//	public UsersDto findByUserEmail(String userEmail) {
+//		log.info("UsersService의 findByUserEmail() 메소드 실행");
+//		Users users = null;
+//		try {
+//			users = usersRepository.findByUserEmail(userEmail);
+//		} catch (NullPointerException e) { }
+//		// Entity 데이터를 Dto로 바꿔주기
+//		return users != null ? UsersDto.toDto(users) : null;
+//	}
 
     @Transactional
 	// 유저 정보 저장
@@ -55,7 +50,7 @@ public class UsersService {
 		// 유저 정보 저장
 		usersRepository.save(users);
 		// Entity 데이터를 Dto로 바꿔주기
-	};
+	}
 	
 	// 아이디 중복 조회
 	public String usersId(String userId) {
@@ -63,7 +58,7 @@ public class UsersService {
 		// 넘어온 아이디가 같은게 있는지 확인
 		Users users = usersRepository.findByUserId(userId);
 		return users.getUserId();
-	};
+	}
 
     // 이메일 중복 조회
     public String usersEmail(String userEmail) {
@@ -71,7 +66,7 @@ public class UsersService {
         // 넘어온 아이디가 같은게 있는지 확인
         Users users = usersRepository.findByUserEmail(userEmail);
         return users.getUserEmail();
-    };
+    }
 
     @Transactional
 	// 유저 정보 수정
@@ -86,13 +81,13 @@ public class UsersService {
 		// 수정된 유저 정보로 다시 저장한다.
 		Users updated = usersRepository.save(users);
 		return UsersDto.toDto(updated);
-	};
+	}
 
     @Transactional
 	// 유저 정보 삭제
 	public void deleteUsers(Long userNum) {
 		log.info("UsersService의 deleteUsers() 메소드 실행");
 		usersRepository.deleteById(userNum);
-	};
+	}
 	
-};
+}
