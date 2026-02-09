@@ -1,7 +1,7 @@
 package com.example.TravelProject.auth;
 
 import com.example.TravelProject.auth.entity.Users;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -11,10 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UsersService {
 
-	@Autowired
 	private UsersRepository usersRepository;
-	
-	// 유저 고유 번호로 로그인한 유저 정보 가져오기
+    private final PasswordEncoder passwordEncoder;
+
+    public UsersService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    // 유저 고유 번호로 로그인한 유저 정보 가져오기
 	public UsersDto selectIUser(Long userNum) {
 		log.info("UsersService의 selectIUser() 메소드 실행");
 		Users users = usersRepository.findById(userNum).orElse(null);
@@ -47,6 +51,9 @@ public class UsersService {
 		log.info("UsersService의 findByuserEmail() 메소드 실행");
 		// Dto를 Entity로 변환
 		Users users = Users.toEntity(usersDto);
+        users.setUserPassword(
+                passwordEncoder.encode(usersDto.getUserPassword())
+        );
 		// 유저 정보 저장
 		usersRepository.save(users);
 		// Entity 데이터를 Dto로 바꿔주기
