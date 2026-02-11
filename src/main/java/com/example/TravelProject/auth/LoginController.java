@@ -44,18 +44,12 @@ public class LoginController {
 		log.info("LoginController의 usersSignup() 메소드 실행");
 		
 		// 이미 있는 유저 아이디인지 확인
-		UsersDto userInfo = usersService.findByUserId(usersDto.getUserId());
+        UsersDto userInfo = usersService.loginChk(usersDto.getUserId(), usersDto.getUserPassword());
 
-		// 데이터가 없으면 로그인 페이지로 리턴한다.
-		if (userInfo == null) {
-			rttr.addFlashAttribute("msg", "존재하지 않는 아이디입니다.");
-			return "redirect:/";
-		}
-		// 비밀번호가 일치하지 않으면 로그인 페이지로 리턴한다.
-		if (!userInfo.getUserPassword().equals(usersDto.getUserPassword())) {
-			rttr.addFlashAttribute("msg", "비밀번호가 일치하지 않습니다.");
-			return "redirect:/";
-		}
+        if (userInfo == null) {
+            rttr.addFlashAttribute("msg", "아이디 또는 비밀번호가 올바르지 않습니다.");
+            return "redirect:/";
+        }
 		
 		// 아이디가 같은 데이터가 있으면 세션을 이용하여 로그인한다.
 		session.setAttribute("userNum", userInfo.getUserNum());
@@ -72,7 +66,7 @@ public class LoginController {
 	}
 	
 	// 로그아웃
-	@PostMapping("/logout")
+	@PostMapping("/users/logout")
 	public String logout(HttpSession session) {
 		log.info("LoginController의 logout() 메소드 실행");
 		session.invalidate();

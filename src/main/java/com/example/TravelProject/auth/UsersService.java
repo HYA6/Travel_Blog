@@ -1,6 +1,7 @@
 package com.example.TravelProject.auth;
 
 import com.example.TravelProject.auth.entity.Users;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +12,28 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UsersService {
 
+    @Autowired
 	private UsersRepository usersRepository;
     private final PasswordEncoder passwordEncoder;
 
     public UsersService(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
+    }
+
+    // 유저 유무 확인 및 비밀번호 일치 확인
+    public UsersDto loginChk(String userId, String rawPassword) {
+        log.info("UsersService의 loginChk() 메소드 실행");
+        if (userId == null || rawPassword == null) return null;
+
+        Users user = usersRepository.findByUserId(userId);
+
+        if (user == null) {
+            return null;
+        }
+        if (!passwordEncoder.matches(rawPassword, user.getUserPassword())) {
+            return null;
+        }
+        return UsersDto.toDto(user);
     }
 
     // 유저 고유 번호로 로그인한 유저 정보 가져오기
@@ -33,30 +51,18 @@ public class UsersService {
 		// Entity 데이터를 Dto로 바꿔주기
 		return users != null ? UsersDto.toDto(users) : null;
 	}
-	
-//	// 유저 이메일로 로그인한 유저 정보 가져오기
-//	public UsersDto findByUserEmail(String userEmail) {
-//		log.info("UsersService의 findByUserEmail() 메소드 실행");
-//		Users users = null;
-//		try {
-//			users = usersRepository.findByUserEmail(userEmail);
-//		} catch (NullPointerException e) { }
-//		// Entity 데이터를 Dto로 바꿔주기
-//		return users != null ? UsersDto.toDto(users) : null;
-//	}
 
     @Transactional
 	// 유저 정보 저장
 	public void saveUser(UsersDto usersDto) {
-		log.info("UsersService의 findByuserEmail() 메소드 실행");
+		log.info("UsersService의 saveUser() 메소드 실행");
 		// Dto를 Entity로 변환
 		Users users = Users.toEntity(usersDto);
         users.setUserPassword(
-                passwordEncoder.encode(usersDto.getUserPassword())
+                passwordEncoder.encode(usersDto.getUserPassword()) // 비밀번호 암호화
         );
 		// 유저 정보 저장
 		usersRepository.save(users);
-		// Entity 데이터를 Dto로 바꿔주기
 	}
 	
 	// 아이디 중복 조회
@@ -69,7 +75,7 @@ public class UsersService {
 
     // 이메일 중복 조회
     public String usersEmail(String userEmail) {
-        log.info("UsersService의 usersId() 메소드 실행");
+        log.info("UsersService의 usersEmail() 메소드 실행");
         // 넘어온 아이디가 같은게 있는지 확인
         Users users = usersRepository.findByUserEmail(userEmail);
         return users.getUserEmail();

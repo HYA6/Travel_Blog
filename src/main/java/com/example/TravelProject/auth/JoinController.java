@@ -34,16 +34,15 @@ public class JoinController {
         // 회원가입 전처리 (소셜/일반 구분 등)
         usersDto = joinService.joinChk(session, usersDto);
 
+        // validation error 뜨면 실행 (유효성 인증 실패)
         Map<String, Object> result = new HashMap<>();
-
         if (bindingResult.hasErrors()) {
             result.put("success", false);
-            result.put("message",
-                    bindingResult.getFieldError().getDefaultMessage()
-            );
+            result.put("message", bindingResult.getFieldError().getDefaultMessage());
             return result;
         }
 
+        // DB 저장
         usersService.saveUser(usersDto);
 
         // 로그인 처리
