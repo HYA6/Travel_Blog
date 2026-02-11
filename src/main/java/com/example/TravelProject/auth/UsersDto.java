@@ -45,6 +45,7 @@ public class UsersDto {
 	private String userPhone; // 유저 전화번호
 
 	private String userGender; // 유저 성별
+    private Users.Role userRole; // 유저 권한
 	private String userNickname; // 유저 닉네임
 	private LocalDate userCreateDate; // 유저 생성일
 	
@@ -52,7 +53,7 @@ public class UsersDto {
 	public static UsersDto toDto(Users users) {
 		return new UsersDto(users.getUserNum(), users.getUserId(), users.getUserName(),
 				users.getUserEmail(), users.getUserBirthday(), users.getUserPassword(), users.getUserPhone(),
-				users.getUserGender(), users.getUserNickname(), users.getUserCreateDate());
+				users.getUserGender(), users.getUserRole(), users.getUserNickname(), users.getUserCreateDate());
 	}
 	
 }

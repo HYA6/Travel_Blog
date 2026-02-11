@@ -18,6 +18,12 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Users {
+    
+    // 권한 설정 enum
+    public enum Role {
+        USER,
+        ADMIN
+    }
 
     // 기본키로 사용할 필드 선언
     // 유저 고유 번호
@@ -47,6 +53,10 @@ public class Users {
     // 유저 성별
     @Column(name = "user_gender", length = 10)
     private String userGender;
+    // 유저 권한
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_role", nullable = false)
+    private Role userRole;
     // 유저 닉네임
     @Column(name = "user_nickname", length = 20)
     private String userNickname;
@@ -58,24 +68,23 @@ public class Users {
 	public static Users toEntity(UsersDto dto) {
 		return new Users(dto.getUserNum(), dto.getUserId(), dto.getUserName(), dto.getUserEmail(),
 				dto.getUserBirthday(), dto.getUserPassword(), dto.getUserPhone(), dto.getUserGender(),
-				dto.getUserNickname(), dto.getUserCreateDate());
-	};
+				dto.getUserRole(), dto.getUserNickname(), dto.getUserCreateDate());
+	}
 	
 	// 유저 정보를 수정하는 메소드
 	public void update(UsersDto dto) {
         if (!this.userNum.equals(dto.getUserNum())) {
             throw new IllegalArgumentException("정보 수정 실패! 유저의 고유 번호가 잘못되었습니다.");
-        };
+        }
 		// 유저 정보 수정
 		if (dto.getUserEmail() != null) {
 			this.userEmail = dto.getUserEmail();
-		};
+		}
 		if (dto.getUserPassword() != null) {
 			this.userPassword = dto.getUserPassword();
-		};
+		}
 		this.userPhone = dto.getUserPhone();
 		this.userGender = dto.getUserGender();
 		this.userNickname = dto.getUserNickname();
-	};
-	
-};
+	}
+}
