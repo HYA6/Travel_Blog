@@ -14,15 +14,18 @@
 	</header>
 
 	<!-- Signup Form -->
-	<form id="signup-form" method="post" action="usersSignup" style="margin-bottom: 0.5em;">
-		<input type="text" name="userId" id="userId" placeholder="ID" />
-		<input type="password" name="userPassword" id="userPassword" placeholder="Password"/><br/><br/>
+	<form id="signup-form" method="post" action="/login" style="margin-bottom: 0.5em;">
+		<input type="text" name="username" id="userId" placeholder="ID" />
+		<input type="password" name="password" id="userPassword" placeholder="Password"/><br/><br/>
 		<input type="submit" value="Sign Up" title="로그인"/>
 		<input type="button" value="Join Us" title="회원가입" onclick="location.href='join'"/>
 	</form>
-	<div style="margin-bottom: 2em;">
-		<span th:text="${msg}" style="color: #FE2E2E; font-weight: bold;"></span>
-	</div>
+    <div th:if="${param.error}">
+        <span style="color: #FE2E2E; font-weight: bold;">아이디 또는 비밀번호가 올바르지 않습니다.</span>
+    </div>
+<!--	<div style="margin-bottom: 2em;">-->
+<!--		<span th:text="${msg}" style="color: #FE2E2E; font-weight: bold;"></span>-->
+<!--	</div>-->
 <!--	<div>-->
 <!--		<a th:href="${NaverLoginUrl}" title="네이버로 로그인 및 회원가입"><img height="50" src="images/naver_btnD.png"/></a>-->
 <!--	</div>-->

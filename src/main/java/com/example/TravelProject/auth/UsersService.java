@@ -21,20 +21,21 @@ public class UsersService {
     }
 
     // 유저 유무 확인 및 비밀번호 일치 확인
-    public UsersDto loginChk(String userId, String rawPassword) {
-        log.info("UsersService의 loginChk() 메소드 실행");
-        if (userId == null || rawPassword == null) return null;
-
-        Users user = usersRepository.findByUserId(userId);
-
-        if (user == null) {
-            return null;
-        }
-        if (!passwordEncoder.matches(rawPassword, user.getUserPassword())) {
-            return null;
-        }
-        return UsersDto.toDto(user);
-    }
+//    public UsersDto loginChk(String userId, String rawPassword) {
+//        log.info("UsersService의 loginChk() 메소드 실행");
+//        if (userId == null || rawPassword == null) return null;
+//
+//        Users user = usersRepository.findByUserId(userId)
+//                .orElse(null);
+//
+//        if (user == null) {
+//            return null;
+//        }
+//        if (!passwordEncoder.matches(rawPassword, user.getUserPassword())) {
+//            return null;
+//        }
+//        return UsersDto.toDto(user);
+//    }
 
     // 유저 고유 번호로 로그인한 유저 정보 가져오기
 	public UsersDto selectIUser(Long userNum) {
@@ -47,9 +48,9 @@ public class UsersService {
 	// 유저 아이디로 로그인한 유저 정보 가져오기
 	public UsersDto findByUserId(String userId) {
 		log.info("UsersService의 findByUserId() 메소드 실행");
-		Users users = usersRepository.findByUserId(userId);
-		// Entity 데이터를 Dto로 바꿔주기
-		return users != null ? UsersDto.toDto(users) : null;
+        return usersRepository.findByUserId(userId)
+                .map(UsersDto::toDto)
+                .orElse(null);
 	}
 
     @Transactional
@@ -66,19 +67,23 @@ public class UsersService {
 	}
 	
 	// 아이디 중복 조회
-	public String usersId(String userId) {
+	public String usersIdChk(String userId) {
 		log.info("UsersService의 usersId() 메소드 실행");
 		// 넘어온 아이디가 같은게 있는지 확인
-		Users users = usersRepository.findByUserId(userId);
-		return users.getUserId();
+		Users users = usersRepository.findByUserId(userId)
+                .orElse(null);
+        UsersDto usersDto = users != null ? UsersDto.toDto(users) : null;
+		return usersDto != null ? usersDto.getUserId() : null;
 	}
 
     // 이메일 중복 조회
-    public String usersEmail(String userEmail) {
+    public String usersEmailChk(String userEmail) {
         log.info("UsersService의 usersEmail() 메소드 실행");
         // 넘어온 아이디가 같은게 있는지 확인
-        Users users = usersRepository.findByUserEmail(userEmail);
-        return users.getUserEmail();
+        Users users = usersRepository.findByUserEmail(userEmail)
+                .orElse(null);
+        UsersDto usersDto = users != null ? UsersDto.toDto(users) : null;
+        return usersDto != null ? usersDto.getUserEmail() : null;
     }
 
     @Transactional

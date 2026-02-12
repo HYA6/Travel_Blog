@@ -39,24 +39,24 @@ public class LoginController {
 	}
 	
 	// 로그인 가능 여부 확인 후 로그인
-	@PostMapping("/usersSignup")
-	public String usersSignup(UsersDto usersDto, RedirectAttributes rttr, HttpSession session) {
-		log.info("LoginController의 usersSignup() 메소드 실행");
-		
-		// 이미 있는 유저 아이디인지 확인
-        UsersDto userInfo = usersService.loginChk(usersDto.getUserId(), usersDto.getUserPassword());
-
-        if (userInfo == null) {
-            rttr.addFlashAttribute("msg", "아이디 또는 비밀번호가 올바르지 않습니다.");
-            return "redirect:/";
-        }
-		
-		// 아이디가 같은 데이터가 있으면 세션을 이용하여 로그인한다.
-		session.setAttribute("userNum", userInfo.getUserNum());
-
-        // 블로그 유무 확인 메소드로 이동
-        return "redirect:blogChk";
-	}
+//	@PostMapping("/usersSignup")
+//	public String usersSignup(UsersDto usersDto, RedirectAttributes rttr, HttpSession session) {
+//		log.info("LoginController의 usersSignup() 메소드 실행");
+//
+//		// 이미 있는 유저 아이디인지 확인
+//        UsersDto userInfo = usersService.loginChk(usersDto.getUserId(), usersDto.getUserPassword());
+//
+//        if (userInfo == null) {
+//            rttr.addFlashAttribute("msg", "아이디 또는 비밀번호가 올바르지 않습니다.");
+//            return "redirect:/";
+//        }
+//
+//		// 아이디가 같은 데이터가 있으면 세션을 이용하여 로그인한다.
+//		session.setAttribute("userNum", userInfo.getUserNum());
+//
+//        // 블로그 유무 확인 메소드로 이동
+//        return "redirect:blogChk";
+//	}
 	
 	// 회원가입 페이지로 이동
 	@GetMapping("/join")

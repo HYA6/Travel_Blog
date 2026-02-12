@@ -4,6 +4,8 @@ import com.example.TravelProject.auth.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 //	springBoot는 JPA에서 Entity의 기본적인 CRUD가 가능하도록 repository를 제공한다.
 //	JPA는 데이터베이스에 적용할 메소드를 정의해 놓고 springBoot가 repository의 내부 구현체를 자동으로 생성시켜주기
 //	때문에 별도의 구현체를 따로 생성하지 않고 메소드를 호출하는 것만으로 데이터베이스에 적용할 메소드를 사용할 수
@@ -16,9 +18,9 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 	
 	// @Query 어노테이션으로 query를 만들어 사용할 수 있다.
 	@Query(value = "SELECT * FROM users WHERE user_id = :user_id", nativeQuery = true)
-	Users findByUserId(String user_id);
+	Optional<Users> findByUserId(String user_id);
 	
 	@Query(value = "SELECT * FROM users WHERE user_email = :user_email", nativeQuery = true)
-	Users findByUserEmail(String user_email);
+    Optional<Users> findByUserEmail(String user_email);
 	
 }

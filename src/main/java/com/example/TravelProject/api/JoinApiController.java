@@ -24,7 +24,7 @@ public class JoinApiController {
 		log.info("JoinApiController의 usersId() 메소드 실행");
 		String id = "";
 		try {
-			id = usersService.usersId(userId);
+			id = usersService.usersIdChk(userId);
 		} catch (Exception e) {
 			id = null;
 		}
@@ -39,7 +39,7 @@ public class JoinApiController {
 		log.info("JoinController의 usersEmailCheck() 메소드");
 		String email = "";
         try {
-            email = usersService.usersEmail(userEmail);
+            email = usersService.usersEmailChk(userEmail);
         } catch (Exception e) {
             email = null;
         }

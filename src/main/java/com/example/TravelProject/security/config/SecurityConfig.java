@@ -1,4 +1,4 @@
-package com.example.TravelProject.config;
+package com.example.TravelProject.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
