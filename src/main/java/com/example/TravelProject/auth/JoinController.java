@@ -30,7 +30,7 @@ public class JoinController {
             HttpSession session,
             @Valid UsersDto usersDto,
             BindingResult bindingResult) {
-
+        log.info("JoinController의 join() 실행");
         // 회원가입 전처리 (소셜/일반 구분 등)
         usersDto = joinService.joinChk(session, usersDto);
 

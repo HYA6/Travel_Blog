@@ -37,6 +37,13 @@ public class LoginController {
 	    
 		return "create/login";
 	}
+
+    // 로그인 실패(security 실패) 시 페이지 반환
+    @GetMapping("/login")
+    public String loginPage() {
+        log.info("LoginController의 loginPage() 실행");
+        return "create/login";
+    }
 	
 	// 로그인 가능 여부 확인 후 로그인
 //	@PostMapping("/usersSignup")
