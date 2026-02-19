@@ -1,5 +1,6 @@
 package com.example.TravelProject.security.config;
 
+import com.example.TravelProject.security.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,7 +12,10 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(
+            HttpSecurity http,
+            CustomUserDetailsService customUserDetailsService
+    ) throws Exception {
         http
                 // csrf: 사이트 간 요청 위조 공격 방지 장치
                 .csrf(csrf -> csrf.disable())
@@ -51,11 +55,14 @@ public class SecurityConfig {
                 */
                 .formLogin(form -> form
                     .loginPage("/login") // 사용자 정의 로그인 페이지
+                    .defaultSuccessUrl("/blogChk", true)    // 로그인 성공 후 이동 페이지 (true: 강제이동)
+                    .failureUrl("/login.html?error=true")   // 로그인 실패 후 이동 페이지
                     .usernameParameter("username")  // 아이디 파라미터명 설정
                     .passwordParameter("password")  // 패스워드 파라미터명 설정
                     .loginProcessingUrl("/login") // 로그인 Form Action Url
                     .permitAll()
-                );
+                )
+                .userDetailsService(customUserDetailsService);
 
         return http.build();
     }

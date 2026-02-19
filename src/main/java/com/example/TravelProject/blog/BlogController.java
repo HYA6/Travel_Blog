@@ -1,9 +1,11 @@
 package com.example.TravelProject.blog;
 
+import com.example.TravelProject.security.data.CustomUserDetails;
 import jakarta.servlet.http.HttpSession;
 
 import com.example.TravelProject.auth.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +25,9 @@ public class BlogController {
 
     // 블로그 유무 확인
     @GetMapping("/blogChk")
-    public String blogChk(HttpSession session) {
+    public String blogChk(HttpSession session, @AuthenticationPrincipal CustomUserDetails user) {
         log.info("BlogController의 blogChk() 메소드");
-        Long userNum = (Long) session.getAttribute("userNum");
+        Long userNum = user.getUserNum();
         BlogDto blogDto = blogService.selectBlog(userNum);
         // 블로그가 없으면 생성 메소드 실행
         if (blogDto == null) {

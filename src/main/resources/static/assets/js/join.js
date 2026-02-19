@@ -86,7 +86,7 @@ function join() {
                 alert(data.message); // @Valid 에러 메시지
             } else {
                 alert("회원가입이 완료되었습니다.");
-                location.href = '/blogChk';
+                location.href = '/login';
             }
         })
         .catch(() => alert("회원가입 중 오류 발생"));
