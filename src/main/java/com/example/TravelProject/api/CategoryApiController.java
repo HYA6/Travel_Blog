@@ -35,7 +35,7 @@ public class CategoryApiController {
 	@ResponseBody
 	@RequestMapping("/api/selectCategory")
 	public ResponseEntity<CategoryDto> selectCategory(CategoryDto dto) {
-		log.info("CategoryApiController의 selectCategoryById() 메소드 실행");
+		log.info("CategoryApiController의 selectCategory() 메소드 실행");
 //		log.info("dto: {}", dto);
 		// 카테고리 불러오기
 		CategoryDto categoryDTO = categoryService.selectCategory(dto);

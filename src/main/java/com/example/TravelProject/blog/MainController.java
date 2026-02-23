@@ -2,11 +2,12 @@ package com.example.TravelProject.blog;
 
 import java.util.List;
 
-import jakarta.servlet.http.HttpSession;
+import com.example.TravelProject.security.data.CustomUserDetails;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,17 +40,19 @@ public class MainController {
 	private CommentsService commentsService;
 	
 	@RequestMapping("/main")
-	public String moveToMain(Model model, HttpSession session, @RequestParam(required=false) String currentPage) {
+	public String moveToMain(Model model,
+                             @RequestParam(required=false) String currentPage,
+                             @AuthenticationPrincipal CustomUserDetails customUser) {
 		log.info("MainController의 main() 메소드");
 		
-		Long userNum = (Long) session.getAttribute("userNum");
-		Long blogId = (Long) session.getAttribute("blogId");
+		Long userNum = customUser.getUserNum();
 		
 		// 로그인한 유저 정보 가져오기
 		UsersDto usersDto = usersService.selectIUser(userNum);
 		
 		// 로그인한 유저 블로그 정보 가져오기
 		BlogDto blogDto = blogService.selectBlog(userNum);
+        Long blogId = blogDto.getBlogId();
 		
 		// 블로그에 있는 카테고리 전부 가져오기
 		List<CategoryDto> categoryDto = categoryService.selectCategoryList(blogId);

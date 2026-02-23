@@ -25,25 +25,24 @@ public class BlogController {
 
     // 블로그 유무 확인
     @GetMapping("/blogChk")
-    public String blogChk(HttpSession session, @AuthenticationPrincipal CustomUserDetails user) {
+    public String blogChk(HttpSession session, @AuthenticationPrincipal CustomUserDetails customUser) {
         log.info("BlogController의 blogChk() 메소드");
-        Long userNum = user.getUserNum();
+        Long userNum = customUser.getUserNum();
         BlogDto blogDto = blogService.selectBlog(userNum);
         // 블로그가 없으면 생성 메소드 실행
         if (blogDto == null) {
             return "redirect:blog";
         } else {
             // 있으면 카테고리 유무 여부 확인 메소드로 이동
-            session.setAttribute("blogId",  blogDto.getBlogId());
             return "redirect:categoryChk";
         }
     }
 	
 	// 블로그 생성 페이지로 이동
 	@GetMapping("/blog")
-	public String blog(Model model, HttpSession session) {
+	public String blog(Model model, @AuthenticationPrincipal CustomUserDetails customUser) {
 		log.info("BlogController의 blog() 메소드");
-		Long userNum = (Long) session.getAttribute("userNum");
+        Long userNum = customUser.getUserNum();
 
 		// 로그인한 사용자 정보 가져오기
 		UsersDto usersDto = usersService.selectIUser(userNum);
@@ -53,16 +52,15 @@ public class BlogController {
 	
 	// 블로그 생성
 	@PostMapping("/blogCreate")
-	public String blogCreate(HttpSession session, BlogDto blogDto) {
+	public String blogCreate(@AuthenticationPrincipal CustomUserDetails customUser, BlogDto blogDto) {
 		log.info("BlogController의 blogCreate() 메소드");
-		Long userNum = (Long) session.getAttribute("userNum");
+        Long userNum = customUser.getUserNum();
 
 		// 블로그 생성하기
 		blogService.blogCreate(blogDto, userNum);
 		// 로그인한 사용자 블로그 선택
 		BlogDto dto = blogService.selectBlog(userNum);
 
-		session.setAttribute("blogId", dto.getBlogId());
 		return "redirect:category";
 	}
 	

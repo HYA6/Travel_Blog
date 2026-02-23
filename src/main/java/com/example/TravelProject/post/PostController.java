@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.example.TravelProject.security.data.CustomUserDetails;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,36 +48,34 @@ public class PostController {
 	
 	// 게시글 작성 페이지로 이동
 	@RequestMapping("/writePost")
-	public String writePost(Model model, HttpSession session) {
+	public String writePost(Model model, @AuthenticationPrincipal CustomUserDetails customUser) {
 		log.info("PostController의 writePost() 메소드");
-		Long userNum = (Long) session.getAttribute("userNum");
-//		log.info("userNum: {}", userNum);
-		Long blogId = (Long) session.getAttribute("blogId");
-//		log.info("blogId: {}", blogId);
+        Long userNum = customUser.getUserNum();
+        BlogDto blogDto = blogService.selectBlog(userNum);
+        Long blogId = blogDto.getBlogId();
 		
 		// 블로그에 있는 카테고리 전부 가져오기
 		List<CategoryDto> categoryDto = categoryService.selectCategoryList(blogId);
-//		log.info("categoryDto: {}", categoryDto);
 		
 		model.addAttribute("userNum", userNum);
 		model.addAttribute("blogId", blogId);
 		model.addAttribute("categoryDto", categoryDto);
 		
 		return "create/postCreate";
-	};
+	}
 	
 	// 게시글 저장(파일 디렉토리에 업로드) 후 메인 페이지
 	@RequestMapping("/postToMain")
 	public String postToMain() {
 		log.info("PostController의 postToMain() 메소드");
 		return "redirect:main";
-	};
+	}
 	
 	// 게시글 1건 보기
 	@GetMapping("/singlePost")
-	public String singlePost(Model model, @RequestParam Long postId, HttpSession session) {
+	public String singlePost(Model model, @RequestParam Long postId, @AuthenticationPrincipal CustomUserDetails customUser) {
 		log.info("PostController의 singlePost() 메소드");
-		Long userNum = (Long) session.getAttribute("userNum");
+		Long userNum = customUser.getUserNum();
 		
 		// 로그인한 유저 정보 가져오기
 		UsersDto usersDto = usersService.selectIUser(userNum);

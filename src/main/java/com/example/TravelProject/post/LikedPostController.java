@@ -1,8 +1,10 @@
 package com.example.TravelProject.post;
 
+import com.example.TravelProject.security.data.CustomUserDetails;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,9 +21,9 @@ public class LikedPostController {
 	
 	// 게시글 좋아요 저장
 	@GetMapping("/savePostLike")
-	public String savePostLike(@RequestParam Long postId, HttpSession session, RedirectAttributes re) {
+	public String savePostLike(@RequestParam Long postId, @AuthenticationPrincipal CustomUserDetails customUser, RedirectAttributes re) {
 		log.info("LikedPostController의 savePostLike() 메소드");
-		Long userNum = (Long) session.getAttribute("userNum");
+		Long userNum = customUser.getUserNum();
 		// Dto에 좋아요 저장
 		LikedPostDto likedPostDto = new LikedPostDto(null, "Y", userNum, postId);
 		// 저장

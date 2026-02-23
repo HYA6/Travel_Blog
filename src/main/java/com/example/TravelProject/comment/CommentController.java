@@ -34,7 +34,7 @@ public class CommentController {
 	// 댓글 삭제
 	@RequestMapping("/deleteComment")
 	public String deleteComment(CommentsDto commentsDto, RedirectAttributes re) {
-		log.info("CommentController의 saveComment()");
+		log.info("CommentController의 deleteComment()");
 //		log.info("commentsDto: {}", commentsDto);
 		// 저장하기
 		commentsService.deleteComment(commentsDto);

@@ -41,7 +41,7 @@ public class LoginController {
     @GetMapping("/login")
     public String loginPage() {
         log.info("LoginController의 loginPage() 실행");
-        return "create/login";
+        return "redirect:/";
     }
 	
 	// 로그인 가능 여부 확인 후 로그인
