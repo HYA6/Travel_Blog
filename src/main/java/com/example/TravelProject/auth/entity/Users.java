@@ -5,17 +5,11 @@ import java.time.LocalDate;
 import jakarta.persistence.*;
 
 import com.example.TravelProject.auth.UsersDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Entity // 현재 클래스는 Entity로 사용되는 클래스임을 의미한다.
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Setter
 @ToString
 public class Users {
     
@@ -64,12 +58,36 @@ public class Users {
     @Column(name = "user_date", nullable = false)
     private LocalDate userCreateDate;
 	
+    @Builder
+    public Users(Long userNum,
+                 String userId,
+                 String userName,
+                 String userEmail,
+                 LocalDate userBirthday,
+                 String userPassword,
+                 String userPhone,
+                 String userGender,
+                 Role userRole,
+                 String userNickname,
+                 LocalDate userCreateDate) {
+        this.userNum = userNum;
+        this.userId = userId;
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.userBirthday = userBirthday;
+        this.userPassword = userPassword;
+        this.userPhone = userPhone;
+        this.userGender = userGender;
+        this.userRole = userRole;
+        this.userNickname = userNickname;
+        this.userCreateDate = userCreateDate;
+    }
 //	DTO 데이터를 Entity(테이블과 매핑되는 클래스, Users)로 변환하는(객체를 만드는) 메소드
-	public static Users toEntity(UsersDto dto) {
-		return new Users(dto.getUserNum(), dto.getUserId(), dto.getUserName(), dto.getUserEmail(),
-				dto.getUserBirthday(), dto.getUserPassword(), dto.getUserPhone(), dto.getUserGender(),
-				dto.getUserRole(), dto.getUserNickname(), dto.getUserCreateDate());
-	}
+//	public static Users toEntity(UsersDto dto) {
+//		return new Users(dto.getUserNum(), dto.getUserId(), dto.getUserName(), dto.getUserEmail(),
+//				dto.getUserBirthday(), dto.getUserPassword(), dto.getUserPhone(), dto.getUserGender(),
+//				dto.getUserRole(), dto.getUserNickname(), dto.getUserCreateDate());
+//	}
 	
 	// 유저 정보를 수정하는 메소드
 	public void update(UsersDto dto) {

@@ -4,11 +4,7 @@ import java.time.LocalDate;
 
 import com.example.TravelProject.auth.entity.Users;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @NoArgsConstructor
@@ -16,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter
 @Setter
 @ToString
+@Builder
 public class UsersDto {
 	
 	private Long userNum; // 유저 고유 번호
@@ -48,12 +45,40 @@ public class UsersDto {
     private Users.Role userRole; // 유저 권한
 	private String userNickname; // 유저 닉네임
 	private LocalDate userCreateDate; // 유저 생성일
-	
+
+    // Entity로 변환 (암호화된 비밀번호를 외부에서 주입받음)
+    public Users toEntity(String encodedPassword) {
+        return Users.builder()
+                .userId(this.userId)
+                .userName(this.userName)
+                .userEmail(this.userEmail)
+                .userBirthday(this.userBirthday)
+                .userPassword(encodedPassword)
+                .userPhone(this.userPhone)
+                .userGender(this.userGender)
+                .userRole(Users.Role.USER) // 기본 권한
+                .userNickname(this.userNickname)
+                .userCreateDate(LocalDate.now())
+                .build();
+    }
+    // Entity → DTO
+    public static UsersDto fromEntity(Users user) {
+        return UsersDto.builder()
+                .userNum(user.getUserNum())
+                .userId(user.getUserId())
+                .userName(user.getUserName())
+                .userEmail(user.getUserEmail())
+                .userBirthday(user.getUserBirthday())
+                .userPhone(user.getUserPhone())
+                .userGender(user.getUserGender())
+                .userNickname(user.getUserNickname())
+                .build();
+    }
 	// entity를 dto로 변환하는 메소드
-	public static UsersDto toDto(Users users) {
-		return new UsersDto(users.getUserNum(), users.getUserId(), users.getUserName(),
-				users.getUserEmail(), users.getUserBirthday(), users.getUserPassword(), users.getUserPhone(),
-				users.getUserGender(), users.getUserRole(), users.getUserNickname(), users.getUserCreateDate());
-	}
+//	public static UsersDto toDto(Users users) {
+//		return new UsersDto(users.getUserNum(), users.getUserId(), users.getUserName(),
+//				users.getUserEmail(), users.getUserBirthday(), users.getUserPassword(), users.getUserPhone(),
+//				users.getUserGender(), users.getUserRole(), users.getUserNickname(), users.getUserCreateDate());
+//	}
 	
 }

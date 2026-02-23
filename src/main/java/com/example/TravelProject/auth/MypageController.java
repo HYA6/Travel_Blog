@@ -31,11 +31,11 @@ public class MypageController {
 		Users users = usersRepository.findById(userNum).orElse(null);
 //		log.info("users: {}", users);
 		
-		UsersDto usersDto = UsersDto.toDto(users);
+		UsersDto usersDto = UsersDto.fromEntity(users);
 		
 		model.addAttribute("usersDto", usersDto);
 		return "mypage";
-	};
+	}
 	
 	// 내 정보 수정 페이지로 이동
 	@RequestMapping("/myInfoEdit")
@@ -49,12 +49,12 @@ public class MypageController {
 		Users users = usersRepository.findById(userNum).orElse(null);
 //		log.info("users: {}", users);
 		
-		UsersDto usersDto = UsersDto.toDto(users);
+		UsersDto usersDto = UsersDto.fromEntity(users);
 //		log.info("usersDto.getUsers_gender(): {}", usersDto.getUsers_gender());
 		
 		model.addAttribute("usersDto", usersDto);
 		return "edit/myInfoEdit";
-	};
+	}
 	
 	// 내 정보 수정하기
 	@RequestMapping("/myInfoEditOK")
@@ -66,13 +66,13 @@ public class MypageController {
 		
 		model.addAttribute("usersDto", dto);
 		return "edit/myInfoEdit";
-	};
+	}
 	
 	// 내 정보 삭제(회원 탈퇴) 후 로그인 페이지로 돌아가기
 	@RequestMapping("/myInfoDelete")
 	public String myInfoDelete() {
 		log.info("MypageController의 myInfoDelete() 메소드");
 		return "redirect:/";
-	};
+	}
 
 }
