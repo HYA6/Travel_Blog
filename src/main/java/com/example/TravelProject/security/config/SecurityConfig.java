@@ -36,7 +36,8 @@ public class SecurityConfig {
                                         "/join",
                                         "/users/join",
                                         "/assets/**",
-                                        "/images/**"
+                                        "/images/**",
+                                        "/api/**"
                                 ).permitAll()
                                 .requestMatchers("/create/**").authenticated()
                                 .anyRequest().authenticated()

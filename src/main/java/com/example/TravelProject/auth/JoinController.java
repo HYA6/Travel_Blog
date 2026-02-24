@@ -46,8 +46,8 @@ public class JoinController {
         usersService.saveUser(usersDto);
 
         // 로그인 처리
-        UsersDto savedUser = usersService.findByUserId(usersDto.getUserId());
-        session.setAttribute("userNum", savedUser.getUserNum());
+//        UsersDto savedUser = usersService.findByUserId(usersDto.getUserId());
+//        session.setAttribute("userNum", savedUser.getUserNum());
 
         result.put("success", true);
         return result;

@@ -45,10 +45,10 @@
 							<td><input type="password" id="password3"/></td>
 						</tr>
 						<tr>
-							<td style="text-align: center;"><label for="userBirhtday">생년월일 (수정불가)</label></td>
+							<td style="text-align: center;"><label for="userBirthday">생년월일 (수정불가)</label></td>
 							<td>
-								<input type="date" name="userBirhtday" id="userBirhtday" 
-									style="width: 35%;" th:value="${usersDto.userBirhtday}" disabled="disabled"/>
+								<input type="date" name="userBirthday" id="userBirthday"
+									style="width: 35%;" th:value="${usersDto.userBirthday}" disabled="disabled"/>
 							</td>
 						</tr>
 						<tr>
@@ -62,9 +62,7 @@
 									<option value="">- 선택 -</option>
 									<option value="naver.com">naver.com</option>
 									<option value="gmail.com">gmail.com</option>
-									<option value="hanmail.net">hanmail.net</option>
 									<option value="daum.com">daum.com</option>
-									<option value="nate.com">nate.com</option>
 								</select>
 								<input type="hidden" name="userEmail" id="mail" th:value="${usersDto.userEmail}"/>
 							</td>

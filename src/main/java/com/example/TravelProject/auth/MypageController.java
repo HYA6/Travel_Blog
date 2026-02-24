@@ -1,9 +1,10 @@
 package com.example.TravelProject.auth;
 
-import jakarta.servlet.http.HttpSession;
+import com.example.TravelProject.security.data.CustomUserDetails;
 
 import com.example.TravelProject.auth.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,15 +22,13 @@ public class MypageController {
 	
 	// 마이 페이지로 이동
 	@RequestMapping("/mypage")
-	public String mypage(Model model, HttpSession session) {
+	public String mypage(Model model, @AuthenticationPrincipal CustomUserDetails customUser) {
 		log.info("MypageController의 mypage() 메소드");
 		
-		Long userNum = (Long) session.getAttribute("userNum");
-//		log.info("userNum: {}", userNum);
+		Long userNum = customUser.getUserNum();
 		
 		// 로그인한 사용자 정보 가져오기
 		Users users = usersRepository.findById(userNum).orElse(null);
-//		log.info("users: {}", users);
 		
 		UsersDto usersDto = UsersDto.fromEntity(users);
 		
@@ -39,18 +38,15 @@ public class MypageController {
 	
 	// 내 정보 수정 페이지로 이동
 	@RequestMapping("/myInfoEdit")
-	public String myInfoEdit(Model model, HttpSession session) {
+	public String myInfoEdit(Model model, @AuthenticationPrincipal CustomUserDetails customUser) {
 		log.info("MypageController의 myInfoEdit() 메소드");
 		
-		Long userNum = (Long) session.getAttribute("userNum");
-//		log.info("userNum: {}", userNum);
+		Long userNum = customUser.getUserNum();
 		
 		// 로그인한 사용자 정보 가져오기
 		Users users = usersRepository.findById(userNum).orElse(null);
-//		log.info("users: {}", users);
 		
 		UsersDto usersDto = UsersDto.fromEntity(users);
-//		log.info("usersDto.getUsers_gender(): {}", usersDto.getUsers_gender());
 		
 		model.addAttribute("usersDto", usersDto);
 		return "edit/myInfoEdit";
