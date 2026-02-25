@@ -21,28 +21,44 @@ public class CategoryService {
 	private BlogRepository blogRepository;
 	@Autowired
 	private CategoryRepository categoryRepository;
+
+    // 검증용 메소드(부모 카테고리 유무, 블로그가 같은지)
+    private void compare(Category parent, Long blogId) {
+        log.info("CategoryService의 compare() 메소드 실행");
+        // 부모 카테고리가 존재하지만 블로그가 같지 않다면 예외 발생
+        if (parent != null && !parent.getBlog().getBlogId().equals(blogId)) {
+            throw new IllegalArgumentException("다른 블로그의 카테고리는 생성 및 수정, 삭제할 수 없음");
+        }
+    }
 	
 	// 카테고리 생성 및 수정
 	@Transactional
-	public void createCategory(CategoryDto dto) {
+	public void createCategory(CategoryRequestDto dto, Long blogId) {
 		log.info("CategoryService의 createCategory() 메소드 실행");
-		// 카테고리를 저장하려는 블로그가 있으면 얻어오고 없으면 예외를 발생시킨다.
-		Blog blog = blogRepository.findById(dto.getBlogId())
-				.orElseThrow(() -> new IllegalArgumentException("카테고리 생성 실패! 대상 블로그가 없습니다."));
-//		log.info("category: {}", category);
-		if (dto.getCategoryId() == null) {
+        // 부모 카테고리 정보
+        Category parent = dto.getParent();
+
+        // 카테고리를 저장하려는 블로그가 없으면 예외 발생
+        compare(parent, blogId);
+
+        // 카테고리 Entity 객체
+        Category category;
+
+        // 카테고리 고유 번호가 없으면 새로 매핑, 있으면 수정
+        if (dto.getCategoryId() == null) {
 			// dto를 entity로 변환
-			Category category = Category.toEntity(dto, blog);
-			// 카테고리 저장
-			categoryRepository.save(category);
-		} else {
-			// 카테고리 저장
-			Category category = categoryRepository.findById(dto.getCategoryId())
-					.orElseThrow(() -> new IllegalArgumentException("카테고리 수정 실패! 대상 카테고리가 없습니다."));
+            category = CategoryMapper.toEntity(dto, parent);
+        } else {
+            // 수정하려는 카테고리의 고유 번호로 카테고리 Entity 얻어오기 (없으면 예외 발생)
+            category = categoryRepository.findById(dto.getCategoryId())
+                    .orElseThrow(() -> new IllegalArgumentException("카테고리 없음"));
+			// 카테고리 수정
 			category.update(dto);
-			categoryRepository.save(category);
-		};
-	};
+        }
+
+        // 카테고리 생성 및 수정
+        categoryRepository.save(category);
+	}
 	
 	// 블로그 고유 번호로 카테고리 목록 찾기
 	@Transactional

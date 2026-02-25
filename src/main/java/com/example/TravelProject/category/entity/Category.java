@@ -32,7 +32,7 @@ public class Category {
     @Enumerated(EnumType.STRING)
 	@Column(name="category_private", nullable=false)
 	private CategoryVisibility categoryPrivate; // 카테고리 공개 여부
-    @Column(name = "category_sort_order")
+    @Column(name = "category_sortOrder")
     private int categorySortOrder; // 같은 부모를 가진 카테고리들의 순서
 
     // 자기 참조 FK
@@ -40,7 +40,7 @@ public class Category {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Category parent;
-    // 자식 카테고리
+    // 자식 카테고리 (DB 컬럼 아님)
     @OneToMany(mappedBy = "parent",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
