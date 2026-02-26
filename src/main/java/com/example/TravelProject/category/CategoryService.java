@@ -22,7 +22,7 @@ public class CategoryService {
 	@Autowired
 	private CategoryRepository categoryRepository;
 
-    // 검증용 메소드(부모 카테고리 유무, 블로그가 같은지)
+    // 검증용 메소드(수정하려는 카테고리의 블로그가 같은지) -> 조회 및 삭제 메소드에서도 사용하는지 보고 사용 안하면 createCategory에 포함
     private void compare(Category parent, Long blogId) {
         log.info("CategoryService의 compare() 메소드 실행");
         // 부모 카테고리가 존재하지만 블로그가 같지 않다면 예외 발생
@@ -35,19 +35,27 @@ public class CategoryService {
 	@Transactional
 	public void createCategory(CategoryRequestDto dto, Long blogId) {
 		log.info("CategoryService의 createCategory() 메소드 실행");
-        // 부모 카테고리 정보
-        Category parent = dto.getParent();
+        Category parent = null;
 
-        // 카테고리를 저장하려는 블로그가 없으면 예외 발생
+        // 부모 카테고리 고유 번호가 있는데 DB에는 데이터가 없을 경우 예외 처리
+        if (dto.getParentId() != null) {
+            parent = categoryRepository.findById(dto.getParentId())
+                    .orElseThrow(() -> new IllegalArgumentException("부모 카테고리 없음"));
+        }
+
+        // 생성 및 수정 전 검증
         compare(parent, blogId);
 
         // 카테고리 Entity 객체
         Category category;
+        // 블로그 Entity 객체
+        Blog blog = blogRepository.findById(blogId)
+                .orElseThrow(() -> new IllegalArgumentException("블로그 없음"));
 
         // 카테고리 고유 번호가 없으면 새로 매핑, 있으면 수정
         if (dto.getCategoryId() == null) {
 			// dto를 entity로 변환
-            category = CategoryMapper.toEntity(dto, parent);
+            category = CategoryMapper.toEntity(dto, parent, blog);
         } else {
             // 수정하려는 카테고리의 고유 번호로 카테고리 Entity 얻어오기 (없으면 예외 발생)
             category = categoryRepository.findById(dto.getCategoryId())

@@ -1,5 +1,6 @@
 package com.example.TravelProject.category;
 
+import com.example.TravelProject.blog.entity.Blog;
 import com.example.TravelProject.category.entity.Category;
 
 public class CategoryMapper {
@@ -8,13 +9,14 @@ public class CategoryMapper {
         - parentCategoryId 같은 경우 null이 올 수도 있으니 null인지 확인 후 아닐 경우(자식 카테고리)에만 실행
     */
     // DTO -> Entity
-    public static Category toEntity(CategoryRequestDto dto, Category parent) {
+    public static Category toEntity(CategoryRequestDto dto, Category parent, Blog blog) {
         return Category.builder()
                 .categoryId(dto.getCategoryId())
                 .categoryName(dto.getCategoryName())
                 .categoryPrivate(dto.getCategoryPrivate())
                 .categorySortOrder(dto.getCategorySortOrder())
                 .parent(parent)
+                .blog(blog)
                 .build();
     }
 
